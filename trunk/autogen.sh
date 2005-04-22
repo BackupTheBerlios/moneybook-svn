@@ -20,8 +20,12 @@
 
 if [ $1 = "--clean" ]
 then
+	echo "make clean..."
+	make clean
+	echo "make maintainer-clean..."
+	make maintainer-clean
 	echo "removing old shit..."
-	rm -R aclocal.m4 autom4te.cache config.* configure Makefile Makefile.in src/Makefile src/Makefile.in src/engine/Makefile.in src/engine/Makefile src/interface/Makefile.in src/interface/Makefile stamp-h1
+	rm -R aclocal.m4 config.* configure Makefile.in src/Makefile.in src/engine/Makefile.in src/interface/Makefile.in src/interface/Makefile 
 else
 	echo "running aclocal..."
 	aclocal
