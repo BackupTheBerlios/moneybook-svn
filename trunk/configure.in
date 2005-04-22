@@ -1,0 +1,23 @@
+AC_INIT(src/moneybook.cpp)
+AC_HEADER_STDBOOL
+AM_INIT_AUTOMAKE(moneybook,0.1,20050419)
+AM_CONFIG_HEADER(config.h)
+
+LIBS="$LIBS"
+
+AC_PROG_CXX
+AC_PROG_CC
+AC_PROG_RANLIB
+AC_LANG_CPLUSPLUS
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
+
+CFLAGS="$CFLAGS"
+CPPFLAGS="$CPPFLAGS"
+CXXFLAGS="$CXXFLAGS"
+
+AC_OUTPUT( Makefile \
+	src/Makefile \
+	src/engine/Makefile \
+	src/interface/Makefile \
+)
