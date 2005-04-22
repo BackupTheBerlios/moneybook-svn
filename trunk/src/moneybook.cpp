@@ -39,6 +39,17 @@ int main () {
 	SJournal* CurRJournal = Test->getJournalByNumber (0,0);
 	do {
 		std::cout << CurRJournal->Journal->getId () << std::endl;
+		SJournalEdit* JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (true);
+		do {
+			std::cout << JournalEdit->JournalEdit->getValue () << std::endl;
+			JournalEdit = JournalEdit->Next;
+		} while (  JournalEdit != 0 );
+		
+		JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (false);
+		do {
+			std::cout << JournalEdit->JournalEdit->getValue () << std::endl;
+			JournalEdit = JournalEdit->Next;
+		} while (  JournalEdit != 0 );
 		CurRJournal = CurRJournal->Next;
 	} while ( CurRJournal != 0 );
 	delete Test;

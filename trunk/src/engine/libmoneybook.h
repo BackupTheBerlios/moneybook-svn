@@ -67,6 +67,11 @@ class CJournalEdit {
 		void setNext ( CJournalEdit* JNext );
 }; /* class CJournalEdit */
 
+struct SJournalEdit {
+	CJournalEdit* JournalEdit;
+	SJournalEdit* Next;
+}; /* struct SJournalEdit */
+
 class CJournal {
 	private:
 		CJournal* Next;
@@ -82,6 +87,7 @@ class CJournal {
 		CJournalEdit* getFirstJournalEdit ();
 		TDate getDate ();
 		std::string getDocument ();
+		SJournalEdit* getJournalEditByDebetEdit ( bool DebetEdit );
 }; /* class CJournal */
 
 struct SJournal {
@@ -91,14 +97,14 @@ struct SJournal {
 
 class CBookKeeping {
 	private:
-		bool searchByNumber ( int Minimum,int Maximum,int Number );
-	public:
-		//CBalance* Balance;
-		//CProveSaldiBalance* ProveSaldiBalance;
 		CPost* LastPost;
 		CPost* FirstPost;
 		CJournal* FirstJournal;
 		CJournal* LastJournal;
+		bool searchByNumber ( int Minimum,int Maximum,int Number );
+	public:
+		//CBalance* Balance;
+		//CProveSaldiBalance* ProveSaldiBalance;
 		CBookKeeping ();
 		~CBookKeeping (); 
 		SJournal* getJournalByNumber ( int Minimum,int Maximum );

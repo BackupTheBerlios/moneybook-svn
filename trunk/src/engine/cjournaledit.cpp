@@ -19,6 +19,9 @@
 #include "libmoneybook.h"
 
 CJournalEdit::CJournalEdit ( bool JDebetEdit,CPost* JPost,float JValue ) {
+	DebetEdit = JDebetEdit;
+	Post = JPost;
+	Value = JValue;
 } /* CJournalEdit::CJournalEdit ( bool JDebetEdit,CPost* JPost,float JValue ) */
 
 bool CJournalEdit::getDebetEdit () {

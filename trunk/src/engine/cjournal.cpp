@@ -52,3 +52,25 @@ std::string CJournal::getDocument () {
 	return Document;
 } /* std::string CJournal::getDocument () */
 
+SJournalEdit* CJournal::getJournalEditByDebetEdit ( bool DebetEdit ) {
+	SJournalEdit* FirstRJournalEdit = 0;
+	SJournalEdit* LastRJournalEdit = 0;
+	SJournalEdit* CurRJournalEdit = 0;
+	CJournalEdit* CurJournalEdit = FirstJournalEdit;
+	do {
+		if ( CurJournalEdit->getDebetEdit () == DebetEdit ) {
+			CurRJournalEdit = new SJournalEdit;
+			CurRJournalEdit->Next = 0;
+			CurRJournalEdit->JournalEdit = CurJournalEdit;
+			if  ( FirstRJournalEdit == 0 ) {
+				FirstRJournalEdit = CurRJournalEdit;
+			} else {
+				LastRJournalEdit->Next = CurRJournalEdit;
+			}
+			LastRJournalEdit = CurRJournalEdit;
+		}
+		CurJournalEdit = CurJournalEdit->getNext ();
+	} while ( CurJournalEdit != 0 );
+	return FirstRJournalEdit;
+}
+
