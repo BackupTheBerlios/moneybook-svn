@@ -42,12 +42,14 @@ int main () {
 		SJournalEdit* JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (true);
 		do {
 			std::cout << JournalEdit->JournalEdit->getValue () << std::endl;
+			std::cout << JournalEdit->JournalEdit->getPost ()->getName () << std::endl;
 			JournalEdit = JournalEdit->Next;
 		} while (  JournalEdit != 0 );
 		
 		JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (false);
 		do {
 			std::cout << JournalEdit->JournalEdit->getValue () << std::endl;
+			std::cout << JournalEdit->JournalEdit->getPost ()->getName () << std::endl;
 			JournalEdit = JournalEdit->Next;
 		} while (  JournalEdit != 0 );
 		CurRJournal = CurRJournal->Next;
