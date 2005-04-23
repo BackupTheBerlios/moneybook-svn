@@ -28,6 +28,16 @@ CJournal::CJournal ( TDate JDate,std::string JDocument,unsigned int JId,CJournal
 	Next = 0;
 } /* CJournal::CJournal ( TDate JDate,std::string JDocument,unsigned int JId,CJournalEdit* JFirstJournalEdit ) */
 
+CJournal::~CJournal () {
+	std::cout << "Destructor CJournal" << std::endl;
+	CJournalEdit* CurJournalEdit = FirstJournalEdit;
+	do {
+		FirstJournalEdit = CurJournalEdit->getNext ();
+		delete CurJournalEdit;
+		CurJournalEdit = FirstJournalEdit;
+	} while ( CurJournalEdit != 0 );
+} /* CJournal::~CJournal () */
+
 void CJournal::setNext ( CJournal* JNext ) {
 	Next = JNext;
 } /* void CJournal::setNext ( CJournal* Jnext ) */

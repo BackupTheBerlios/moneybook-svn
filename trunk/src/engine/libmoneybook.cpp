@@ -31,7 +31,13 @@ CBookKeeping::CBookKeeping () {
 } /* Bookkeeping::BookKeeping () */
 
 CBookKeeping::~CBookKeeping () {
-	//std::cout << FirstJournal->getId () << std::endl;
+	std::cout << "Destructor CBookKeeping" << std::endl;
+	CJournal* CurJournal = FirstJournal;
+	do {
+		FirstJournal = CurJournal->getNext ();
+		delete CurJournal;
+		CurJournal = FirstJournal;
+	} while ( CurJournal != 0 );
 } /* CBookKeeping::~CBookKeeping ()  */
 
 bool CBookKeeping::searchByNumber ( int Minimum,int Maximum,int Number ) {

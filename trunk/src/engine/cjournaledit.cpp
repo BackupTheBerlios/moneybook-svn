@@ -18,11 +18,17 @@
 
 #include "libmoneybook.h"
 
+#include <iostream>
+
 CJournalEdit::CJournalEdit ( bool JDebetEdit,CPost* JPost,float JValue ) {
 	DebetEdit = JDebetEdit;
 	Post = JPost;
 	Value = JValue;
 } /* CJournalEdit::CJournalEdit ( bool JDebetEdit,CPost* JPost,float JValue ) */
+
+CJournalEdit::~CJournalEdit () {
+	std::cout << "Destructor CJournalEdit" << std::endl;
+} /* CjournalEdit::~CJournalEdit () */
 
 bool CJournalEdit::getDebetEdit () {
 	return DebetEdit;

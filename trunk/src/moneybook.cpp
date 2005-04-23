@@ -36,22 +36,26 @@ int main () {
 	Test->bookJournal ( Date,"BA 001/2 Fortis",FirstJEdit );
 	Test->bookJournal ( Date,"BA 001/3 Fortis",FirstJEdit );
 	Test->bookJournal ( Date,"BA 001/4 Fortis",FirstJEdit );
+	
 	SJournal* CurRJournal = Test->getJournalByNumber (0,0);
 	do {
-		std::cout << CurRJournal->Journal->getId () << std::endl;
+		std::cout << "Id: " << CurRJournal->Journal->getId () << " Date: "  << CurRJournal->Journal->getDate ().date << std::endl;
 		SJournalEdit* JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (true);
 		do {
+			std::cout << JournalEdit->JournalEdit->getPost ()->getId () << "  ";
+			std::cout << JournalEdit->JournalEdit->getPost ()->getName () << "  " ;
 			std::cout << JournalEdit->JournalEdit->getValue () << std::endl;
-			std::cout << JournalEdit->JournalEdit->getPost ()->getName () << std::endl;
 			JournalEdit = JournalEdit->Next;
 		} while (  JournalEdit != 0 );
-		
+		std::cout << "                  @" << std::endl;
 		JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (false);
 		do {
-			std::cout << JournalEdit->JournalEdit->getValue () << std::endl;
-			std::cout << JournalEdit->JournalEdit->getPost ()->getName () << std::endl;
+			std::cout << JournalEdit->JournalEdit->getPost ()->getId () << "  ";
+			std::cout << JournalEdit->JournalEdit->getPost ()->getName () << "  ";
+			std::cout << "            " << JournalEdit->JournalEdit->getValue () << std::endl;
 			JournalEdit = JournalEdit->Next;
 		} while (  JournalEdit != 0 );
+		std::cout << std::endl << std::endl;
 		CurRJournal = CurRJournal->Next;
 	} while ( CurRJournal != 0 );
 	delete Test;

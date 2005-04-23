@@ -60,6 +60,7 @@ class CJournalEdit {
 		bool DebetEdit;
 	public:
 		CJournalEdit ( bool JDebetEdit, CPost* JPost, float JValue );
+		~CJournalEdit ();
 		bool getDebetEdit ();
 		CPost* getPost ();
 		float getValue ();
@@ -81,6 +82,7 @@ class CJournal {
 		TDate Date;
 	public:
 		CJournal ( TDate JDate,std::string JDocument,unsigned int JNumber,CJournalEdit* JFirstJournalEdit );
+		~CJournal ();
 		void setNext ( CJournal* JNext );
 		CJournal* getNext ();
 		unsigned int getId ();
