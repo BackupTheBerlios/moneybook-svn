@@ -18,18 +18,35 @@
 
 #include "libmoneybook.h"
 
-CPostEdit::CPostEdit ( bool PDebetEdit,long double PValue ) {
-} /* CPostEdit::CPostEdit ( bool PDebetEdit,float PValue ) */
+#include <iostream>
+
+CPostEdit::CPostEdit ( bool PDebetEdit,long double PValue,unsigned int BookNumber ) {
+	DebetEdit = PDebetEdit;
+	Value = PValue;
+	Number = BookNumber;
+} /* CPostEdit::CPostEdit ( bool PDebetEdit,long double PValue,unsigned int BookNumber )*/
+
+CPostEdit::~CPostEdit () {
+	std::cout << "Destructor CPostEdit " << Number << std::endl;
+} /* CpostEdit::~CPostEdit ()  */
 
 long double CPostEdit::getValue () {
+	return Value;
 } /* long double CPostEdit::getValue */
 
 CPostEdit* CPostEdit::getNext () {
+	return Next;
 } /* CPostEdit* CPostEdit::getNext () */
 
 bool CPostEdit::getDebetEdit () {
+	return DebetEdit;
 } /* bool CPostEdit::getDebetEdit () */
 
 void CPostEdit::setNext ( CPostEdit* PNext ) {
+	Next = PNext;
 } /* void CPostEdit::setNext ( CPostEdit* PNext ) */
+
+unsigned int CPostEdit::getNumber () {
+	return Number;
+} /* unsigned int CPostEdit::getNumber ()  */
 

@@ -25,31 +25,44 @@ struct TDate {
 	std::string date;
 }; /* struct TDate */
 
+enum SSortPost { ACTIVE,PASSIVE,COST,WINST };
+
 class CPostEdit {
 	private:
 		long double Value;
 		CPostEdit* Next;
 		bool DebetEdit;
+		unsigned int Number;
 	public:
-		CPostEdit ( bool PDebetEdit, long double PValue );
+		CPostEdit ( bool PDebetEdit,long double PValue,unsigned int BookNumber );
+		~CPostEdit ();
 		long double getValue ();
 		CPostEdit* getNext ();
 		bool getDebetEdit ();
 		void setNext ( CPostEdit* PNext );
+		unsigned int getNumber ();
 }; /* class CPostEdit */
 
 class CPost {
 	private:
 		CPost* Next;
 		CPostEdit* FirstPostEdit;
+		CPostEdit* LastPostEdit;
 		unsigned short Id;
 		std::string Name;
+		SSortPost SortPost;
 	public:
-		CPost ( std::string PName,unsigned short PId );
+		CPost ( std::string PName,unsigned short PId,SSortPost PSortPost );
+		~CPost ();
 		CPost* getNext ();
 		std::string getName ();
 		unsigned short getId ();
 		void setNext ( CPost* PNext );
+		CPostEdit* getFirstPostEdit ();
+		CPostEdit* getLastPostEdit ();
+		void setFirstPostEdit ( CPostEdit* PFirstEdit );
+		void setLastPostEdit ( CPostEdit* PLastEdit );
+		long double getSaldo ();
 }; /* class CPost */
 
 class CJournalEdit {
@@ -111,10 +124,12 @@ class CBookKeeping {
 		~CBookKeeping (); 
 		SJournal* getJournalByNumber ( int Minimum,int Maximum );
 		bool bookJournal ( TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit );
-		bool addPost ( std::string name,unsigned short id );
+		bool addPost ( std::string name,unsigned short id,SSortPost SortPost );
 		CJournalEdit* newJournalEdit ( bool DebetEdit,CPost* Post,long double Value );
 		bool setNextOnJournalEdit ( CJournalEdit* CurJEdit,CJournalEdit* FirstJEdit,CJournalEdit* LastJEdit );
 		CPost* getPostByName ( std::string Name );
+		CPost* getFirstPost ();
+		CPost* getLastPost ();
 }; /* class CBookKeeping */
 
 #endif /* BOOKKEEPING_H  */

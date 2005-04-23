@@ -19,12 +19,26 @@
 #include "libmoneybook.h"
 
 #include <string>
+#include <iostream>
 
-CPost::CPost ( std::string PName,unsigned short PId ) {
+CPost::CPost ( std::string PName,unsigned short PId,SSortPost PSortPost ) {
 	Next = 0;
 	Id = PId;
 	Name = PName;
-} /* CPost::CPost ( std::string PName, unsigned short PId ) */ 
+	SortPost = PSortPost;
+	FirstPostEdit = 0;
+	LastPostEdit = 0;
+} /* CPost::CPost ( std::string PName, unsigned short PId,SSortPost PSortPos ) */ 
+
+CPost::~CPost () {
+	std::cout << "Destructor CPost" << std::endl;
+	CPostEdit* CurPostEdit = FirstPostEdit;
+	do {
+		FirstPostEdit = CurPostEdit->getNext ();
+		delete CurPostEdit;
+		CurPostEdit = FirstPostEdit;
+	} while ( CurPostEdit != 0 );
+} /* CPost::~CPost () */
 
 CPost* CPost::getNext () {
 	return Next;
@@ -41,3 +55,38 @@ unsigned short CPost::getId () {
 void CPost::setNext ( CPost* PNext ) {
 	Next = PNext;
 } /* void CPost::setNext ( CPost* PNext ) */
+
+CPostEdit* CPost::getFirstPostEdit () {
+	return FirstPostEdit;
+} /* CpostEdit* CPost::getFirstPostEdit () */
+
+CPostEdit* CPost::getLastPostEdit () {
+	return LastPostEdit;
+} /* CPostEdit* CPost::getLastPostEdit () */
+
+void CPost::setFirstPostEdit ( CPostEdit* PFirstEdit ) {
+	FirstPostEdit = PFirstEdit;
+} /* void CPost::setFirstPostEdit ( CPostEdit* PFirstEdit ) */
+
+void CPost::setLastPostEdit ( CPostEdit* PLastEdit ) {
+	LastPostEdit = PLastEdit;
+} /* void CPost::setLastPostEdit ( CPostEdit* PLastEdit ) */
+
+long double CPost::getSaldo () {
+	CPostEdit* CurPostEdit = FirstPostEdit;
+	long double Saldo = 0;
+	do {
+		if ( CurPostEdit->getDebetEdit () == true ) {
+			Saldo += CurPostEdit->getValue ();
+		} else {
+			Saldo -= CurPostEdit->getValue ();
+		}
+		CurPostEdit = CurPostEdit->getNext ();
+	} while ( CurPostEdit != 0 );
+
+	if  ( ( SortPost == PASSIVE ) or ( SortPost == WINST ) ) {
+		Saldo *= -1;
+	}
+
+	return Saldo;
+} /* unsigned long CPost::getSaldo () */

@@ -38,6 +38,13 @@ CBookKeeping::~CBookKeeping () {
 		delete CurJournal;
 		CurJournal = FirstJournal;
 	} while ( CurJournal != 0 );
+
+	CPost* CurPost = FirstPost;
+	do {
+		FirstPost = CurPost->getNext ();
+		delete CurPost;
+		CurPost = FirstPost;
+	} while ( CurPost != 0 );
 } /* CBookKeeping::~CBookKeeping ()  */
 
 bool CBookKeeping::searchByNumber ( int Minimum,int Maximum,int Number ) {
@@ -91,8 +98,8 @@ SJournal* CBookKeeping::getJournalByNumber ( int Minimum,int Maximum ) {
 	return FirstRJournal;
 } /* CJournal* CBookKeeping::getJournalByNumber ( int Minimum,int Maximum )  */
 
-bool CBookKeeping::addPost ( std::string name,unsigned short id ) {
-	CPost* CurPost  = new CPost ( name,id );
+bool CBookKeeping::addPost ( std::string name,unsigned short id,SSortPost SortPost ) {
+	CPost* CurPost  = new CPost ( name,id,SortPost );
 	if ( FirstPost == 0 )  {
 		FirstPost = CurPost;
 	} else {
@@ -100,7 +107,7 @@ bool CBookKeeping::addPost ( std::string name,unsigned short id ) {
 	}
 	LastPost = CurPost;
 	return true;
-} /*  CBookKeeping::addPost ( std::string name,unsigned short id ) */
+} /*  bool CBookKeeping::addPost ( std::string name,unsigned short id,SSortPost SortPost ) */
 
 CJournalEdit* CBookKeeping::newJournalEdit ( bool DebetEdit,CPost* Post,long double Value ) {
 	CJournalEdit* JournalEdit = new CJournalEdit ( DebetEdit,Post,Value );
@@ -131,6 +138,14 @@ CPost* CBookKeeping::getPostByName ( std::string Name ) {
 	}*/
 } /* CPost* CBookKeeping::getPostByName ( std::string Name ) */
 
+CPost* CBookKeeping::getFirstPost () {
+	return FirstPost;
+} /* CPost* CBookKeeping::getFirstPost ()  */
+
+CPost* CBookKeeping::getLastPost () {
+	return LastPost;
+} /* CPost* CBookKeeping::getLastPost ()  */
+
 bool CBookKeeping::bookJournal ( TDate JDate,std::string Document,CJournalEdit* FirstJournalEdit ) {
 	CJournal* CurJournal; 
 	if ( FirstJournal == 0 ) {
@@ -141,4 +156,20 @@ bool CBookKeeping::bookJournal ( TDate JDate,std::string Document,CJournalEdit* 
 		LastJournal->setNext ( CurJournal );
 	}
 	LastJournal = CurJournal;
-} /* CBookKeeping::bookJournal ( TDate JDate,CJournalEdit* JFirstJournalEdit ) */
+
+	// Now book it on Posts
+	CJournalEdit* CurJournalEdit = FirstJournalEdit;
+	do {
+		std::cout << "boeken in posts" << std::endl;
+		CPostEdit* CurPostEdit = new CPostEdit ( CurJournalEdit->getDebetEdit (),CurJournalEdit->getValue (),CurJournal->getId () );
+		if ( CurJournalEdit->getPost ()->getFirstPostEdit () == 0 ) {
+			CurJournalEdit->getPost ()->setFirstPostEdit ( CurPostEdit );
+		} else {
+			CurJournalEdit->getPost ()->getLastPostEdit ()->setNext ( CurPostEdit );
+		}
+		CurJournalEdit->getPost ()->setLastPostEdit ( CurPostEdit );
+
+		CurJournalEdit = CurJournalEdit->getNext ();
+	} while ( CurJournalEdit != 0 );
+
+} /* CBookKeeping::bookJournal ( TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit ) */
