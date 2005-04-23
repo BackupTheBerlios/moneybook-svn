@@ -20,7 +20,7 @@
 
 #include <string>
 
-CPost::CPost ( std::string PName,unsigned int PId ) {
+CPost::CPost ( std::string PName,unsigned short PId ) {
 	Next = 0;
 	Id = PId;
 	Name = PName;
@@ -34,7 +34,7 @@ std::string CPost::getName () {
 	return Name;
 } /* std::string CPost::getName () */
 
-unsigned int CPost::getId () {
+unsigned short CPost::getId () {
 	return Id;
 } /* int CPost::getNumber */
 

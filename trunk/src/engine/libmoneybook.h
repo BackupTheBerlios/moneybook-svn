@@ -42,28 +42,28 @@ class CPost {
 	private:
 		CPost* Next;
 		CPostEdit* FirstPostEdit;
-		unsigned int Id;
+		unsigned short Id;
 		std::string Name;
 	public:
-		CPost ( std::string PName,unsigned int PId );
+		CPost ( std::string PName,unsigned short PId );
 		CPost* getNext ();
 		std::string getName ();
-		unsigned int getId ();
+		unsigned short getId ();
 		void setNext ( CPost* PNext );
 }; /* class CPost */
 
 class CJournalEdit {
 	private:
-		float Value;
+		long double Value;
 		CJournalEdit* Next;
 		CPost* Post;
 		bool DebetEdit;
 	public:
-		CJournalEdit ( bool JDebetEdit, CPost* JPost, float JValue );
+		CJournalEdit ( bool JDebetEdit, CPost* JPost, long double JValue );
 		~CJournalEdit ();
 		bool getDebetEdit ();
 		CPost* getPost ();
-		float getValue ();
+		long double getValue ();
 		CJournalEdit* getNext ();
 		void setNext ( CJournalEdit* JNext );
 }; /* class CJournalEdit */

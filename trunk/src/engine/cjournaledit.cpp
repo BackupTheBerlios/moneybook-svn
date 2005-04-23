@@ -20,7 +20,7 @@
 
 #include <iostream>
 
-CJournalEdit::CJournalEdit ( bool JDebetEdit,CPost* JPost,float JValue ) {
+CJournalEdit::CJournalEdit ( bool JDebetEdit,CPost* JPost,long double JValue ) {
 	DebetEdit = JDebetEdit;
 	Post = JPost;
 	Value = JValue;
@@ -38,7 +38,7 @@ CPost* CJournalEdit::getPost () {
 	return Post;
 } /* CPost* CJournalEdit::getPost () */
 
-float CJournalEdit::getValue () {
+long double CJournalEdit::getValue () {
 	return Value;
 } /* float CJournalEdit::getValue () */
 
