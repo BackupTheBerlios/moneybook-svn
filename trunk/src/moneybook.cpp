@@ -26,9 +26,9 @@ int main () {
 	Test->addPost ( "Kapitaal",1000 );
 	Test->addPost ( "Bank",5500 );
 	
-	CJournalEdit* FirstJEdit = Test->newJournalEdit ( true,Test->getPostByName ( "Bank" ),1000 );
+	CJournalEdit* FirstJEdit = Test->newJournalEdit ( true,Test->getPostByName ( "Bank" ),-10000000004500.78 );
 	CJournalEdit* LastJEdit = FirstJEdit;
-	CJournalEdit* CurJEdit = Test->newJournalEdit ( false,Test->getPostByName ( "Kapitaal" ),1000 );
+	CJournalEdit* CurJEdit = Test->newJournalEdit ( false,Test->getPostByName ( "Kapitaal" ),-10000000004500.78 );
 	Test->setNextOnJournalEdit ( CurJEdit,FirstJEdit,LastJEdit );
 	TDate Date;
 	Date.date= "Dit is de datum ";

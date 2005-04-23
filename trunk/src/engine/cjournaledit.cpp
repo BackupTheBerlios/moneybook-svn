@@ -24,7 +24,7 @@ CJournalEdit::CJournalEdit ( bool JDebetEdit,CPost* JPost,long double JValue ) {
 	DebetEdit = JDebetEdit;
 	Post = JPost;
 	Value = JValue;
-} /* CJournalEdit::CJournalEdit ( bool JDebetEdit,CPost* JPost,float JValue ) */
+} /* CJournalEdit::CJournalEdit ( bool JDebetEdit,CPost* JPost,long double JValue ) */
 
 CJournalEdit::~CJournalEdit () {
 	std::cout << "Destructor CJournalEdit" << std::endl;
@@ -40,7 +40,7 @@ CPost* CJournalEdit::getPost () {
 
 long double CJournalEdit::getValue () {
 	return Value;
-} /* float CJournalEdit::getValue () */
+} /* long double CJournalEdit::getValue () */
 
 CJournalEdit* CJournalEdit::getNext () {
 	return Next;

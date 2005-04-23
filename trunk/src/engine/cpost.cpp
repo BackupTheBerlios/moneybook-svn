@@ -24,7 +24,7 @@ CPost::CPost ( std::string PName,unsigned short PId ) {
 	Next = 0;
 	Id = PId;
 	Name = PName;
-} /* CPost::CPost ( std::string PName, unsigned int PId ) */ 
+} /* CPost::CPost ( std::string PName, unsigned short PId ) */ 
 
 CPost* CPost::getNext () {
 	return Next;
@@ -36,7 +36,7 @@ std::string CPost::getName () {
 
 unsigned short CPost::getId () {
 	return Id;
-} /* int CPost::getNumber */
+} /* unsigned short CPost::getNumber */
 
 void CPost::setNext ( CPost* PNext ) {
 	Next = PNext;

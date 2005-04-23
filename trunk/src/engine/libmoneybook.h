@@ -27,12 +27,12 @@ struct TDate {
 
 class CPostEdit {
 	private:
-		float Value;
+		long double Value;
 		CPostEdit* Next;
 		bool DebetEdit;
 	public:
-		CPostEdit ( bool PDebetEdit, float PValue );
-		float getValue ();
+		CPostEdit ( bool PDebetEdit, long double PValue );
+		long double getValue ();
 		CPostEdit* getNext ();
 		bool getDebetEdit ();
 		void setNext ( CPostEdit* PNext );
@@ -111,8 +111,8 @@ class CBookKeeping {
 		~CBookKeeping (); 
 		SJournal* getJournalByNumber ( int Minimum,int Maximum );
 		bool bookJournal ( TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit );
-		bool addPost ( std::string name,unsigned int id );
-		CJournalEdit* newJournalEdit ( bool DebetEdit,CPost* Post,float Value );
+		bool addPost ( std::string name,unsigned short id );
+		CJournalEdit* newJournalEdit ( bool DebetEdit,CPost* Post,long double Value );
 		bool setNextOnJournalEdit ( CJournalEdit* CurJEdit,CJournalEdit* FirstJEdit,CJournalEdit* LastJEdit );
 		CPost* getPostByName ( std::string Name );
 }; /* class CBookKeeping */

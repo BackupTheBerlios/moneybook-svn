@@ -18,11 +18,11 @@
 
 #include "libmoneybook.h"
 
-CPostEdit::CPostEdit ( bool PDebetEdit,float PValue ) {
+CPostEdit::CPostEdit ( bool PDebetEdit,long double PValue ) {
 } /* CPostEdit::CPostEdit ( bool PDebetEdit,float PValue ) */
 
-float CPostEdit::getValue () {
-} /* float CPostEdit::getValue */
+long double CPostEdit::getValue () {
+} /* long double CPostEdit::getValue */
 
 CPostEdit* CPostEdit::getNext () {
 } /* CPostEdit* CPostEdit::getNext () */

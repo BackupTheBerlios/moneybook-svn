@@ -91,7 +91,7 @@ SJournal* CBookKeeping::getJournalByNumber ( int Minimum,int Maximum ) {
 	return FirstRJournal;
 } /* CJournal* CBookKeeping::getJournalByNumber ( int Minimum,int Maximum )  */
 
-bool CBookKeeping::addPost ( std::string name,unsigned int id ) {
+bool CBookKeeping::addPost ( std::string name,unsigned short id ) {
 	CPost* CurPost  = new CPost ( name,id );
 	if ( FirstPost == 0 )  {
 		FirstPost = CurPost;
@@ -100,12 +100,12 @@ bool CBookKeeping::addPost ( std::string name,unsigned int id ) {
 	}
 	LastPost = CurPost;
 	return true;
-} /*  CBookKeeping::addPost ( std::string name,unsigned int id ) */
+} /*  CBookKeeping::addPost ( std::string name,unsigned short id ) */
 
-CJournalEdit* CBookKeeping::newJournalEdit ( bool DebetEdit,CPost* Post,float Value ) {
+CJournalEdit* CBookKeeping::newJournalEdit ( bool DebetEdit,CPost* Post,long double Value ) {
 	CJournalEdit* JournalEdit = new CJournalEdit ( DebetEdit,Post,Value );
 	return JournalEdit;
-} /* CJournalEdit* CBookKeeping::newJournalEdit ( bool DebetEdit,CPost* Post,float Value ) */
+} /* CJournalEdit* CBookKeeping::newJournalEdit ( bool DebetEdit,CPost* Post,long double Value ) */
 
 bool CBookKeeping::setNextOnJournalEdit ( CJournalEdit* CurJEdit,CJournalEdit* FirstJEdit,CJournalEdit* LastJEdit ) {
 	if ( FirstJEdit == 0 )  {

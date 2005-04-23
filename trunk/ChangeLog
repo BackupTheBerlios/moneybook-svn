@@ -3,7 +3,8 @@
 	cjournal.cpp,cjournaledit.cpp,libmoneybook.cpp,libmoneybook.h:
 		written some destructors
 
-	cjournaledit.cpp,cpost.cpp,libmoneybook.h:
+	cjournaledit.cpp,cpost.cpp,libmoneybook.h,
+	cpostedit.cpp libmoneybook.cpp:
 		changed some data-types ( unsigned int to unsigned short and float to long double )
 		to make it more bookkeeping compatible
 
