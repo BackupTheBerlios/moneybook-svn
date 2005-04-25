@@ -23,20 +23,20 @@
 int main () {
 	std::cout << "dit is een leuk programma" << std::endl;
 	CBookKeeping* Test = new CBookKeeping;
-	Test->addPost ( "Kapitaal",1000,PASSIVE );
-	Test->addPost ( "Bank",5500,ACTIVE );
+	Test->addPost ("Kapitaal",1000,PASSIVE);
+	Test->addPost ("Bank",5500,ACTIVE);
 	
-	CJournalEdit* FirstJEdit = Test->newJournalEdit ( true,Test->getPostByName ( "Bank" ),1000 );
+	CJournalEdit* FirstJEdit = Test->newJournalEdit (true,Test->getPostByName ("Bank"),1000);
 	CJournalEdit* LastJEdit = FirstJEdit;
-	CJournalEdit* CurJEdit = Test->newJournalEdit ( false,Test->getPostByName ( "Kapitaal" ),1000 );
-	Test->setNextOnJournalEdit ( CurJEdit,FirstJEdit,LastJEdit );
+	CJournalEdit* CurJEdit = Test->newJournalEdit (false,Test->getPostByName ("Kapitaal"),1000);
+	Test->setNextOnJournalEdit (CurJEdit,FirstJEdit,LastJEdit);
 	TDate Date;
 	Date.date= "Dit is de datum ";
-	Test->bookJournal ( Date,"BA 001/1 Fortis",FirstJEdit );
-	Test->bookJournal ( Date,"BA 001/2 Fortis",FirstJEdit );
-	Test->bookJournal ( Date,"BA 001/3 Fortis",FirstJEdit );
-	Test->bookJournal ( Date,"BA 001/4 Fortis",FirstJEdit );
-	Test->bookJournal ( Date,"BA 001/5 Fortis",FirstJEdit );
+	Test->bookJournal (Date,"BA 001/1 Fortis",FirstJEdit);
+	Test->bookJournal (Date,"BA 001/2 Fortis",FirstJEdit);
+	Test->bookJournal (Date,"BA 001/3 Fortis",FirstJEdit);
+	Test->bookJournal (Date,"BA 001/4 Fortis",FirstJEdit);
+	Test->bookJournal (Date,"BA 001/5 Fortis",FirstJEdit);
 	
 	SJournal* CurRJournal = Test->getJournalByNumber (0,0);
 	do {
@@ -47,7 +47,7 @@ int main () {
 			std::cout << JournalEdit->JournalEdit->getPost ()->getName () << "  " ;
 			std::cout << JournalEdit->JournalEdit->getValue () << std::endl;
 			JournalEdit = JournalEdit->Next;
-		} while (  JournalEdit != 0 );
+		} while (JournalEdit != 0);
 		std::cout << "                  @" << std::endl;
 		JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (false);
 		do {
@@ -55,17 +55,17 @@ int main () {
 			std::cout << JournalEdit->JournalEdit->getPost ()->getName () << "  ";
 			std::cout << "            " << JournalEdit->JournalEdit->getValue () << std::endl;
 			JournalEdit = JournalEdit->Next;
-		} while (  JournalEdit != 0 );
+		} while (JournalEdit != 0);
 		std::cout << std::endl << std::endl;
 		CurRJournal = CurRJournal->Next;
-	} while ( CurRJournal != 0 );
+	} while (CurRJournal != 0);
 
 	CPost* CurPost = Test->getFirstPost ();
 	do {
 		std::cout << "Id: " << CurPost->getId () << " Name: " << CurPost->getName () << std::endl;
 		std::cout << " Saldo: " << CurPost->getSaldo () << std::endl;
 		CurPost = CurPost->getNext ();
-	} while ( CurPost != 0 );
+	} while (CurPost != 0);
 
 	delete Test;
 }

@@ -20,32 +20,53 @@
 
 #include <iostream>
 
-CPostEdit::CPostEdit ( bool PDebetEdit,long double PValue,unsigned int BookNumber ) {
+/*!
+	Constructor of CPostEdit
+*/
+CPostEdit::CPostEdit (bool PDebetEdit,long double PValue,unsigned int BookNumber) {
 	DebetEdit = PDebetEdit;
 	Value = PValue;
 	Number = BookNumber;
-} /* CPostEdit::CPostEdit ( bool PDebetEdit,long double PValue,unsigned int BookNumber )*/
+} /* CPostEdit::CPostEdit (bool PDebetEdit,long double PValue,unsigned int BookNumber)*/
 
+/*!
+	Destructor of CPostEdit
+*/
 CPostEdit::~CPostEdit () {
 	std::cout << "Destructor CPostEdit " << Number << std::endl;
 } /* CpostEdit::~CPostEdit ()  */
 
-long double CPostEdit::getValue () {
-	return Value;
-} /* long double CPostEdit::getValue */
-
+/*!
+		returns the next in the list
+*/
 CPostEdit* CPostEdit::getNext () {
 	return Next;
 } /* CPostEdit* CPostEdit::getNext () */
 
+/*!
+	set the Next in the list
+*/
+void CPostEdit::setNext (CPostEdit* PNext) {
+	Next = PNext;
+} /* void CPostEdit::setNext (CPostEdit* PNext) */
+
+/*!
+	returns the Value of the PostEdit
+*/
+long double CPostEdit::getValue () {
+	return Value;
+} /* long double CPostEdit::getValue */
+
+/*!
+	returns true if it is an Edit on the DebetSide
+*/
 bool CPostEdit::getDebetEdit () {
 	return DebetEdit;
 } /* bool CPostEdit::getDebetEdit () */
 
-void CPostEdit::setNext ( CPostEdit* PNext ) {
-	Next = PNext;
-} /* void CPostEdit::setNext ( CPostEdit* PNext ) */
-
+/*!
+	returns the number of the PostEdit ( the same number on the correspondending Journal )
+*/
 unsigned int CPostEdit::getNumber () {
 	return Number;
 } /* unsigned int CPostEdit::getNumber ()  */

@@ -20,32 +20,53 @@
 
 #include <iostream>
 
-CJournalEdit::CJournalEdit ( bool JDebetEdit,CPost* JPost,long double JValue ) {
+/*!
+	Constructor of CJournalEdit
+*/
+CJournalEdit::CJournalEdit (bool JDebetEdit,CPost* JPost,long double JValue) {
 	DebetEdit = JDebetEdit;
 	Post = JPost;
 	Value = JValue;
-} /* CJournalEdit::CJournalEdit ( bool JDebetEdit,CPost* JPost,long double JValue ) */
+} /* CJournalEdit::CJournalEdit (bool JDebetEdit,CPost* JPost,long double JValue) */
 
+/*!
+	Destructor of CJournalEdit
+*/
 CJournalEdit::~CJournalEdit () {
 	std::cout << "Destructor CJournalEdit" << std::endl;
 } /* CjournalEdit::~CJournalEdit () */
 
-bool CJournalEdit::getDebetEdit () {
-	return DebetEdit;
-} /* bool CJournalEdit::getDebetEdit () */
-
-CPost* CJournalEdit::getPost () {
-	return Post;
-} /* CPost* CJournalEdit::getPost () */
-
-long double CJournalEdit::getValue () {
-	return Value;
-} /* long double CJournalEdit::getValue () */
-
+/*!
+	returns the next in the CJournalEditList
+*/
 CJournalEdit* CJournalEdit::getNext () {
 	return Next;
 } /* CJournalEdit* CJournalEdit::getNext () */
 
-void CJournalEdit::setNext ( CJournalEdit* JNext ) {
+/*!
+	set the next in the CJournalEdit List
+*/
+void CJournalEdit::setNext (CJournalEdit* JNext) {
 	Next = JNext;
-} /* void CJournalEdit::setNext ( CJournalEdit* JNext ) */
+} /* void CJournalEdit::setNext (CJournalEdit* JNext) */
+
+/*!
+	return of CJournalEdit, is on the debetside 
+*/
+bool CJournalEdit::getDebetEdit () {
+	return DebetEdit;
+} /* bool CJournalEdit::getDebetEdit () */
+
+/*!
+	returns the pointer to the post of this CJournalEdit
+*/
+CPost* CJournalEdit::getPost () {
+	return Post;
+} /* CPost* CJournalEdit::getPost () */
+
+/*!
+	returns the value of this CJournalEdit
+*/
+long double CJournalEdit::getValue () {
+	return Value;
+} /* long double CJournalEdit::getValue () */

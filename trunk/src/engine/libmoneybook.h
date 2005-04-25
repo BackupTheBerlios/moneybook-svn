@@ -21,64 +21,83 @@
 
 #include <string>
 
+/*!
+	Date, can store dates ( in all types and formats )
+*/
 struct TDate {
 	std::string date;
 }; /* struct TDate */
 
+/*!
+	SSortPost, stores with types of posts you have
+*/
 enum SSortPost { ACTIVE,PASSIVE,COST,WINST };
 
+/*!
+	CPostEdit, Dynamic list, for holding all PostEdits
+*/
 class CPostEdit {
 	private:
 		long double Value;
-		CPostEdit* Next;
 		bool DebetEdit;
 		unsigned int Number;
+
+		CPostEdit* Next;
 	public:
 		CPostEdit ( bool PDebetEdit,long double PValue,unsigned int BookNumber );
 		~CPostEdit ();
-		long double getValue ();
 		CPostEdit* getNext ();
-		bool getDebetEdit ();
 		void setNext ( CPostEdit* PNext );
+		long double getValue ();
+		bool getDebetEdit ();
 		unsigned int getNumber ();
 }; /* class CPostEdit */
 
+/*!
+	CPost, Dynamic list, for holding all Posts
+*/
 class CPost {
 	private:
-		CPost* Next;
 		CPostEdit* FirstPostEdit;
 		CPostEdit* LastPostEdit;
+
 		unsigned short Id;
 		std::string Name;
 		SSortPost SortPost;
+
+		CPost* Next;
 	public:
 		CPost ( std::string PName,unsigned short PId,SSortPost PSortPost );
 		~CPost ();
 		CPost* getNext ();
+		void setNext ( CPost* PNext );
 		std::string getName ();
 		unsigned short getId ();
-		void setNext ( CPost* PNext );
 		CPostEdit* getFirstPostEdit ();
-		CPostEdit* getLastPostEdit ();
 		void setFirstPostEdit ( CPostEdit* PFirstEdit );
+		CPostEdit* getLastPostEdit ();
 		void setLastPostEdit ( CPostEdit* PLastEdit );
 		long double getSaldo ();
 }; /* class CPost */
 
+/*!
+	CJournalEdit, Dynamic list, for holding all CJournalEdit
+*/
 class CJournalEdit {
 	private:
 		long double Value;
-		CJournalEdit* Next;
 		CPost* Post;
 		bool DebetEdit;
+
+		CJournalEdit* Next;
 	public:
 		CJournalEdit ( bool JDebetEdit, CPost* JPost, long double JValue );
 		~CJournalEdit ();
+		CJournalEdit* getNext ();
+		void setNext ( CJournalEdit* JNext );
 		bool getDebetEdit ();
 		CPost* getPost ();
 		long double getValue ();
-		CJournalEdit* getNext ();
-		void setNext ( CJournalEdit* JNext );
 }; /* class CJournalEdit */
 
 struct SJournalEdit {
@@ -86,18 +105,22 @@ struct SJournalEdit {
 	SJournalEdit* Next;
 }; /* struct SJournalEdit */
 
+/*!
+	CJournal, dynamic list, keeps a Journal
+*/
 class CJournal {
 	private:
-		CJournal* Next;
 		CJournalEdit* FirstJournalEdit;
 		std::string Document;
 		unsigned int Id;
 		TDate Date;
+
+		CJournal* Next;
 	public:
 		CJournal ( TDate JDate,std::string JDocument,unsigned int JNumber,CJournalEdit* JFirstJournalEdit );
 		~CJournal ();
-		void setNext ( CJournal* JNext );
 		CJournal* getNext ();
+		void setNext ( CJournal* JNext );
 		unsigned int getId ();
 		CJournalEdit* getFirstJournalEdit ();
 		TDate getDate ();
@@ -110,6 +133,9 @@ struct SJournal {
 	SJournal* Next;
 }; /* struct SJournal */
 
+/*!
+	Main API, most functionality is in this Class
+*/
 class CBookKeeping {
 	private:
 		CPost* LastPost;
@@ -118,13 +144,11 @@ class CBookKeeping {
 		CJournal* LastJournal;
 		bool searchByNumber ( int Minimum,int Maximum,int Number );
 	public:
-		//CBalance* Balance;
-		//CProveSaldiBalance* ProveSaldiBalance;
 		CBookKeeping ();
 		~CBookKeeping (); 
 		SJournal* getJournalByNumber ( int Minimum,int Maximum );
 		bool bookJournal ( TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit );
-		bool addPost ( std::string name,unsigned short id,SSortPost SortPost );
+		void addPost ( std::string name,unsigned short id,SSortPost SortPost );
 		CJournalEdit* newJournalEdit ( bool DebetEdit,CPost* Post,long double Value );
 		bool setNextOnJournalEdit ( CJournalEdit* CurJEdit,CJournalEdit* FirstJEdit,CJournalEdit* LastJEdit );
 		CPost* getPostByName ( std::string Name );

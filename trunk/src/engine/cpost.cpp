@@ -21,7 +21,10 @@
 #include <string>
 #include <iostream>
 
-CPost::CPost ( std::string PName,unsigned short PId,SSortPost PSortPost ) {
+/*!
+	Constructor of CPost
+*/
+CPost::CPost (std::string PName,unsigned short PId,SSortPost PSortPost) {
 	Next = 0;
 	Id = PId;
 	Name = PName;
@@ -30,6 +33,9 @@ CPost::CPost ( std::string PName,unsigned short PId,SSortPost PSortPost ) {
 	LastPostEdit = 0;
 } /* CPost::CPost ( std::string PName, unsigned short PId,SSortPost PSortPos ) */ 
 
+/*!
+	Destructor of CPost
+*/
 CPost::~CPost () {
 	std::cout << "Destructor CPost" << std::endl;
 	CPostEdit* CurPostEdit = FirstPostEdit;
@@ -37,41 +43,67 @@ CPost::~CPost () {
 		FirstPostEdit = CurPostEdit->getNext ();
 		delete CurPostEdit;
 		CurPostEdit = FirstPostEdit;
-	} while ( CurPostEdit != 0 );
+	} while (CurPostEdit != 0);
 } /* CPost::~CPost () */
 
+/*!
+	returns the next in the list
+*/
 CPost* CPost::getNext () {
 	return Next;
 } /* CPost* CPost::getNext () */
 
+/*!
+	set the Next in the list
+*/
+void CPost::setNext (CPost* PNext) {
+	Next = PNext;
+} /* void CPost::setNext (CPost* PNext) */
+
+/*!
+	returns Name of the Post
+*/
 std::string CPost::getName () {
 	return Name;
 } /* std::string CPost::getName () */
 
+/*!
+	returns the id ( between 0 and 65535 )
+*/
 unsigned short CPost::getId () {
 	return Id;
 } /* unsigned short CPost::getNumber */
 
-void CPost::setNext ( CPost* PNext ) {
-	Next = PNext;
-} /* void CPost::setNext ( CPost* PNext ) */
-
+/*!
+	get the first PostEdit
+*/
 CPostEdit* CPost::getFirstPostEdit () {
 	return FirstPostEdit;
 } /* CpostEdit* CPost::getFirstPostEdit () */
 
+/*!
+	set the first PostEdit
+*/
+void CPost::setFirstPostEdit (CPostEdit* PFirstEdit) {
+	FirstPostEdit = PFirstEdit;
+} /* void CPost::setFirstPostEdit (CPostEdit* PFirstEdit) */
+
+/*!
+	get the last PostEdit
+*/
 CPostEdit* CPost::getLastPostEdit () {
 	return LastPostEdit;
 } /* CPostEdit* CPost::getLastPostEdit () */
 
-void CPost::setFirstPostEdit ( CPostEdit* PFirstEdit ) {
-	FirstPostEdit = PFirstEdit;
-} /* void CPost::setFirstPostEdit ( CPostEdit* PFirstEdit ) */
-
-void CPost::setLastPostEdit ( CPostEdit* PLastEdit ) {
+/*! set the last PostEdit
+*/
+void CPost::setLastPostEdit (CPostEdit* PLastEdit) {
 	LastPostEdit = PLastEdit;
-} /* void CPost::setLastPostEdit ( CPostEdit* PLastEdit ) */
+} /* void CPost::setLastPostEdit (CPostEdit* PLastEdit) */
 
+/*!
+	get the Saldo of the Post
+*/
 long double CPost::getSaldo () {
 	CPostEdit* CurPostEdit = FirstPostEdit;
 	long double Saldo = 0;
@@ -82,9 +114,9 @@ long double CPost::getSaldo () {
 			Saldo -= CurPostEdit->getValue ();
 		}
 		CurPostEdit = CurPostEdit->getNext ();
-	} while ( CurPostEdit != 0 );
+	} while (CurPostEdit != 0);
 
-	if  ( ( SortPost == PASSIVE ) or ( SortPost == WINST ) ) {
+	if  ((SortPost == PASSIVE ) or (SortPost == WINST)) {
 		Saldo *= -1;
 	}
 

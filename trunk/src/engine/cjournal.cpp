@@ -20,14 +20,21 @@
 #include <string>
 #include <iostream>
 
-CJournal::CJournal ( TDate JDate,std::string JDocument,unsigned int JId,CJournalEdit* JFirstJournalEdit ) {
+/*! 
+	Constructor of CJournal 
+*/
+CJournal::CJournal (TDate JDate,std::string JDocument,unsigned int JId,CJournalEdit* JFirstJournalEdit) {
 	Date = JDate;
 	Document = JDocument;
 	Id = JId;
 	FirstJournalEdit = JFirstJournalEdit;
 	Next = 0;
-} /* CJournal::CJournal ( TDate JDate,std::string JDocument,unsigned int JId,CJournalEdit* JFirstJournalEdit ) */
+} /* CJournal::CJournal (TDate JDate,std::string JDocument,unsigned int JId,CJournalEdit* JFirstJournalEdit) */
 
+
+/*! 
+	Destrucor of CJournal 
+*/
 CJournal::~CJournal () {
 	std::cout << "Destructor CJournal" << std::endl;
 	CJournalEdit* CurJournalEdit = FirstJournalEdit;
@@ -38,41 +45,62 @@ CJournal::~CJournal () {
 	} while ( CurJournalEdit != 0 );
 } /* CJournal::~CJournal () */
 
-void CJournal::setNext ( CJournal* JNext ) {
-	Next = JNext;
-} /* void CJournal::setNext ( CJournal* Jnext ) */
-
+/* !
+	Get the Next in the Dynamic list of CJournal 
+*/
 CJournal* CJournal::getNext () {
 	return Next;
 } /* CJournal* CJournal::getNext () */
 
+/* !
+	Set the Next in the Dynamic list of CJournal 
+*/
+void CJournal::setNext (CJournal* JNext) {
+	Next = JNext;
+} /* void CJournal::setNext (CJournal* Jnext) */
+
+/*!
+	Get the id ( each journal has his own Id ) of a CJournal 
+*/
 unsigned int CJournal::getId () {
 	return Id;
 } /* unsigned int CJournal::getId () */
 
+/* !
+	Get the first JournalEdit 
+*/
 CJournalEdit* CJournal::getFirstJournalEdit () {
 	return FirstJournalEdit;
 } /* CJournalEdit* CJournal::getFirstJournalEdit () */
 
+/*!
+	Get the date of the Cjournal 
+*/
 TDate CJournal::getDate () {
 	return Date;
 } /* TDate CJournal::getDate () */
 
+/* !
+	Get the document of the Cjournal 
+*/
 std::string CJournal::getDocument () {
 	return Document;
 } /* std::string CJournal::getDocument () */
 
+/*!
+	get all journaledits from CJournal who matches DebetEdit 
+*/
 SJournalEdit* CJournal::getJournalEditByDebetEdit ( bool DebetEdit ) {
 	SJournalEdit* FirstRJournalEdit = 0;
 	SJournalEdit* LastRJournalEdit = 0;
 	SJournalEdit* CurRJournalEdit = 0;
 	CJournalEdit* CurJournalEdit = FirstJournalEdit;
 	do {
-		if ( CurJournalEdit->getDebetEdit () == DebetEdit ) {
+		if (CurJournalEdit->getDebetEdit () == DebetEdit) {
 			CurRJournalEdit = new SJournalEdit;
 			CurRJournalEdit->Next = 0;
 			CurRJournalEdit->JournalEdit = CurJournalEdit;
-			if  ( FirstRJournalEdit == 0 ) {
+			if  (FirstRJournalEdit == 0) {
 				FirstRJournalEdit = CurRJournalEdit;
 			} else {
 				LastRJournalEdit->Next = CurRJournalEdit;
@@ -80,7 +108,7 @@ SJournalEdit* CJournal::getJournalEditByDebetEdit ( bool DebetEdit ) {
 			LastRJournalEdit = CurRJournalEdit;
 		}
 		CurJournalEdit = CurJournalEdit->getNext ();
-	} while ( CurJournalEdit != 0 );
+	} while (CurJournalEdit != 0);
 	return FirstRJournalEdit;
 }
 

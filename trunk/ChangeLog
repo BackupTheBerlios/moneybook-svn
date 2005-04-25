@@ -1,3 +1,8 @@
+2005-04-25 Nathan Samson <nathansamson@gmail.com>
+	
+	cjournaledit.cpp,cpost.cpp,libmoneybook.h,
+	cpostedit.cpp, libmoneybook.cpp,Doxyfile: added documentations, changed some little style
+
 2005-04-23 Nathan Samson <nathansamson@gmail.com>
 	
 	cjournal.cpp,cjournaledit.cpp,libmoneybook.cpp,libmoneybook.h:
@@ -7,6 +12,9 @@
 	cpostedit.cpp, libmoneybook.cpp:
 		changed some data-types ( unsigned int to unsigned short and float to long double )
 		to make it more bookkeeping compatible
+
+	cpost.cpp,cpostedit.cpp,libmoneybook.cpp,libmoneybook.h:
+		changed posts, you can make a post and view them all with all its changes, also you can get the saldo
 
 2005-04-22 Nathan Samson <nathansamson@gmail.com>
 
