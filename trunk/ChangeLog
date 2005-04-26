@@ -1,3 +1,10 @@
+2005-04-26 Nathan Samson <nathansamson@gmail.com>
+	
+	autogen.sh, added src/engine/tests/Makefile.am, src/engine/Makefile.am, configure.in, BUGS
+	added config.sub, config.guess, added src/engine/tests/main.cpp, added src/engine/tests/libmoneybook.cpp,
+	added src/engine/tests/libmoneybook.h ,added src/engine/tests/main.cpp,added src/engine/tests/Makefile.am   : 
+		automatic making of Makefiles do work now ( thanks to Botg with his nice autogen.sh script ), make tests ( the do nearly nothing AND crash )
+
 2005-04-25 Nathan Samson <nathansamson@gmail.com>
 	
 	cjournaledit.cpp,cpost.cpp,libmoneybook.h,

@@ -17,4 +17,5 @@
 #
 
 lib_LIBRARIES = libmoneybook.a
+SUBDIRS = tests
 libmoneybook_a_SOURCES = libmoneybook.cpp cjournal.cpp cjournaledit.cpp cpost.cpp cpostedit.cpp
