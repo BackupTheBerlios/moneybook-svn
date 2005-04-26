@@ -25,7 +25,7 @@ then
 	echo "make maintainer-clean..."
 	make maintainer-clean
 	echo "removing old shit..."
-	rm -R aclocal.m4 config.h* configure Makefile.in src/Makefile.in src/engine/Makefile.in src/interface/Makefile.in src/interface/Makefile 
+	rm -R aclocal.m4 config.h* autoscan.log configure.scan configure Makefile.in src/Makefile.in src/engine/Makefile.in src/interface/Makefile.in src/interface/Makefile 
 else
 	echo "Running aclocal... "
 	aclocal -I .
