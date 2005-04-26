@@ -25,10 +25,10 @@ then
 	echo "make maintainer-clean..."
 	make maintainer-clean
 	echo "removing old shit..."
-	rm -R aclocal.m4 config.h* autoscan.log configure.scan configure Makefile.in src/Makefile.in src/engine/Makefile.in src/interface/Makefile.in src/interface/Makefile 
+	rm -R aclocal.m4 config.h* autoscan.log configure.scan configure Makefile.in src/Makefile.in src/engine/Makefile.in src/interface/Makefile.in src/interface/Makefile src/engine/tests/Makefile.in 
 else
 	echo "Running aclocal... "
-	aclocal -I .
+	aclocal
 	echo "Running autoheader... "
 	autoheader
 	echo "Runnig libtoolize... "

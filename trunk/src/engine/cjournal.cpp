@@ -111,4 +111,3 @@ SJournalEdit* CJournal::getJournalEditByDebetEdit ( bool DebetEdit ) {
 	} while (CurJournalEdit != 0);
 	return FirstRJournalEdit;
 }
-
