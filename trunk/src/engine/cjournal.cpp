@@ -90,7 +90,7 @@ std::string CJournal::getDocument () {
 /*!
 	get all journaledits from CJournal who matches DebetEdit 
 */
-SJournalEdit* CJournal::getJournalEditByDebetEdit ( bool DebetEdit ) {
+SJournalEdit* CJournal::getJournalEditByDebetEdit (bool DebetEdit) {
 	SJournalEdit* FirstRJournalEdit = 0;
 	SJournalEdit* LastRJournalEdit = 0;
 	SJournalEdit* CurRJournalEdit = 0;
@@ -110,4 +110,4 @@ SJournalEdit* CJournal::getJournalEditByDebetEdit ( bool DebetEdit ) {
 		CurJournalEdit = CurJournalEdit->getNext ();
 	}
 	return FirstRJournalEdit;
-}
+} /* SJournalEdit* CJournal::getJournalEditByDebetEdit (bool DebetEdit) */

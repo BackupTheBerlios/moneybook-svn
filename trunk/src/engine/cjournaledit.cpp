@@ -27,6 +27,7 @@ CJournalEdit::CJournalEdit (bool JDebetEdit,CPost* JPost,long double JValue) {
 	DebetEdit = JDebetEdit;
 	Post = JPost;
 	Value = JValue;
+	Next = 0;
 } /* CJournalEdit::CJournalEdit (bool JDebetEdit,CPost* JPost,long double JValue) */
 
 /*!

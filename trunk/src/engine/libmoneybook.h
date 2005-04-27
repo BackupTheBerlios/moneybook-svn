@@ -31,7 +31,9 @@ struct TDate {
 /*!
 	SSortPost, stores with types of posts you have
 */
-enum SSortPost { ACTIVE,PASSIVE,COST,WINST };
+enum SSortPost { ACTIVE,PASSIVE,COST,WINST,NOTVALID };
+std::string SortPostToString ( SSortPost SortPost );
+SSortPost StringToSortPost ( std::string SortPost );
 
 /*!
 	CPostEdit, Dynamic list, for holding all PostEdits
@@ -78,6 +80,7 @@ class CPost {
 		CPostEdit* getLastPostEdit ();
 		void setLastPostEdit ( CPostEdit* PLastEdit );
 		long double getSaldo ();
+		SSortPost getSortPost ();
 }; /* class CPost */
 
 /*!

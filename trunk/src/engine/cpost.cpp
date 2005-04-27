@@ -122,3 +122,10 @@ long double CPost::getSaldo () {
 
 	return Saldo;
 } /* unsigned long CPost::getSaldo () */
+
+/*!
+	returns the Sort of Post
+*/
+SSortPost CPost::getSortPost () {
+	return SortPost;
+} /*SSortPost CPost::getSortPost ()*/

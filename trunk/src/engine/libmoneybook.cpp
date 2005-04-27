@@ -22,6 +22,34 @@
 #include <fstream>
 #include <iostream>
 
+std::string SortPostToString ( SSortPost SortPost ) {
+	switch ( SortPost ) {
+		case ACTIVE: return "ACTIVE";
+			break;
+		case PASSIVE: return "PASSIVE";
+			break;
+		case COST: return "COST";
+			break;
+		case WINST: return "WINST";
+			break;
+		default: return "NOTVALID";
+	}
+} /* std::string SortPostToString ( SSortPost SortPost  */
+
+SSortPost StringToSortPost ( std::string SortPost ) {
+	if (SortPost == "ACTIVE") {
+		return ACTIVE;
+	} else if (SortPost == "PASSIVE") {
+		return PASSIVE;
+	} else if (SortPost == "COST") {
+		return COST;
+	} else if (SortPost == "WINST") {
+		return WINST;
+	} else {
+		return NOTVALID;
+	}
+} /* SSortPost StringToSortPost ( std::string SortPost )  */
+
 /*!
 	Constructor CBookKeeping
 */
@@ -191,7 +219,7 @@ bool CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* F
 
 	// Now book it on Posts
 	CJournalEdit* CurJournalEdit = FirstJournalEdit;
-	while (CurJournalEdit) {
+	while (CurJournalEdit != 0) {
 		std::cout << "boeken in posts" << std::endl;
 		CPostEdit* CurPostEdit = new CPostEdit (CurJournalEdit->getDebetEdit (),CurJournalEdit->getValue (),CurJournal->getId ());
 		if ( CurJournalEdit->getPost ()->getFirstPostEdit () == 0 ) {
@@ -240,15 +268,39 @@ bool CBookKeeping::save (std::string sFileName) {
 	{
 		File << "<?xml version=\"1.0\"?>\n";
 		File << "<bookkeeping>\n";
-		File << "\t<posts>\n";
 		
 		// Save the Posts
+		File << "\t<posts>\n";
 		CPost* CurPost = FirstPost;
 		while (CurPost != 0) {
-			File << "\t\t<post name=\"" << CurPost->getName () << "\" id=\"" << CurPost->getId () << "\" />\n";
+			File << "\t\t<post name=\"" << CurPost->getName () << "\" id=\"" << CurPost->getId () << "\" ";
+			File << "sort=\"" << SortPostToString (CurPost->getSortPost ()) << "\" saldo=\"" << CurPost->getSaldo () << "\" />\n";
 			CurPost = CurPost->getNext ();
 		}
 		File << "\t</posts>\n";
+
+		// Save the Journals
+		File << "\t<journals>\n";
+		CJournal* CurJournal = FirstJournal;
+		while (CurJournal != 0) {
+			File << "\t\t<journal id=\" "<< CurJournal->getId () << "\" "; 
+			File << "document=\"" << CurJournal->getDocument () << "\" date=\"" << CurJournal->getDate ().date << "\" >\n";
+
+			CJournalEdit* CurJournalEdit = CurJournal->getFirstJournalEdit ();
+			while (CurJournalEdit != 0) {
+				File << "\t\t\t <journaledit "; 
+				File << "postname=\"" << CurJournalEdit->getPost ()->getName () << "\" ";
+				File << "value=\"" << CurJournalEdit->getValue () << "\" ";
+				File << "debetedit=\"" << CurJournalEdit->getDebetEdit () << "\" ";
+				File << "/>\n";
+				CurJournalEdit = CurJournalEdit->getNext ();
+			} 
+
+			File << "\t\t</journal>\n";
+			CurJournal = CurJournal->getNext ();
+		}
+		File << "\t</journals>\n";
+
 		File << "</bookkeeping>";
 	}
 	File.close();

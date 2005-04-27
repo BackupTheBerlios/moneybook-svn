@@ -1,5 +1,9 @@
 2005-04-27 Nathan Samson <nathansamson@gmail.com>
-	
+		
+	libmoneybook.h, libmoneybook.cpp: fully implemented saving files
+
+	cjournaledit.cpp: fixed a Next that is set to 0 in the Construcotr
+
 	libmoneybook.cpp,libmoneybook.h: first attempt to save files
 
 	cpost.cpp,cjournal.cpp,libmoneybook.cpp: fixed segfaults in do-while loop ( changed to while )
