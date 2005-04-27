@@ -42,30 +42,34 @@ int main () {
 	do {
 		std::cout << "Id: " << CurRJournal->Journal->getId () << " Date: "  << CurRJournal->Journal->getDate ().date << std::endl;
 		SJournalEdit* JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (true);
-		do {
+		while (JournalEdit != 0) {
 			std::cout << JournalEdit->JournalEdit->getPost ()->getId () << "  ";
 			std::cout << JournalEdit->JournalEdit->getPost ()->getName () << "  " ;
 			std::cout << JournalEdit->JournalEdit->getValue () << std::endl;
 			JournalEdit = JournalEdit->Next;
-		} while (JournalEdit != 0);
+		};
 		std::cout << "                  @" << std::endl;
 		JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (false);
-		do {
+		while (JournalEdit != 0) {
 			std::cout << JournalEdit->JournalEdit->getPost ()->getId () << "  ";
 			std::cout << JournalEdit->JournalEdit->getPost ()->getName () << "  ";
 			std::cout << "            " << JournalEdit->JournalEdit->getValue () << std::endl;
 			JournalEdit = JournalEdit->Next;
-		} while (JournalEdit != 0);
+		};
 		std::cout << std::endl << std::endl;
 		CurRJournal = CurRJournal->Next;
 	} while (CurRJournal != 0);
 
 	CPost* CurPost = Test->getFirstPost ();
-	do {
+	while (CurPost != 0) {
 		std::cout << "Id: " << CurPost->getId () << " Name: " << CurPost->getName () << std::endl;
 		std::cout << " Saldo: " << CurPost->getSaldo () << std::endl;
 		CurPost = CurPost->getNext ();
-	} while (CurPost != 0);
-
+	};
+	Test->save ();
+	Test->setFileName ("first.xml");
+	Test->save ();
+	Test->addPost ("Kas",5700,ACTIVE);
+	Test->save ("second.xml");
 	delete Test;
 }

@@ -19,6 +19,7 @@
 #include "libmoneybook.h"
 
 #include <string>
+#include <fstream>
 #include <iostream>
 
 /*!
@@ -38,18 +39,18 @@ CBookKeeping::CBookKeeping () {
 CBookKeeping::~CBookKeeping () {
 	std::cout << "Destructor CBookKeeping" << std::endl;
 	CJournal* CurJournal = FirstJournal;
-	do {
+	while (CurJournal != 0) {
 		FirstJournal = CurJournal->getNext ();
 		delete CurJournal;
 		CurJournal = FirstJournal;
-	} while (CurJournal != 0);
+	}
 
 	CPost* CurPost = FirstPost;
-	do {
+	while (CurPost != 0) {
 		FirstPost = CurPost->getNext ();
 		delete CurPost;
 		CurPost = FirstPost;
-	} while (CurPost != 0);
+	}
 } /* CBookKeeping::~CBookKeeping ()  */
 
 /*!
@@ -91,7 +92,7 @@ SJournal* CBookKeeping::getJournalByNumber (int Minimum,int Maximum) {
 	SJournal* FirstRJournal = 0;
 	SJournal* LastRJournal = 0;
 	
-	do {
+	while (CurJournal != 0) {
 		if (searchByNumber (Minimum,Maximum,CurJournal->getId ())) {
 			SJournal* CurRJournal = new SJournal;
 			if (FirstRJournal == 0) {
@@ -105,7 +106,7 @@ SJournal* CBookKeeping::getJournalByNumber (int Minimum,int Maximum) {
 			LastRJournal = CurRJournal;
 		}
 		CurJournal = CurJournal->getNext ();
-	} while (CurJournal != 0);
+	}
 	return FirstRJournal;
 } /* CJournal* CBookKeeping::getJournalByNumber (int Minimum,int Maximum)  */
 
@@ -148,12 +149,12 @@ bool CBookKeeping::setNextOnJournalEdit (CJournalEdit* CurJEdit,CJournalEdit* Fi
 */
 CPost* CBookKeeping::getPostByName (std::string Name) {
 	CPost* CurPost = FirstPost;
-	do {
+	while (CurPost != 0) {
 		if (CurPost->getName () == Name) {
 			return CurPost;
 		}
 		CurPost = CurPost->getNext();
-	} while ( CurPost != 0 );
+	}
 	// Not found
 	/*try {
 		throw ();
@@ -190,7 +191,7 @@ bool CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* F
 
 	// Now book it on Posts
 	CJournalEdit* CurJournalEdit = FirstJournalEdit;
-	do {
+	while (CurJournalEdit) {
 		std::cout << "boeken in posts" << std::endl;
 		CPostEdit* CurPostEdit = new CPostEdit (CurJournalEdit->getDebetEdit (),CurJournalEdit->getValue (),CurJournal->getId ());
 		if ( CurJournalEdit->getPost ()->getFirstPostEdit () == 0 ) {
@@ -201,6 +202,58 @@ bool CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* F
 		CurJournalEdit->getPost ()->setLastPostEdit (CurPostEdit);
 
 		CurJournalEdit = CurJournalEdit->getNext ();
-	} while ( CurJournalEdit != 0 );
+	}
 
 } /* CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit) */
+
+/*!
+	get the current FileName
+*/
+std::string CBookKeeping::getFileName () {
+	return FileName;
+} /* std::string CBookKeeping::getFileName () */
+
+/*!
+	set the FileName to sFileName
+*/
+void CBookKeeping::setFileName ( std::string sFileName ) {
+	FileName = sFileName;
+} /* void CBookKeeping::setFileName ( std::string sFileName ) */
+
+/*!
+	save it, if sFileName is empty, use FileName, if that is empty return nothing and end
+*/
+bool CBookKeeping::save (std::string sFileName) {	
+	if ( sFileName == "" ) {
+		if ( FileName != "" ) {
+			sFileName = FileName;
+		} else {
+			std::cout << "Error, no filename given, return false" << std::endl;
+			return false;
+		}
+	} else {
+		FileName = sFileName;
+	}
+	std::ofstream File (sFileName.c_str());
+
+	if (File.is_open())
+	{
+		File << "<?xml version=\"1.0\"?>\n";
+		File << "<bookkeeping>\n";
+		File << "\t<posts>\n";
+		
+		// Save the Posts
+		CPost* CurPost = FirstPost;
+		while (CurPost != 0) {
+			File << "\t\t<post name=\"" << CurPost->getName () << "\" id=\"" << CurPost->getId () << "\" />\n";
+			CurPost = CurPost->getNext ();
+		}
+		File << "\t</posts>\n";
+		File << "</bookkeeping>";
+	}
+	File.close();
+	std::cout << "saved as: " << sFileName << std::endl;
+	return true;
+} /* void CBookKeeping::save (std::string sFileName)  */
+
+

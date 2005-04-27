@@ -38,11 +38,11 @@ CJournal::CJournal (TDate JDate,std::string JDocument,unsigned int JId,CJournalE
 CJournal::~CJournal () {
 	std::cout << "Destructor CJournal" << std::endl;
 	CJournalEdit* CurJournalEdit = FirstJournalEdit;
-	do {
+	while (CurJournalEdit != 0) {
 		FirstJournalEdit = CurJournalEdit->getNext ();
 		delete CurJournalEdit;
 		CurJournalEdit = FirstJournalEdit;
-	} while ( CurJournalEdit != 0 );
+	};
 } /* CJournal::~CJournal () */
 
 /* !
@@ -95,7 +95,7 @@ SJournalEdit* CJournal::getJournalEditByDebetEdit ( bool DebetEdit ) {
 	SJournalEdit* LastRJournalEdit = 0;
 	SJournalEdit* CurRJournalEdit = 0;
 	CJournalEdit* CurJournalEdit = FirstJournalEdit;
-	do {
+	 while (CurJournalEdit != 0) {
 		if (CurJournalEdit->getDebetEdit () == DebetEdit) {
 			CurRJournalEdit = new SJournalEdit;
 			CurRJournalEdit->Next = 0;
@@ -108,6 +108,6 @@ SJournalEdit* CJournal::getJournalEditByDebetEdit ( bool DebetEdit ) {
 			LastRJournalEdit = CurRJournalEdit;
 		}
 		CurJournalEdit = CurJournalEdit->getNext ();
-	} while (CurJournalEdit != 0);
+	}
 	return FirstRJournalEdit;
 }

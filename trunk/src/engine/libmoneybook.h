@@ -143,6 +143,7 @@ class CBookKeeping {
 		CJournal* FirstJournal;
 		CJournal* LastJournal;
 		bool searchByNumber ( int Minimum,int Maximum,int Number );
+		std::string FileName;
 	public:
 		CBookKeeping ();
 		~CBookKeeping (); 
@@ -154,6 +155,9 @@ class CBookKeeping {
 		CPost* getPostByName ( std::string Name );
 		CPost* getFirstPost ();
 		CPost* getLastPost ();
+		std::string getFileName ();
+		void setFileName ( std::string sFileName );
+		bool save (std::string sFileName = "");
 }; /* class CBookKeeping */
 
 #endif /* BOOKKEEPING_H  */

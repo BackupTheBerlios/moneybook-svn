@@ -1,3 +1,9 @@
+2005-04-27 Nathan Samson <nathansamson@gmail.com>
+	
+	libmoneybook.cpp,libmoneybook.h: first attempt to save files
+
+	cpost.cpp,cjournal.cpp,libmoneybook.cpp: fixed segfaults in do-while loop ( changed to while )
+
 2005-04-26 Nathan Samson <nathansamson@gmail.com>
 	
 	autogen.sh, added src/engine/tests/Makefile.am, src/engine/Makefile.am, configure.in, BUGS
