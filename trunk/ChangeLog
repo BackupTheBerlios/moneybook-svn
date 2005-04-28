@@ -7,7 +7,7 @@
 
 	libmoneybook.cpp, libmoneybook.h: start implementig the load feature, only the real cose is needed now
 
-	added moneybook.anjuta: added an anjuta (2) projevt
+	added moneybook.anjuta,TODO.tasks: added an anjuta (2) projevt
 
 2005-04-27 Nathan Samson <nathansamson@gmail.com>
 		
