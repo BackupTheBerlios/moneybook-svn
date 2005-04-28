@@ -161,6 +161,7 @@ class CBookKeeping {
 		std::string getFileName ();
 		void setFileName ( std::string sFileName );
 		bool save (std::string sFileName = "");
+		bool CBookKeeping::load (std::string LFileName = "",bool override = false);
 }; /* class CBookKeeping */
 
 #endif /* BOOKKEEPING_H  */

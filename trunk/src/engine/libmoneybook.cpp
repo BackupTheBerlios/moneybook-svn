@@ -308,4 +308,49 @@ bool CBookKeeping::save (std::string sFileName) {
 	return true;
 } /* void CBookKeeping::save (std::string sFileName)  */
 
+/*!
+	load a savefile
+	if lFileName is empty FileName is used
+	if there is already opened a file or already started to work on posts / journals override
+	must be true to load a file
+*/
+bool CBookKeeping::load (std::string LFileName,bool override) {
+	if (LFileName != "") {
+		if (FileName == "") {
+			FileName = LFileName;
+		} else {
+			std::cout << "There is already assigned a filename" << std::endl;
+			if (override == false) {
+				return false;
+			} else {
+				std::cout << "override" << std::endl;
+				FileName = LFileName;
+			}
+		}
+	} else {
+		if (FileName == "") {
+			FileName = LFileName;
+		} else {
+			std::cout << "There is already assigned a filename" << std::endl;
+			if (override == false) {
+				return false;
+			} else {
+				std::cout << "override" << std::endl;
+				FileName = LFileName;
+			}
+		}
+	}
 
+	if ( ( FirstJournal == 0 ) and ( FirstPost == 0 ) ) {
+		
+	} else {
+		std::cout << "Already modified" << std::endl;
+		if ( override == false ) {
+			return false;
+		} else {
+			std::cout << "override" << std::endl;
+		}
+	}
+
+	return true;
+} /* bool CBookKeeping::load (std::string LFileName,bool override) */ 
