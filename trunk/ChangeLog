@@ -2,6 +2,8 @@
 
 	It is my birthday now, I'm 16 now
 	
+	src/engine/tests/libmoneybook.cpp: tests are working now, no crash
+
 	configure.in, src/engine/tests/Makefile.am: changed makesystem to check on cppuint
 		and doxygen
 

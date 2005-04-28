@@ -143,7 +143,7 @@ SJournal* CBookKeeping::getJournalByNumber (int Minimum,int Maximum) {
 */
 void CBookKeeping::addPost (std::string name,unsigned short id,SSortPost SortPost) {
 	CPost* CurPost  = new CPost (name,id,SortPost);
-	if (FirstPost == 0)  {
+	if (FirstPost == 0) {
 		FirstPost = CurPost;
 	} else {
 		LastPost->setNext (CurPost);
