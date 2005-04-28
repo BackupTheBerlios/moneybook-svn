@@ -2,6 +2,9 @@
 
 	It is my birthday now, I'm 16 now
 	
+	configure.in, src/engine/tests/Makefile.am: changed makesystem to check on cppuint
+		and doxygen
+
 	libmoneybook.cpp, libmoneybook.h: start implementig the load feature, only the real cose is needed now
 
 	added moneybook.anjuta: added an anjuta (2) projevt
