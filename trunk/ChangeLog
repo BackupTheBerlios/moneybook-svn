@@ -1,8 +1,14 @@
+2005-04-28 Nathan Samson <nathansamson@gmail.com>
+
+	It is my birthday now, I'm 16 now
+	
+	added moneybook.anjuta: added an anjuta (2) projevt
+
 2005-04-27 Nathan Samson <nathansamson@gmail.com>
 		
-	libmoneybook.h, libmoneybook.cpp: fully implemented saving files
+	libmoneybook.h, libmoneybook.cpp,cpost: fully implemented saving files
 
-	cjournaledit.cpp: fixed a Next that is set to 0 in the Construcotr
+	cjournaledit.cpp,cjournal.cpp: fixed a Next that is set to 0 in the Construcotr
 
 	libmoneybook.cpp,libmoneybook.h: first attempt to save files
 
