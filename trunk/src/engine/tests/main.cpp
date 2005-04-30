@@ -18,6 +18,7 @@
 #include "libmoneybook.h"
 
 #include <cppunit/ui/text/TestRunner.h>
+#include <string>
 #include <iostream>
 
 int main ()

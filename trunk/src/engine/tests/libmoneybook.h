@@ -27,12 +27,19 @@
 class LibMoneyBookTest : public CppUnit::TestFixture
 {
 	private:		
-		CBookKeeping* BookKeeping;
+		//CBookKeeping* BookKeeping;
 	public:
+
+		LibMoneyBookTest ();
+		~LibMoneyBookTest ();
+CBookKeeping* BookKeeping;
 		void setUp ();
 		void tearDown ();
 
 		void testAddPost ();
+		void testBookJournalGood ();
+		//void testSave ();
+		//void testLoad ();
 
 		static CppUnit::Test* suite ();
 };
