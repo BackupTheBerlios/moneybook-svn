@@ -15,10 +15,10 @@
   *  along with this program; if not, write to the Free Software
   *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-#include "libmoneybook.h"
-
 #include <string>
-#include <iostream>
+
+#include "../general.h"
+#include "libmoneybook.h"
 
 /*! 
 	Constructor of CJournal 
@@ -36,7 +36,7 @@ CJournal::CJournal (TDate JDate,std::string JDocument,unsigned int JId,CJournalE
 	Destrucor of CJournal 
 */
 CJournal::~CJournal () {
-	std::cout << "Destructor CJournal" << std::endl;
+	cdebug << "Destructor CJournal" << std::endl;
 	CJournalEdit* CurJournalEdit = FirstJournalEdit;
 	while (CurJournalEdit != 0) {
 		FirstJournalEdit = CurJournalEdit->getNext ();

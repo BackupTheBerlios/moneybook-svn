@@ -19,10 +19,10 @@
 #ifndef TEST_LIBMONEYBOOK_H
 #define TEST_LIBMONEYBOOK_H
 
-#include "../libmoneybook.h"
-
 #include <cppunit/TestFixture.h>
 #include <cppunit/Test.h>
+
+#include "../libmoneybook.h"
 
 class LibMoneyBookTest : public CppUnit::TestFixture
 {

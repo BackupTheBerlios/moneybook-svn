@@ -1,3 +1,22 @@
+2005-05-01 Nathan Samson <nathansamson@gmail.com>
+
+	TODO.tasks: added some tasks
+
+	moneybook.anjuta: added Terminal plugin to started automatically when opened the project
+
+	src/tests/main.cpp,src/tests/libmoneybook.cpp,src/tests/libmoneybook.h: changed some tests
+
+	add src/general.cpp, add src/general.h,src/Makefile.am, src/engine/cjournaledit.cpp,src/engine/cpost.cpp,src/engine/libmoneybook.h,
+	src/engine/cpostedit.cpp, src/engine/libmoneybook.cpp: removed cout and replaced by cdebug
+
+	configure.in: update configure.in to create src/config.h and not config.h
+
+2005-04-30 Nathan Samson <nathansamson@gmail.com>
+
+	src/engine/tests/libmoneybook.cpp: add some tests
+
+	src/engine/tests/Makefile.am: if the engine change, now the test rebuild also if you do "make check"
+
 2005-04-28 Nathan Samson <nathansamson@gmail.com>
 
 	It is my birthday now, I'm 16 now

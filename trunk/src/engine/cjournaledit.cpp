@@ -15,10 +15,8 @@
   *  along with this program; if not, write to the Free Software
   *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-
+#include "../general.h"
 #include "libmoneybook.h"
-
-#include <iostream>
 
 /*!
 	Constructor of CJournalEdit
@@ -34,7 +32,7 @@ CJournalEdit::CJournalEdit (bool JDebetEdit,CPost* JPost,long double JValue) {
 	Destructor of CJournalEdit
 */
 CJournalEdit::~CJournalEdit () {
-	std::cout << "Destructor CJournalEdit" << std::endl;
+	cdebug << "Destructor CJournalEdit" << std::endl;
 } /* CjournalEdit::~CJournalEdit () */
 
 /*!

@@ -15,12 +15,11 @@
   *  along with this program; if not, write to the Free Software
   *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-
-#include "libmoneybook.h"
-
-#include <string>
 #include <fstream>
-#include <iostream>
+#include <string>
+
+#include "../general.h"
+#include "libmoneybook.h"
 
 std::string SortPostToString ( SSortPost SortPost ) {
 	switch ( SortPost ) {
@@ -65,7 +64,7 @@ CBookKeeping::CBookKeeping () {
 	Destructor CBookKeeping
 */
 CBookKeeping::~CBookKeeping () {
-	std::cout << "Destructor CBookKeeping" << std::endl;
+	cdebug << "Destructor CBookKeeping" << std::endl;
 	CJournal* CurJournal = FirstJournal;
 	while (CurJournal != 0) {
 		FirstJournal = CurJournal->getNext ();
@@ -143,10 +142,13 @@ SJournal* CBookKeeping::getJournalByNumber (int Minimum,int Maximum) {
 */
 void CBookKeeping::addPost (std::string name,unsigned short id,SSortPost SortPost) {
 	CPost* CurPost  = new CPost (name,id,SortPost);
+	cdebug << "add posts" << std::endl;
 	if (FirstPost == 0) {
 		FirstPost = CurPost;
+		cdebug << "FirstPost == empty" << std::endl;
 	} else {
 		LastPost->setNext (CurPost);
+		cdebug << "FirstPost != empty" << std::endl;
 	}
 	LastPost = CurPost;
 } /* void CBookKeeping::addPost (std::string name,unsigned short id,SSortPost SortPost) */
@@ -177,16 +179,18 @@ bool CBookKeeping::setNextOnJournalEdit (CJournalEdit* CurJEdit,CJournalEdit* Fi
 */
 CPost* CBookKeeping::getPostByName (std::string Name) {
 	CPost* CurPost = FirstPost;
+	cdebug << "Search Post By: " << Name << std::endl;
 	while (CurPost != 0) {
+		cdebug << CurPost << std::endl;
 		if (CurPost->getName () == Name) {
+			cdebug << CurPost->getName () << Name<< std::endl;
 			return CurPost;
 		}
 		CurPost = CurPost->getNext();
-	}
-	// Not found
-	/*try {
-		throw ();
-	}*/
+	} 
+	//cdebug << ""
+	cdebug << "empty" << std::endl;
+	return 0;
 } /* CPost* CBookKeeping::getPostByName (std::string Name) */
 
 /*!
@@ -220,7 +224,8 @@ bool CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* F
 	// Now book it on Posts
 	CJournalEdit* CurJournalEdit = FirstJournalEdit;
 	while (CurJournalEdit != 0) {
-		std::cout << "boeken in posts" << std::endl;
+		cdebug << "boeken in posts" << std::endl;
+		if (CurJournalEdit->getPost() == 0) {cdebug << "empty" << std::endl; }
 		CPostEdit* CurPostEdit = new CPostEdit (CurJournalEdit->getDebetEdit (),CurJournalEdit->getValue (),CurJournal->getId ());
 		if ( CurJournalEdit->getPost ()->getFirstPostEdit () == 0 ) {
 			CurJournalEdit->getPost ()->setFirstPostEdit (CurPostEdit);
@@ -256,7 +261,7 @@ bool CBookKeeping::save (std::string sFileName) {
 		if ( FileName != "" ) {
 			sFileName = FileName;
 		} else {
-			std::cout << "Error, no filename given, return false" << std::endl;
+			cdebug << "Error, no filename given, return false" << std::endl;
 			return false;
 		}
 	} else {
@@ -304,7 +309,7 @@ bool CBookKeeping::save (std::string sFileName) {
 		File << "</bookkeeping>";
 	}
 	File.close();
-	std::cout << "saved as: " << sFileName << std::endl;
+	cdebug << "saved as: " << sFileName << std::endl;
 	return true;
 } /* void CBookKeeping::save (std::string sFileName)  */
 
@@ -319,11 +324,11 @@ bool CBookKeeping::load (std::string LFileName,bool override) {
 		if (FileName == "") {
 			FileName = LFileName;
 		} else {
-			std::cout << "There is already assigned a filename" << std::endl;
+			cdebug << "There is already assigned a filename" << std::endl;
 			if (override == false) {
 				return false;
 			} else {
-				std::cout << "override" << std::endl;
+				cdebug << "override" << std::endl;
 				FileName = LFileName;
 			}
 		}
@@ -331,11 +336,11 @@ bool CBookKeeping::load (std::string LFileName,bool override) {
 		if (FileName == "") {
 			FileName = LFileName;
 		} else {
-			std::cout << "There is already assigned a filename" << std::endl;
+			cdebug << "There is already assigned a filename" << std::endl;
 			if (override == false) {
 				return false;
 			} else {
-				std::cout << "override" << std::endl;
+				cdebug << "override" << std::endl;
 				FileName = LFileName;
 			}
 		}
@@ -344,11 +349,11 @@ bool CBookKeeping::load (std::string LFileName,bool override) {
 	if ( ( FirstJournal == 0 ) and ( FirstPost == 0 ) ) {
 		
 	} else {
-		std::cout << "Already modified" << std::endl;
+		cdebug << "Already modified" << std::endl;
 		if ( override == false ) {
 			return false;
 		} else {
-			std::cout << "override" << std::endl;
+			cdebug << "override" << std::endl;
 		}
 	}
 

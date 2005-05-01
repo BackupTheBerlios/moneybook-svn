@@ -1,6 +1,38 @@
 <?xml version="1.0"?>
 <gtodo>
-  <category title="Personal" place="0"/>
-  <category title="Business" place="1"/>
-  <category title="Unfiled" place="2"/>
+  <category title="tests" place="0"/>
+  <category title="libmoneybook" place="1">
+    <item>
+      <attribute id="1114870868" priority="1" done="0" start_date="732066" enddate="99999999" notify="0" endtime="-60" last_edited="1114870868"/>
+      <summary>addpost</summary>
+      <comment>check if a post with that name / number already exists</comment>
+    </item>
+    <item>
+      <attribute id="1114870893" priority="1" done="0" start_date="732066" enddate="99999999" notify="0" endtime="-60" last_edited="1114870893"/>
+      <summary>bookjournal</summary>
+      <comment>see if the booking is in balance</comment>
+    </item>
+    <item>
+      <attribute id="1114870903" priority="1" done="0" start_date="732066" enddate="99999999" notify="0" endtime="-60" last_edited="1114870903"/>
+      <summary>load</summary>
+      <comment>add a load function</comment>
+    </item>
+    <item>
+      <attribute id="1114870945" priority="1" done="0" start_date="732066" enddate="99999999" notify="0" endtime="-60" last_edited="1114870945"/>
+      <summary>returnvalues</summary>
+      <comment>if an error occures in a function use throw</comment>
+    </item>
+    <item>
+      <attribute id="1114892533" priority="1" done="0" start_date="732066" enddate="99999999" notify="0" endtime="-60" last_edited="1114892533"/>
+      <summary>date</summary>
+      <comment>change the day type
+std::string format?
+char dayofmonth
+usigned short year
+EDay dayofweek ?
+EMonth monthofyear?
+</comment>
+    </item>
+  </category>
+  <category title="interface" place="2"/>
 </gtodo>

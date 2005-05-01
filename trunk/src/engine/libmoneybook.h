@@ -46,10 +46,10 @@ class CPostEdit {
 
 		CPostEdit* Next;
 	public:
-		CPostEdit ( bool PDebetEdit,long double PValue,unsigned int BookNumber );
+		CPostEdit (bool PDebetEdit,long double PValue,unsigned int BookNumber);
 		~CPostEdit ();
 		CPostEdit* getNext ();
-		void setNext ( CPostEdit* PNext );
+		void setNext (CPostEdit* PNext);
 		long double getValue ();
 		bool getDebetEdit ();
 		unsigned int getNumber ();
@@ -69,16 +69,16 @@ class CPost {
 
 		CPost* Next;
 	public:
-		CPost ( std::string PName,unsigned short PId,SSortPost PSortPost );
+		CPost (std::string PName,unsigned short PId,SSortPost PSortPost);
 		~CPost ();
 		CPost* getNext ();
-		void setNext ( CPost* PNext );
+		void setNext (CPost* PNext);
 		std::string getName ();
 		unsigned short getId ();
 		CPostEdit* getFirstPostEdit ();
-		void setFirstPostEdit ( CPostEdit* PFirstEdit );
+		void setFirstPostEdit (CPostEdit* PFirstEdit);
 		CPostEdit* getLastPostEdit ();
-		void setLastPostEdit ( CPostEdit* PLastEdit );
+		void setLastPostEdit (CPostEdit* PLastEdit);
 		long double getSaldo ();
 		SSortPost getSortPost ();
 }; /* class CPost */
@@ -94,10 +94,10 @@ class CJournalEdit {
 
 		CJournalEdit* Next;
 	public:
-		CJournalEdit ( bool JDebetEdit, CPost* JPost, long double JValue );
+		CJournalEdit (bool JDebetEdit, CPost* JPost, long double JValue);
 		~CJournalEdit ();
 		CJournalEdit* getNext ();
-		void setNext ( CJournalEdit* JNext );
+		void setNext (CJournalEdit* JNext);
 		bool getDebetEdit ();
 		CPost* getPost ();
 		long double getValue ();
@@ -120,15 +120,15 @@ class CJournal {
 
 		CJournal* Next;
 	public:
-		CJournal ( TDate JDate,std::string JDocument,unsigned int JNumber,CJournalEdit* JFirstJournalEdit );
+		CJournal (TDate JDate,std::string JDocument,unsigned int JNumber,CJournalEdit* JFirstJournalEdit);
 		~CJournal ();
 		CJournal* getNext ();
-		void setNext ( CJournal* JNext );
+		void setNext (CJournal* JNext);
 		unsigned int getId ();
 		CJournalEdit* getFirstJournalEdit ();
 		TDate getDate ();
 		std::string getDocument ();
-		SJournalEdit* getJournalEditByDebetEdit ( bool DebetEdit );
+		SJournalEdit* getJournalEditByDebetEdit (bool DebetEdit);
 }; /* class CJournal */
 
 struct SJournal {
@@ -145,21 +145,21 @@ class CBookKeeping {
 		CPost* FirstPost;
 		CJournal* FirstJournal;
 		CJournal* LastJournal;
-		bool searchByNumber ( int Minimum,int Maximum,int Number );
+		bool searchByNumber (int Minimum,int Maximum,int Number);
 		std::string FileName;
 	public:
 		CBookKeeping ();
 		~CBookKeeping (); 
-		SJournal* getJournalByNumber ( int Minimum,int Maximum );
-		bool bookJournal ( TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit );
-		void addPost ( std::string name,unsigned short id,SSortPost SortPost );
-		CJournalEdit* newJournalEdit ( bool DebetEdit,CPost* Post,long double Value );
-		bool setNextOnJournalEdit ( CJournalEdit* CurJEdit,CJournalEdit* FirstJEdit,CJournalEdit* LastJEdit );
-		CPost* getPostByName ( std::string Name );
+		SJournal* getJournalByNumber (int Minimum,int Maximum);
+		bool bookJournal (TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit);
+		void addPost (std::string name,unsigned short id,SSortPost SortPost);
+		CJournalEdit* newJournalEdit (bool DebetEdit,CPost* Post,long double Value);
+		bool setNextOnJournalEdit (CJournalEdit* CurJEdit,CJournalEdit* FirstJEdit,CJournalEdit* LastJEdit);
+		CPost* getPostByName (std::string Name);
 		CPost* getFirstPost ();
 		CPost* getLastPost ();
 		std::string getFileName ();
-		void setFileName ( std::string sFileName );
+		void setFileName (std::string sFileName);
 		bool save (std::string sFileName = "");
 		bool CBookKeeping::load (std::string LFileName = "",bool override = false);
 }; /* class CBookKeeping */

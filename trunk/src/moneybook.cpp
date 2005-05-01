@@ -16,12 +16,14 @@
   *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#include "engine/libmoneybook.h"
-
 #include <iostream>
 
+#include "general.h"
+#include "engine/libmoneybook.h"
+
 int main () {
-	std::cout << "dit is een leuk programma" << std::endl;
+	debug (false);
+	cdebug << "dit is een leuk programma" << std::endl;
 	CBookKeeping* Test = new CBookKeeping;
 	Test->addPost ("Kapitaal",1000,PASSIVE);
 	Test->addPost ("Bank",5500,ACTIVE);
@@ -39,7 +41,7 @@ int main () {
 	Test->bookJournal (Date,"BA 001/5 Fortis",FirstJEdit);
 	
 	SJournal* CurRJournal = Test->getJournalByNumber (0,0);
-	do {
+	while (CurRJournal != 0) {
 		std::cout << "Id: " << CurRJournal->Journal->getId () << " Date: "  << CurRJournal->Journal->getDate ().date << std::endl;
 		SJournalEdit* JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (true);
 		while (JournalEdit != 0) {
@@ -58,8 +60,8 @@ int main () {
 		};
 		std::cout << std::endl << std::endl;
 		CurRJournal = CurRJournal->Next;
-	} while (CurRJournal != 0);
-
+	}
+	
 	CPost* CurPost = Test->getFirstPost ();
 	while (CurPost != 0) {
 		std::cout << "Id: " << CurPost->getId () << " Name: " << CurPost->getName () << std::endl;

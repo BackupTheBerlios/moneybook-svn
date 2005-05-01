@@ -15,11 +15,10 @@
   *  along with this program; if not, write to the Free Software
   *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-
-#include "libmoneybook.h"
-
 #include <string>
-#include <iostream>
+
+#include "../general.h"
+#include "libmoneybook.h"
 
 /*!
 	Constructor of CPost
@@ -37,7 +36,7 @@ CPost::CPost (std::string PName,unsigned short PId,SSortPost PSortPost) {
 	Destructor of CPost
 */
 CPost::~CPost () {
-	std::cout << "Destructor CPost" << std::endl;
+	cdebug << "Destructor CPost" << std::endl;
 	CPostEdit* CurPostEdit = FirstPostEdit;
 	while (CurPostEdit != 0) {
 		FirstPostEdit = CurPostEdit->getNext ();
