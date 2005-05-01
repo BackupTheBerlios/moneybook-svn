@@ -1,5 +1,7 @@
 2005-05-01 Nathan Samson <nathansamson@gmail.com>
 
+	src/enigne/Makefile.am, src/engine/tests/Makefile.am: fixed cdebug
+
 	src/general.cpp,src/general.h,src/engine/libmoneybook.cpp:
 		CBookKeeping::bookJoournal (...) throws CException if booking is not in balance
 
