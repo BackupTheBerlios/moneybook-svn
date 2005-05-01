@@ -15,7 +15,6 @@
   *  along with this program; if not, write to the Free Software
   *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-
 #include <iostream>
 
 #include "general.h"
@@ -30,15 +29,24 @@ int main () {
 	
 	CJournalEdit* FirstJEdit = Test->newJournalEdit (true,Test->getPostByName ("Bank"),1000);
 	CJournalEdit* LastJEdit = FirstJEdit;
-	CJournalEdit* CurJEdit = Test->newJournalEdit (false,Test->getPostByName ("Kapitaal"),1000);
+	CJournalEdit* CurJEdit = Test->newJournalEdit (false,Test->getPostByName ("Kapitaal"),1000.01);
 	Test->setNextOnJournalEdit (CurJEdit,FirstJEdit,LastJEdit);
 	TDate Date;
 	Date.date= "Dit is de datum ";
-	Test->bookJournal (Date,"BA 001/1 Fortis",FirstJEdit);
-	Test->bookJournal (Date,"BA 001/2 Fortis",FirstJEdit);
-	Test->bookJournal (Date,"BA 001/3 Fortis",FirstJEdit);
-	Test->bookJournal (Date,"BA 001/4 Fortis",FirstJEdit);
-	Test->bookJournal (Date,"BA 001/5 Fortis",FirstJEdit);
+	debug (true);
+	try {
+		Test->bookJournal (Date,"BA 001/1 Fortis",FirstJEdit);
+		Test->bookJournal (Date,"BA 001/2 Fortis",FirstJEdit);
+		Test->bookJournal (Date,"BA 001/3 Fortis",FirstJEdit);
+		Test->bookJournal (Date,"BA 001/4 Fortis",FirstJEdit);
+		Test->bookJournal (Date,"BA 001/5 Fortis",FirstJEdit);
+	}
+	catch (CException e) {
+		std::cout << "Exception occured: " << e.what << std::endl;
+	}
+	catch (...) {
+		std::cout << "Unexpected exception" << std::endl;
+	}
 	
 	SJournal* CurRJournal = Test->getJournalByNumber (0,0);
 	while (CurRJournal != 0) {

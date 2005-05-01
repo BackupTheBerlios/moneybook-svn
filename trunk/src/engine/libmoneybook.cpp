@@ -21,7 +21,7 @@
 #include "../general.h"
 #include "libmoneybook.h"
 
-std::string SortPostToString ( SSortPost SortPost ) {
+std::string SortPostToString (SSortPost SortPost) {
 	switch ( SortPost ) {
 		case ACTIVE: return "ACTIVE";
 			break;
@@ -33,9 +33,9 @@ std::string SortPostToString ( SSortPost SortPost ) {
 			break;
 		default: return "NOTVALID";
 	}
-} /* std::string SortPostToString ( SSortPost SortPost  */
+} /* std::string SortPostToString (SSortPost SortPost)  */
 
-SSortPost StringToSortPost ( std::string SortPost ) {
+SSortPost StringToSortPost (std::string SortPost) {
 	if (SortPost == "ACTIVE") {
 		return ACTIVE;
 	} else if (SortPost == "PASSIVE") {
@@ -47,7 +47,7 @@ SSortPost StringToSortPost ( std::string SortPost ) {
 	} else {
 		return NOTVALID;
 	}
-} /* SSortPost StringToSortPost ( std::string SortPost )  */
+} /* SSortPost StringToSortPost (std::string SortPost)  */
 
 /*!
 	Constructor CBookKeeping
@@ -211,33 +211,44 @@ CPost* CBookKeeping::getLastPost () {
 	book a journal, and book with that information also the corresponding posts
 */
 bool CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* FirstJournalEdit) {
-	CJournal* CurJournal; 
-	if ( FirstJournal == 0 ) {
-		CurJournal = new CJournal (JDate,Document,1,FirstJournalEdit);
-		FirstJournal = CurJournal;
-	} else {
-		CurJournal = new CJournal (JDate,Document,LastJournal->getId () + 1,FirstJournalEdit);
-		LastJournal->setNext (CurJournal);
-	}
-	LastJournal = CurJournal;
-
-	// Now book it on Posts
 	CJournalEdit* CurJournalEdit = FirstJournalEdit;
+	long double balance = 0;
 	while (CurJournalEdit != 0) {
-		cdebug << "boeken in posts" << std::endl;
-		if (CurJournalEdit->getPost() == 0) {cdebug << "empty" << std::endl; }
-		CPostEdit* CurPostEdit = new CPostEdit (CurJournalEdit->getDebetEdit (),CurJournalEdit->getValue (),CurJournal->getId ());
-		if ( CurJournalEdit->getPost ()->getFirstPostEdit () == 0 ) {
-			CurJournalEdit->getPost ()->setFirstPostEdit (CurPostEdit);
+		if (CurJournalEdit->getDebetEdit () == true) {
+			balance += CurJournalEdit->getValue ();
 		} else {
-			CurJournalEdit->getPost ()->getLastPostEdit ()->setNext (CurPostEdit);
+			balance -= CurJournalEdit->getValue ();
 		}
-		CurJournalEdit->getPost ()->setLastPostEdit (CurPostEdit);
-
 		CurJournalEdit = CurJournalEdit->getNext ();
 	}
-
-} /* CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit) */
+	if (balance == 0) {
+		CJournal* CurJournal; 
+		if ( FirstJournal == 0 ) {
+			CurJournal = new CJournal (JDate,Document,1,FirstJournalEdit);
+			FirstJournal = CurJournal;
+		} else {
+			CurJournal = new CJournal (JDate,Document,LastJournal->getId () + 1,FirstJournalEdit);
+			LastJournal->setNext (CurJournal);
+		}
+		LastJournal = CurJournal;
+	
+		// Now book it on Posts
+		CJournalEdit* CurJournalEdit = FirstJournalEdit;
+		while (CurJournalEdit != 0) {
+			CPostEdit* CurPostEdit = new CPostEdit (CurJournalEdit->getDebetEdit (),CurJournalEdit->getValue (),CurJournal->getId ());
+			if ( CurJournalEdit->getPost ()->getFirstPostEdit () == 0 ) {
+				CurJournalEdit->getPost ()->setFirstPostEdit (CurPostEdit);
+			} else {
+				CurJournalEdit->getPost ()->getLastPostEdit ()->setNext (CurPostEdit);
+			}
+			CurJournalEdit->getPost ()->setLastPostEdit (CurPostEdit);
+	
+			CurJournalEdit = CurJournalEdit->getNext ();
+		}
+	} else {
+		throw CException ("Not in balance");
+	}
+} /* CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit) throw() */
 
 /*!
 	get the current FileName

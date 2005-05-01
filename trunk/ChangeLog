@@ -1,6 +1,7 @@
 2005-05-01 Nathan Samson <nathansamson@gmail.com>
 
-	TODO.tasks: added some tasks
+	src/general.cpp,src/general.h,src/engine/libmoneybook.cpp:
+		CBookKeeping::bookJoournal (...) throws CException if booking is not in balance
 
 	moneybook.anjuta: added Terminal plugin to started automatically when opened the project
 
