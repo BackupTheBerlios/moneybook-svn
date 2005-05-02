@@ -83,6 +83,11 @@ class CPost {
 		SSortPost getSortPost ();
 }; /* class CPost */
 
+struct SPost {
+	CPost* Post;
+	SPost* Next;
+};
+
 /*!
 	CJournalEdit, Dynamic list, for holding all CJournalEdit
 */
@@ -162,6 +167,7 @@ class CBookKeeping {
 		void setFileName (std::string sFileName);
 		bool save (std::string sFileName = "");
 		bool CBookKeeping::load (std::string LFileName = "",bool override = false);
+		SPost* getPostById (int Minimum,int Maximum);
 }; /* class CBookKeeping */
 
 #endif /* BOOKKEEPING_H  */

@@ -111,15 +111,21 @@ SJournal* CBookKeeping::getJournalByNumberRange (int Minimum,int Maximum) {
 */
 void CBookKeeping::addPost (std::string name,unsigned short id,SSortPost SortPost) {
 	CPost* CurPost  = new CPost (name,id,SortPost);
-	cdebug << "add posts" << std::endl;
-	if (FirstPost == 0) {
-		FirstPost = CurPost;
-		cdebug << "FirstPost == empty" << std::endl;
+	if ((getPostById (id,id) == 0) && (getPostByName(name) == 0)) {
+		cdebug << "add posts" << std::endl;
+		if (FirstPost == 0) {
+			FirstPost = CurPost;
+			cdebug << "FirstPost == empty" << std::endl;
+		} else {
+			LastPost->setNext (CurPost);
+			cdebug << "FirstPost != empty" << std::endl;
+		}
+		LastPost = CurPost;
 	} else {
-		LastPost->setNext (CurPost);
-		cdebug << "FirstPost != empty" << std::endl;
+		cdebug << "Name and/or id already used in another post" << std::endl;
+		throw CException ("Name and/or id already used in another post");
+		cdebug << "Name and/or id already used in another post" << std::endl;
 	}
-	LastPost = CurPost;
 } /* void CBookKeeping::addPost (std::string name,unsigned short id,SSortPost SortPost) */
 
 /*!
@@ -339,3 +345,29 @@ bool CBookKeeping::load (std::string LFileName,bool override) {
 
 	return true;
 } /* bool CBookKeeping::load (std::string LFileName,bool override) */ 
+
+/*
+	returns SPost with all Posts in in range Minimum->Maximum
+*/
+SPost* CBookKeeping::getPostById (int Minimum,int Maximum) {
+	CPost* CurPost = FirstPost;
+	SPost* FirstSPost = 0;
+	SPost* LastSPost = 0;
+	
+	while (CurPost != 0) {
+		if (isInIntRange (Minimum,Maximum,CurPost->getId ())) {
+			SPost* CurSPost = new SPost;
+			if (FirstSPost == 0) {
+				FirstSPost = CurSPost;
+				LastSPost = CurSPost;
+			} else {
+				LastSPost->Next = CurSPost;
+			}
+			CurSPost->Post = CurPost;
+			CurSPost->Next = 0;
+			LastSPost = CurSPost;
+		}
+		CurPost = CurPost->getNext ();
+	}
+	return FirstSPost;
+} /* SPost* CBookKeeping::getPostById (int Minimum,int Maximum) */

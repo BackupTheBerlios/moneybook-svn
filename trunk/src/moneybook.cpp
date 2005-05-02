@@ -21,19 +21,24 @@
 #include "engine/libmoneybook.h"
 
 int main () {
-	debug (false);
+	debug (true);
 	cdebug << "dit is een leuk programma" << std::endl;
 	CBookKeeping* Test = new CBookKeeping;
-	Test->addPost ("Kapitaal",1000,PASSIVE);
-	Test->addPost ("Bank",5500,ACTIVE);
-	
+	try {
+		Test->addPost ("Kapitaal",1000,PASSIVE);
+		Test->addPost ("Bank",5500,ACTIVE);
+		Test->addPost ("Bank",5500,ACTIVE);
+	}
+	catch (CException e) {
+		cdebug << "Exception occured: " << e.what << std::endl;
+	}
+	debug (false);
 	CJournalEdit* FirstJEdit = Test->newJournalEdit (true,Test->getPostByName ("Bank"),1000);
 	CJournalEdit* LastJEdit = FirstJEdit;
 	CJournalEdit* CurJEdit = Test->newJournalEdit (false,Test->getPostByName ("Kapitaal"),1000.01);
 	Test->setNextOnJournalEdit (CurJEdit,FirstJEdit,LastJEdit);
 	TDate Date;
 	Date.date= "Dit is de datum ";
-	debug (true);
 	try {
 		Test->bookJournal (Date,"BA 001/1 Fortis",FirstJEdit);
 		Test->bookJournal (Date,"BA 001/2 Fortis",FirstJEdit);

@@ -3,11 +3,6 @@
   <category title="tests" place="0"/>
   <category title="libmoneybook" place="1">
     <item>
-      <attribute id="1114870868" priority="1" done="0" start_date="732066" enddate="99999999" notify="0" endtime="-60" last_edited="1114870868"/>
-      <summary>addpost</summary>
-      <comment>check if a post with that name / number already exists</comment>
-    </item>
-    <item>
       <attribute id="1114870903" priority="1" done="0" start_date="732066" enddate="99999999" notify="0" endtime="-60" last_edited="1114870903"/>
       <summary>load</summary>
       <comment>add a load function</comment>
@@ -32,6 +27,11 @@ EMonth monthofyear?
       <attribute id="1114870893" priority="1" done="1" start_date="732066" completed_date="732067" notify="0" last_edited="1114969143"/>
       <summary>bookjournal</summary>
       <comment>see if the booking is in balance</comment>
+    </item>
+    <item>
+      <attribute id="1114870868" priority="1" done="1" start_date="732066" completed_date="732068" notify="0" last_edited="1115058790"/>
+      <summary>addpost</summary>
+      <comment>check if a post with that name / number already exists</comment>
     </item>
   </category>
   <category title="interface" place="2"/>

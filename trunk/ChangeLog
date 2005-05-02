@@ -1,5 +1,8 @@
 2005-05-02 Nathan Samson <nathansamson@gmail.com>
 
+	src/engine/libmoneybook.cpp: if you add a post and its name and/or id 
+		is already uesd in another post, throw an CException
+
 	src/engine/libmoneybook.h,src/engine/libmoneybook.cpp,src/genreal.h,
 	src/general.cpp,src/engine/tests/libmoenybook.cpp: re{placed,named} some search functions
 
