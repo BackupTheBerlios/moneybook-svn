@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
 <gtodo>
-  <category title="tests" place="0">
-    <item>
-      <attribute id="1114975592" priority="1" done="0" start_date="732067" enddate="99999999" notify="0" endtime="-60" last_edited="1114975592"/>
-      <summary>fix build</summary>
-      <comment>if you did not do make, make check will fail</comment>
-    </item>
-  </category>
+  <category title="tests" place="0"/>
   <category title="libmoneybook" place="1">
     <item>
       <attribute id="1114870868" priority="1" done="0" start_date="732066" enddate="99999999" notify="0" endtime="-60" last_edited="1114870868"/>
@@ -41,4 +35,11 @@ EMonth monthofyear?
     </item>
   </category>
   <category title="interface" place="2"/>
+  <category title="build-system" place="3">
+    <item>
+      <attribute id="1114975592" priority="1" done="0" start_date="732067" enddate="99999999" notify="0" endtime="-60" last_edited="1115057473"/>
+      <summary>fix build</summary>
+      <comment>if you did not do make, make check will fail</comment>
+    </item>
+  </category>
 </gtodo>

@@ -27,6 +27,8 @@
 
 #include "config.h"
 
+bool isInIntRange (int Minimum,int Maximum,int Number);
+
 class CException {
 	public:
 		CException (std::string ewhat) throw ();

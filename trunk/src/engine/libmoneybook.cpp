@@ -81,46 +81,15 @@ CBookKeeping::~CBookKeeping () {
 } /* CBookKeeping::~CBookKeeping ()  */
 
 /*!
-	returns of a number is in a defined rang, if so return true
-*/
-bool CBookKeeping::searchByNumber (int Minimum,int Maximum,int Number) {
-	bool BMinimum,BMaximum;
-	BMinimum = false;
-	BMaximum = false;
-	
-	if (Minimum == 0) {
-		BMinimum = true;
-	} else {
-		if (Number >= Minimum) {
-			BMinimum = true;
-		}
-	}
-	
-	if (Maximum == 0) {
-		BMaximum = true;
-	} else {
-		if (Number <= Maximum) {
-			BMaximum = true;
-		}
-	}
-	
-	if ((BMinimum == true) && (BMaximum == true)) {
-		return true;
-	} else {
-		return false;
-	}
-} /* bool CBookKeeping::searchByNumber (int Minimum,int Maximum,int Number) */
-
-/*!
 	returns all Journals who are in a range ( 0 is "I don't care" )
 */
-SJournal* CBookKeeping::getJournalByNumber (int Minimum,int Maximum) {
+SJournal* CBookKeeping::getJournalByNumberRange (int Minimum,int Maximum) {
 	CJournal* CurJournal = FirstJournal;
 	SJournal* FirstRJournal = 0;
 	SJournal* LastRJournal = 0;
 	
 	while (CurJournal != 0) {
-		if (searchByNumber (Minimum,Maximum,CurJournal->getId ())) {
+		if (isInIntRange (Minimum,Maximum,CurJournal->getId ())) {
 			SJournal* CurRJournal = new SJournal;
 			if (FirstRJournal == 0) {
 				FirstRJournal = CurRJournal;
@@ -135,7 +104,7 @@ SJournal* CBookKeeping::getJournalByNumber (int Minimum,int Maximum) {
 		CurJournal = CurJournal->getNext ();
 	}
 	return FirstRJournal;
-} /* CJournal* CBookKeeping::getJournalByNumber (int Minimum,int Maximum)  */
+} /* CJournal* CBookKeeping::getJournalByNumberRange (int Minimum,int Maximum)  */
 
 /*!
 	add a post in the dynamic list
@@ -183,7 +152,7 @@ CPost* CBookKeeping::getPostByName (std::string Name) {
 	while (CurPost != 0) {
 		cdebug << CurPost << std::endl;
 		if (CurPost->getName () == Name) {
-			cdebug << CurPost->getName () << Name<< std::endl;
+			cdebug << CurPost->getName () << CurPost<< std::endl;
 			return CurPost;
 		}
 		CurPost = CurPost->getNext();

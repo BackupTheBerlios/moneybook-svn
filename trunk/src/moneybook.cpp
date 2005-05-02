@@ -48,7 +48,7 @@ int main () {
 		std::cout << "Unexpected exception" << std::endl;
 	}
 	
-	SJournal* CurRJournal = Test->getJournalByNumber (0,0);
+	SJournal* CurRJournal = Test->getJournalByNumberRange (0,0);
 	while (CurRJournal != 0) {
 		std::cout << "Id: " << CurRJournal->Journal->getId () << " Date: "  << CurRJournal->Journal->getDate ().date << std::endl;
 		SJournalEdit* JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (true);

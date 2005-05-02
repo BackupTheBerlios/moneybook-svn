@@ -74,7 +74,7 @@ void LibMoneyBookTest::testBookJournalGood () {
 	TDate Date;
 	Date.date= "This is the date";
 	BookKeeping->bookJournal (Date,"BA 001/1 Fortis",FirstJEdit);
-	SJournal* CurJournal = BookKeeping->getJournalByNumber (1,1);
+	SJournal* CurJournal = BookKeeping->getJournalByNumberRange (1,1);
 	CPPUNIT_ASSERT_EQUAL (std::string ("BA 001/1 Fortis"),CurJournal->Journal->getDocument ());
 	CPPUNIT_ASSERT_EQUAL (std::string ("This is the date"),CurJournal->Journal->getDate ().date);
 	CPPUNIT_ASSERT (CurJournal->Journal->getId () == 1);

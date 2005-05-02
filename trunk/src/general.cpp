@@ -21,6 +21,37 @@
 
 #include "general.h"
 
+/*!
+	returns of a number is in a defined range, if so return true
+*/
+bool isInIntRange (int Minimum,int Maximum,int Number) {
+	bool BMinimum,BMaximum;
+	BMinimum = false;
+	BMaximum = false;
+	
+	if (Minimum == 0) {
+		BMinimum = true;
+	} else {
+		if (Number >= Minimum) {
+			BMinimum = true;
+		}
+	}
+	
+	if (Maximum == 0) {
+		BMaximum = true;
+	} else {
+		if (Number <= Maximum) {
+			BMaximum = true;
+		}
+	}
+	
+	if ((BMinimum == true) && (BMaximum == true)) {
+		return true;
+	} else {
+		return false;
+	}
+} /* bool isInIntRange (int Minimum,int Maximum,int Number) */
+
 CException::CException (std::string ewhat) throw () {
 	what = ewhat;
 } /* CException::CException (std::string ewhat) throw () */

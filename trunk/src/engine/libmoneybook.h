@@ -150,7 +150,7 @@ class CBookKeeping {
 	public:
 		CBookKeeping ();
 		~CBookKeeping (); 
-		SJournal* getJournalByNumber (int Minimum,int Maximum);
+		SJournal* getJournalByNumberRange (int Minimum,int Maximum);
 		bool bookJournal (TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit);
 		void addPost (std::string name,unsigned short id,SSortPost SortPost);
 		CJournalEdit* newJournalEdit (bool DebetEdit,CPost* Post,long double Value);

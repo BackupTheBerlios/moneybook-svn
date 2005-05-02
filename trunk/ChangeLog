@@ -1,5 +1,8 @@
 2005-05-02 Nathan Samson <nathansamson@gmail.com>
 
+	src/engine/libmoneybook.h,src/engine/libmoneybook.cpp,src/genreal.h,
+	src/general.cpp,src/engine/tests/libmoenybook.cpp: re{placed,named} some search functions
+
 	src/engine/libmoneybook.cpp,src/engine/libmoneybook.h,
 	src/engine/cpost.cpp: more english compatible
 
