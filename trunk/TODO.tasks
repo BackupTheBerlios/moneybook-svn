@@ -8,11 +8,6 @@
       <comment>add a load function</comment>
     </item>
     <item>
-      <attribute id="1114870945" priority="1" done="0" start_date="732066" enddate="99999999" notify="0" endtime="-60" last_edited="1114870945"/>
-      <summary>returnvalues</summary>
-      <comment>if an error occures in a function use throw</comment>
-    </item>
-    <item>
       <attribute id="1114892533" priority="1" done="0" start_date="732066" enddate="99999999" notify="0" endtime="-60" last_edited="1114892533"/>
       <summary>date</summary>
       <comment>change the day type
@@ -33,8 +28,20 @@ EMonth monthofyear?
       <summary>addpost</summary>
       <comment>check if a post with that name / number already exists</comment>
     </item>
+    <item>
+      <attribute id="1114870945" priority="1" done="1" start_date="732066" completed_date="732068" notify="0" last_edited="1115060542"/>
+      <summary>returnvalues</summary>
+      <comment>if an error occures in a function use throw</comment>
+    </item>
   </category>
-  <category title="interface" place="2"/>
+  <category title="interface" place="2">
+    <item>
+      <attribute id="1115060648" priority="1" done="0" start_date="732068" enddate="99999999" notify="0" endtime="-60" last_edited="1115060648"/>
+      <summary>basic</summary>
+      <comment>make a basic interface in ??gtkmm??
+supported: add journal, view all journals, view all posts, view some posts, view some journals, load,save,select language,...</comment>
+    </item>
+  </category>
   <category title="build-system" place="3">
     <item>
       <attribute id="1114975592" priority="1" done="0" start_date="732067" enddate="99999999" notify="0" endtime="-60" last_edited="1115057473"/>

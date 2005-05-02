@@ -115,7 +115,7 @@ long double CPost::getSaldo () {
 		CurPostEdit = CurPostEdit->getNext ();
 	}
 
-	if  ((SortPost == PASSIVE ) or (SortPost == TURNOVER)) {
+	if  ((SortPost == PASSIVE) || (SortPost == TURNOVER)) {
 		Saldo *= -1;
 	}
 

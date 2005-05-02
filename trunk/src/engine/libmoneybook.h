@@ -31,7 +31,7 @@ struct TDate {
 /*!
 	SSortPost, stores with types of posts you have
 */
-enum SSortPost { ACTIVE,PASSIVE,COST,TURNOVER,NOTVALID };
+enum SSortPost { ACTIVE,PASSIVE,COST,TURNOVER };
 std::string SortPostToString ( SSortPost SortPost );
 SSortPost StringToSortPost ( std::string SortPost );
 
@@ -156,16 +156,16 @@ class CBookKeeping {
 		CBookKeeping ();
 		~CBookKeeping (); 
 		SJournal* getJournalByNumberRange (int Minimum,int Maximum);
-		bool bookJournal (TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit);
+		void bookJournal (TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit);
 		void addPost (std::string name,unsigned short id,SSortPost SortPost);
 		CJournalEdit* newJournalEdit (bool DebetEdit,CPost* Post,long double Value);
-		bool setNextOnJournalEdit (CJournalEdit* CurJEdit,CJournalEdit* FirstJEdit,CJournalEdit* LastJEdit);
+		void setNextOnJournalEdit (CJournalEdit* CurJEdit,CJournalEdit* FirstJEdit,CJournalEdit* LastJEdit);
 		CPost* getPostByName (std::string Name);
 		CPost* getFirstPost ();
 		CPost* getLastPost ();
 		std::string getFileName ();
 		void setFileName (std::string sFileName);
-		bool save (std::string sFileName = "");
+		void save (std::string sFileName = "");
 		bool CBookKeeping::load (std::string LFileName = "",bool override = false);
 		SPost* getPostById (int Minimum,int Maximum);
 }; /* class CBookKeeping */

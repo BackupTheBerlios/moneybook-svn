@@ -31,7 +31,7 @@ std::string SortPostToString (SSortPost SortPost) {
 			break;
 		case TURNOVER: return "TURNOVER";
 			break;
-		default: return "NOTVALID";
+		default: throw CException ("Not a valid SPost");
 	}
 } /* std::string SortPostToString (SSortPost SortPost)  */
 
@@ -45,7 +45,7 @@ SSortPost StringToSortPost (std::string SortPost) {
 	} else if (SortPost == "TURNOVER") {
 		return TURNOVER;
 	} else {
-		return NOTVALID;
+		throw CException ("Not a valid SPost");
 	}
 } /* SSortPost StringToSortPost (std::string SortPost)  */
 
@@ -104,7 +104,7 @@ SJournal* CBookKeeping::getJournalByNumberRange (int Minimum,int Maximum) {
 		CurJournal = CurJournal->getNext ();
 	}
 	return FirstRJournal;
-} /* CJournal* CBookKeeping::getJournalByNumberRange (int Minimum,int Maximum)  */
+} /* SJournal* CBookKeeping::getJournalByNumberRange (int Minimum,int Maximum)  */
 
 /*!
 	add a post in the dynamic list
@@ -115,16 +115,13 @@ void CBookKeeping::addPost (std::string name,unsigned short id,SSortPost SortPos
 		cdebug << "add posts" << std::endl;
 		if (FirstPost == 0) {
 			FirstPost = CurPost;
-			cdebug << "FirstPost == empty" << std::endl;
 		} else {
 			LastPost->setNext (CurPost);
-			cdebug << "FirstPost != empty" << std::endl;
 		}
 		LastPost = CurPost;
 	} else {
 		cdebug << "Name and/or id already used in another post" << std::endl;
 		throw CException ("Name and/or id already used in another post");
-		cdebug << "Name and/or id already used in another post" << std::endl;
 	}
 } /* void CBookKeeping::addPost (std::string name,unsigned short id,SSortPost SortPost) */
 
@@ -132,22 +129,21 @@ void CBookKeeping::addPost (std::string name,unsigned short id,SSortPost SortPos
 	returns a new CJournalEdit*
 */
 CJournalEdit* CBookKeeping::newJournalEdit (bool DebetEdit,CPost* Post,long double Value) {
-	CJournalEdit* JournalEdit = new CJournalEdit (DebetEdit,Post,Value);
-	return JournalEdit;
+	return new CJournalEdit (DebetEdit,Post,Value);;
 } /* CJournalEdit* CBookKeeping::newJournalEdit (bool DebetEdit,CPost* Post,long double Value) */
 
 /*!
+	!!!I think i'm not going to use this anymore!!!
 	set the next on a given JournalEdit
 */
-bool CBookKeeping::setNextOnJournalEdit (CJournalEdit* CurJEdit,CJournalEdit* FirstJEdit,CJournalEdit* LastJEdit) {
+void CBookKeeping::setNextOnJournalEdit (CJournalEdit* CurJEdit,CJournalEdit* FirstJEdit,CJournalEdit* LastJEdit) {
 	if (FirstJEdit == 0)  {
 		FirstJEdit = CurJEdit;
 	} else {
 		LastJEdit->setNext (CurJEdit);
 	}
 	LastJEdit = CurJEdit;
-	return true;
-} /* bool CBookKeeping::setNextOnJournalEdit (CJournalEdit* CurJEdit,CJournalEdit* FirstJEdit,CJournalEdit* LastJEdit) */
+} /* void CBookKeeping::setNextOnJournalEdit (CJournalEdit* CurJEdit,CJournalEdit* FirstJEdit,CJournalEdit* LastJEdit) */
 
 /*!
 	returns a post whose name matches Name
@@ -162,9 +158,7 @@ CPost* CBookKeeping::getPostByName (std::string Name) {
 			return CurPost;
 		}
 		CurPost = CurPost->getNext();
-	} 
-	//cdebug << ""
-	cdebug << "empty" << std::endl;
+	}
 	return 0;
 } /* CPost* CBookKeeping::getPostByName (std::string Name) */
 
@@ -185,7 +179,7 @@ CPost* CBookKeeping::getLastPost () {
 /*!
 	book a journal, and book with that information also the corresponding posts
 */
-bool CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* FirstJournalEdit) {
+void CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* FirstJournalEdit) {
 	CJournalEdit* CurJournalEdit = FirstJournalEdit;
 	long double balance = 0;
 	while (CurJournalEdit != 0) {
@@ -196,7 +190,9 @@ bool CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* F
 		}
 		CurJournalEdit = CurJournalEdit->getNext ();
 	}
+
 	if (balance == 0) {
+		// Book it in the journals
 		CJournal* CurJournal; 
 		if ( FirstJournal == 0 ) {
 			CurJournal = new CJournal (JDate,Document,1,FirstJournalEdit);
@@ -223,7 +219,7 @@ bool CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* F
 	} else {
 		throw CException ("Not in balance");
 	}
-} /* CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit) throw() */
+} /* void CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit) throw() */
 
 /*!
 	get the current FileName
@@ -242,13 +238,13 @@ void CBookKeeping::setFileName ( std::string sFileName ) {
 /*!
 	save it, if sFileName is empty, use FileName, if that is empty return nothing and end
 */
-bool CBookKeeping::save (std::string sFileName) {	
-	if ( sFileName == "" ) {
-		if ( FileName != "" ) {
+void CBookKeeping::save (std::string sFileName) {	
+	if (sFileName == "") {
+		if (FileName != "") {
 			sFileName = FileName;
 		} else {
-			cdebug << "Error, no filename given, return false" << std::endl;
-			return false;
+			cdebug << "Error, no filename given" << std::endl;
+			throw CException ("Error, no filename given");
 		}
 	} else {
 		FileName = sFileName;
@@ -257,6 +253,8 @@ bool CBookKeeping::save (std::string sFileName) {
 
 	if (File.is_open())
 	{
+		cdebug << "Saving as: " << FileName << "..." << std::endl;
+		// Header
 		File << "<?xml version=\"1.0\"?>\n";
 		File << "<bookkeeping>\n";
 		
@@ -293,10 +291,10 @@ bool CBookKeeping::save (std::string sFileName) {
 		File << "\t</journals>\n";
 
 		File << "</bookkeeping>";
+		File.close();
+	} else {
+		throw CException ("Can not save, can not open file");
 	}
-	File.close();
-	cdebug << "saved as: " << sFileName << std::endl;
-	return true;
 } /* void CBookKeeping::save (std::string sFileName)  */
 
 /*!

@@ -1,5 +1,8 @@
 2005-05-02 Nathan Samson <nathansamson@gmail.com>
 
+	src/engine/libmoneybook.h,src/engine/libmoneybook.cpp,
+		src/engine/libmoneybook.cpp: cleaned some code (cdebug, ret vals and comments) changed or in ||
+
 	src/engine/libmoneybook.cpp: if you add a post and its name and/or id 
 		is already uesd in another post, throw an CException
 
