@@ -29,7 +29,7 @@ std::string SortPostToString (SSortPost SortPost) {
 			break;
 		case COST: return "COST";
 			break;
-		case WINST: return "WINST";
+		case TURNOVER: return "TURNOVER";
 			break;
 		default: return "NOTVALID";
 	}
@@ -42,8 +42,8 @@ SSortPost StringToSortPost (std::string SortPost) {
 		return PASSIVE;
 	} else if (SortPost == "COST") {
 		return COST;
-	} else if (SortPost == "WINST") {
-		return WINST;
+	} else if (SortPost == "TURNOVER") {
+		return TURNOVER;
 	} else {
 		return NOTVALID;
 	}

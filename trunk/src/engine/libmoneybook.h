@@ -31,7 +31,7 @@ struct TDate {
 /*!
 	SSortPost, stores with types of posts you have
 */
-enum SSortPost { ACTIVE,PASSIVE,COST,WINST,NOTVALID };
+enum SSortPost { ACTIVE,PASSIVE,COST,TURNOVER,NOTVALID };
 std::string SortPostToString ( SSortPost SortPost );
 SSortPost StringToSortPost ( std::string SortPost );
 

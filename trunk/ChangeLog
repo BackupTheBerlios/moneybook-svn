@@ -1,3 +1,8 @@
+2005-05-02 Nathan Samson <nathansamson@gmail.com>
+
+	src/engine/libmoneybook.cpp,src/engine/libmoneybook.h,
+	src/engine/cpost.cpp: more english compatible
+
 2005-05-01 Nathan Samson <nathansamson@gmail.com>
 
 	src/enigne/Makefile.am, src/engine/tests/Makefile.am: fixed cdebug
