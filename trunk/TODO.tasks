@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <gtodo>
-  <category title="tests" place="0"/>
-  <category title="libmoneybook" place="1">
+  <category title="tests" place="0">
     <item>
-      <attribute id="1114870903" priority="1" done="0" start_date="732066" enddate="99999999" notify="0" endtime="-60" last_edited="1114870903"/>
-      <summary>load</summary>
-      <comment>add a load function</comment>
+      <attribute id="1115234529" priority="1" done="0" start_date="732070" enddate="99999999" notify="0" endtime="-60" last_edited="1115234529"/>
+      <summary>save/load</summary>
+      <comment>Add save and load tests</comment>
     </item>
+  </category>
+  <category title="libmoneybook" place="1">
     <item>
       <attribute id="1114892533" priority="1" done="0" start_date="732066" enddate="99999999" notify="0" endtime="-60" last_edited="1114892533"/>
       <summary>date</summary>
@@ -32,6 +33,16 @@ EMonth monthofyear?
       <attribute id="1114870945" priority="1" done="1" start_date="732066" completed_date="732068" notify="0" last_edited="1115060542"/>
       <summary>returnvalues</summary>
       <comment>if an error occures in a function use throw</comment>
+    </item>
+    <item>
+      <attribute id="1114870903" priority="1" done="1" start_date="732066" completed_date="732070" notify="0" last_edited="1115234503"/>
+      <summary>load</summary>
+      <comment>add a load function</comment>
+    </item>
+    <item>
+      <attribute id="1115234585" priority="1" done="0" start_date="732070" enddate="99999999" notify="0" endtime="-60" last_edited="1115234585"/>
+      <summary>save/load date</summary>
+      <comment>Change save and load so that dates can be saved and loaded</comment>
     </item>
   </category>
   <category title="interface" place="2">

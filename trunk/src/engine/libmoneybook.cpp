@@ -455,15 +455,14 @@ SPost* CBookKeeping::getPostById (int Minimum,int Maximum) {
 } /* SPost* CBookKeeping::getPostById (int Minimum,int Maximum) */
 
 void CBookKeeping::loadFromParser (DOMNode *n) {
-	cdebug << "searching tag bookkeeping" << std::endl;
 	DOMNode* tagpost = 0;
+	DOMNode* tagjournal = 0;
 	try {
-		//DOMNode* tagbookkeeping = getTagByName (n,"bookkeeping");
-		//cdebug << "searching tag psots" << std::endl;
 		DOMNode* tagposts = getTagByName (n,"posts");
-		cdebug << "get the first child" << std::endl;
 		tagpost = tagposts->getFirstChild ();
-		cdebug << "tagpost != 0" << std::endl;
+
+		DOMNode* tagjournals = getTagByName (n,"journals");
+		tagjournal = tagjournals->getFirstChild ();
 	}
 	catch (CException e) {
 		cdebug << "Exception occured" << e.what << std::endl;
@@ -471,6 +470,7 @@ void CBookKeeping::loadFromParser (DOMNode *n) {
 	catch (...) {
 		cdebug << "Uknown exception occured" << std::endl;
 	}
+
 	while (tagpost != 0) {
 		if (std::string(XMLString::transcode (tagpost->getNodeName())) == "post") {
 			cdebug << "Post found" << std::endl;
@@ -489,5 +489,57 @@ void CBookKeeping::loadFromParser (DOMNode *n) {
 		}
 		tagpost = tagpost->getNextSibling ();
 	}
+	debug (true);
+	while (tagjournal != 0) {
+		if (std::string(XMLString::transcode (tagjournal->getNodeName())) == "journal") {
+			cdebug << "Journal found" << std::endl;
 
+			CJournalEdit* FirstJournalEdit = 0;
+			CJournalEdit* LastJournalEdit = 0;
+			CJournalEdit* CurJournalEdit = 0;
+
+			// check for journaledit
+			DOMNode* tagjournaledit = tagjournal->getFirstChild ();
+			while (tagjournaledit != 0) {
+				if (std::string(XMLString::transcode (tagjournaledit->getNodeName())) == "journaledit") {
+					cdebug << "Journaledit found" << std::endl;
+					CPost* post = getPostByName(getAttributeByName (tagjournaledit,"postname"));
+					cdebug << post << std::endl;
+					long double value = atof (getAttributeByName (tagjournaledit,"value").c_str());
+					// it is a number (0 or 1) but it is an bool
+					bool debetedit = atoi (getAttributeByName (tagjournaledit,"debetedit").c_str ());
+					try {
+						cdebug << "ADD JOURNALEDIT" << std::endl;
+						CurJournalEdit = new CJournalEdit (debetedit,post,value);
+					}
+					catch (CException e) {
+						cdebug << "Exception occured: " << e.what;
+					}
+					if (FirstJournalEdit == 0) {
+						FirstJournalEdit = CurJournalEdit;
+					} else {
+						LastJournalEdit->setNext (CurJournalEdit);
+					}
+					LastJournalEdit = CurJournalEdit;
+				} else {
+					cdebug << "Not a usable tag: " << XMLString::transcode (tagjournaledit->getNodeName()) << std::endl;
+				}
+				tagjournaledit = tagjournaledit->getNextSibling ();
+			}
+
+			try {
+				std::string document = getAttributeByName (tagjournal,"document");
+				TDate date;
+				date.date = "Dit is de zelfgemaakte datum";
+				bookJournal (date,document,FirstJournalEdit);
+			}
+			catch (CException e) {
+				cdebug << "ADD Journal" << std::endl;
+			}
+		} else {
+			cdebug << "Not a usable tag: " << XMLString::transcode (tagjournal->getNodeName()) << std::endl;
+		}
+		tagjournal = tagjournal->getNextSibling ();
+	}
+	debug (false);
 } /* void CBookKeeping::loadFromParser (DOMNode *n) */ 

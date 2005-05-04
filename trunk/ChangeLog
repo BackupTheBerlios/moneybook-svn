@@ -1,5 +1,8 @@
 2005-05-02 Nathan Samson <nathansamson@gmail.com>
 
+	src/engine/libmoneybook.cpp: you can load a whole bookkeeping from a file
+		only dates are not working yet.
+
 	src/engine/libmoneybook.cpp,src/engine/libmoneybook.h:
 		you can load posts from a file
 
