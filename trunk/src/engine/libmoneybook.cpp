@@ -15,11 +15,23 @@
   *  along with this program; if not, write to the Free Software
   *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+#include <cassert>
 #include <fstream>
 #include <string>
 
+#include <xercesc/dom/DOMAttr.hpp>
+#include <xercesc/dom/DOMDocument.hpp>
+#include <xercesc/dom/DOMError.hpp>
+#include <xercesc/dom/DOMException.hpp>
+#include <xercesc/dom/DOMNamedNodeMap.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
+#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/util/OutOfMemoryException.hpp>
+
 #include "../general.h"
 #include "libmoneybook.h"
+
+XERCES_CPP_NAMESPACE_USE;
 
 std::string SortPostToString (SSortPost SortPost) {
 	switch ( SortPost ) {
@@ -48,6 +60,48 @@ SSortPost StringToSortPost (std::string SortPost) {
 		throw CException ("Not a valid SPost");
 	}
 } /* SSortPost StringToSortPost (std::string SortPost)  */
+
+std::string getAttributeByName (DOMNode* node, std::string attrName) {
+	std::cout << "getAttr" << std::endl;
+	assert (node->getNodeType () == DOMNode::ELEMENT_NODE);
+	
+	std::string value = "";
+	
+	if (node->hasAttributes()) {
+		DOMNamedNodeMap *pAttributes = node->getAttributes ();
+		
+		for (unsigned int i = 0; i < pAttributes->getLength (); i++) {
+			DOMAttr* pAttributeNode = (DOMAttr*) pAttributes->item(i);
+			char* name = XMLString::transcode(pAttributeNode->getName());
+			if (name == attrName) {
+				char* tmpValue = XMLString::transcode(pAttributeNode->getValue());
+				value = tmpValue;
+				XMLString::release(&tmpValue);
+			}
+			XMLString::release(&name);
+		}
+	} else {
+		cdebug << "Error in file to parse" << std::endl;
+		throw ("Error in file to parse attributes");
+	}
+	cdebug << value << std::endl;
+	return value;
+} /* std::string getAttributeByName (DOMNode* node, std::string attrName) */
+
+DOMNode* getTagByName (DOMNode* node, std::string tagName) {
+	assert (node->getNodeType () == DOMNode::ELEMENT_NODE);
+	
+	DOMNode* tag = 0;
+	DOMNode* CurNode = node->getFirstChild ();
+	while (CurNode != 0) {
+		if (std::string (XMLString::transcode (CurNode->getNodeName())) == tagName) {
+			cdebug << "Found..." << XMLString::transcode (CurNode->getNodeName()) << std::endl;
+			return CurNode;
+		}
+		CurNode = CurNode->getNextSibling ();
+	}
+	throw ("Not found");
+} /* DOMNode* getTagByName (DOMNode* node, std::string tagName) */
 
 /*!
 	Constructor CBookKeeping
@@ -304,13 +358,14 @@ void CBookKeeping::save (std::string sFileName) {
 	must be true to load a file
 */
 bool CBookKeeping::load (std::string LFileName,bool override) {
+	bool load = false;
 	if (LFileName != "") {
 		if (FileName == "") {
 			FileName = LFileName;
 		} else {
 			cdebug << "There is already assigned a filename" << std::endl;
 			if (override == false) {
-				return false;
+				throw CException ("There is already assigned a filename");
 			} else {
 				cdebug << "override" << std::endl;
 				FileName = LFileName;
@@ -322,7 +377,7 @@ bool CBookKeeping::load (std::string LFileName,bool override) {
 		} else {
 			cdebug << "There is already assigned a filename" << std::endl;
 			if (override == false) {
-				return false;
+				throw CException ("There is already assigned a filename");
 			} else {
 				cdebug << "override" << std::endl;
 				FileName = LFileName;
@@ -330,18 +385,47 @@ bool CBookKeeping::load (std::string LFileName,bool override) {
 		}
 	}
 
-	if ( ( FirstJournal == 0 ) and ( FirstPost == 0 ) ) {
-		
-	} else {
+	if ((FirstJournal != 0) and (FirstPost != 0)) {
 		cdebug << "Already modified" << std::endl;
 		if ( override == false ) {
-			return false;
+			throw CException ("Already modified");
 		} else {
 			cdebug << "override" << std::endl;
 		}
 	}
+	// now the file is ready to load
+	cdebug << "Loading..." << std::endl;
+	// Initialize the XML4C2 system
+	XMLPlatformUtils::Initialize();
 
-	return true;
+	// Create our parser, then attach an error handler to the parser.
+	// The parser will call back to methods of the ErrorHandler if it
+	// discovers errors during the course of parsing the XML document.
+	XercesDOMParser* parser = new XercesDOMParser;
+	parser->setDoNamespaces (false);
+	parser->setDoSchema (false);
+	parser->setCreateEntityReferenceNodes (false);
+	try {
+		parser->parse (FileName.c_str());
+	} catch (XMLException& e) {
+		std::cerr << "Error occured during parsing" << std::endl;
+		throw CException ("XML Error occured during parsing");
+	} catch (DOMException& e) {
+		std::cerr << "Error occured during parsing" << std::endl;
+		throw CException ("Dom Error occured during parsing");
+	} catch (...) {
+		cdebug << "Unknown error occured during parsing" << std::endl;
+		throw CException ("Unknown error occured during parsing");
+	}
+
+	DOMDocument* doc = 0;
+	doc = parser->getDocument ();
+	loadFromParser ((DOMNode*)doc->getDocumentElement ());
+
+	delete parser;
+	// And call the termination method
+	XMLPlatformUtils::Terminate ();
+	cdebug << "Opened bookkeeping document \""<< FileName <<"\"" << std::endl;
 } /* bool CBookKeeping::load (std::string LFileName,bool override) */ 
 
 /*
@@ -369,3 +453,41 @@ SPost* CBookKeeping::getPostById (int Minimum,int Maximum) {
 	}
 	return FirstSPost;
 } /* SPost* CBookKeeping::getPostById (int Minimum,int Maximum) */
+
+void CBookKeeping::loadFromParser (DOMNode *n) {
+	cdebug << "searching tag bookkeeping" << std::endl;
+	DOMNode* tagpost = 0;
+	try {
+		//DOMNode* tagbookkeeping = getTagByName (n,"bookkeeping");
+		//cdebug << "searching tag psots" << std::endl;
+		DOMNode* tagposts = getTagByName (n,"posts");
+		cdebug << "get the first child" << std::endl;
+		tagpost = tagposts->getFirstChild ();
+		cdebug << "tagpost != 0" << std::endl;
+	}
+	catch (CException e) {
+		cdebug << "Exception occured" << e.what << std::endl;
+	}
+	catch (...) {
+		cdebug << "Uknown exception occured" << std::endl;
+	}
+	while (tagpost != 0) {
+		if (std::string(XMLString::transcode (tagpost->getNodeName())) == "post") {
+			cdebug << "Post found" << std::endl;
+			std::string name = getAttributeByName (tagpost,"name");
+			unsigned short id = atoi (getAttributeByName (tagpost,"id").c_str());
+			SSortPost sortpost = StringToSortPost (getAttributeByName (tagpost,"sort"));
+			try {
+				cdebug << "Adding post" << name << " " << id;
+				addPost (name,id,sortpost);
+			}
+			catch (CException e) {
+				cdebug << "Exception occured: " << e.what << std::endl;
+			}
+		} else {
+			cdebug << "Not a usuable tag: " << XMLString::transcode (tagpost->getNodeName()) << std::endl;
+		}
+		tagpost = tagpost->getNextSibling ();
+	}
+
+} /* void CBookKeeping::loadFromParser (DOMNode *n) */ 

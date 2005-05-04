@@ -25,66 +25,16 @@ int main () {
 	cdebug << "dit is een leuk programma" << std::endl;
 	CBookKeeping* Test = new CBookKeeping;
 	try {
-		Test->addPost ("Kapitaal",1000,PASSIVE);
-		Test->addPost ("Bank",5500,ACTIVE);
-		Test->addPost ("Bank",5500,ACTIVE);
+		Test->load ("first.xml");
 	}
 	catch (CException e) {
 		cdebug << "Exception occured: " << e.what << std::endl;
 	}
-	debug (false);
-	CJournalEdit* FirstJEdit = Test->newJournalEdit (true,Test->getPostByName ("Bank"),1000);
-	CJournalEdit* LastJEdit = FirstJEdit;
-	CJournalEdit* CurJEdit = Test->newJournalEdit (false,Test->getPostByName ("Kapitaal"),1000.01);
-	Test->setNextOnJournalEdit (CurJEdit,FirstJEdit,LastJEdit);
-	TDate Date;
-	Date.date= "Dit is de datum ";
-	try {
-		Test->bookJournal (Date,"BA 001/1 Fortis",FirstJEdit);
-		Test->bookJournal (Date,"BA 001/2 Fortis",FirstJEdit);
-		Test->bookJournal (Date,"BA 001/3 Fortis",FirstJEdit);
-		Test->bookJournal (Date,"BA 001/4 Fortis",FirstJEdit);
-		Test->bookJournal (Date,"BA 001/5 Fortis",FirstJEdit);
-	}
-	catch (CException e) {
-		std::cout << "Exception occured: " << e.what << std::endl;
-	}
 	catch (...) {
-		std::cout << "Unexpected exception" << std::endl;
+		cdebug << "Uknown exception occured: " << std::endl;
 	}
-	
-	SJournal* CurRJournal = Test->getJournalByNumberRange (0,0);
-	while (CurRJournal != 0) {
-		std::cout << "Id: " << CurRJournal->Journal->getId () << " Date: "  << CurRJournal->Journal->getDate ().date << std::endl;
-		SJournalEdit* JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (true);
-		while (JournalEdit != 0) {
-			std::cout << JournalEdit->JournalEdit->getPost ()->getId () << "  ";
-			std::cout << JournalEdit->JournalEdit->getPost ()->getName () << "  " ;
-			std::cout << JournalEdit->JournalEdit->getValue () << std::endl;
-			JournalEdit = JournalEdit->Next;
-		};
-		std::cout << "                  @" << std::endl;
-		JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (false);
-		while (JournalEdit != 0) {
-			std::cout << JournalEdit->JournalEdit->getPost ()->getId () << "  ";
-			std::cout << JournalEdit->JournalEdit->getPost ()->getName () << "  ";
-			std::cout << "            " << JournalEdit->JournalEdit->getValue () << std::endl;
-			JournalEdit = JournalEdit->Next;
-		};
-		std::cout << std::endl << std::endl;
-		CurRJournal = CurRJournal->Next;
-	}
-	
-	CPost* CurPost = Test->getFirstPost ();
-	while (CurPost != 0) {
-		std::cout << "Id: " << CurPost->getId () << " Name: " << CurPost->getName () << std::endl;
-		std::cout << " Saldo: " << CurPost->getSaldo () << std::endl;
-		CurPost = CurPost->getNext ();
-	};
-	Test->save ();
-	Test->setFileName ("first.xml");
-	Test->save ();
-	Test->addPost ("Kas",5700,ACTIVE);
-	Test->save ("second.xml");
+
+	std::cout << Test->getPostByName ("Kapitaal") << std::endl;
+
 	delete Test;
 }

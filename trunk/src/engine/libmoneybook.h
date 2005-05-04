@@ -21,6 +21,17 @@
 
 #include <string>
 
+#include <xercesc/dom/DOMAttr.hpp>
+#include <xercesc/dom/DOMDocument.hpp>
+#include <xercesc/dom/DOMError.hpp>
+#include <xercesc/dom/DOMException.hpp>
+#include <xercesc/dom/DOMNamedNodeMap.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
+#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/util/OutOfMemoryException.hpp>
+
+XERCES_CPP_NAMESPACE_USE;
+
 /*!
 	Date, can store dates ( in all types and formats )
 */
@@ -150,8 +161,9 @@ class CBookKeeping {
 		CPost* FirstPost;
 		CJournal* FirstJournal;
 		CJournal* LastJournal;
-		bool searchByNumber (int Minimum,int Maximum,int Number);
 		std::string FileName;
+
+		void loadFromParser (DOMNode* n);
 	public:
 		CBookKeeping ();
 		~CBookKeeping (); 
@@ -168,6 +180,7 @@ class CBookKeeping {
 		void save (std::string sFileName = "");
 		bool CBookKeeping::load (std::string LFileName = "",bool override = false);
 		SPost* getPostById (int Minimum,int Maximum);
+		
 }; /* class CBookKeeping */
 
 #endif /* BOOKKEEPING_H  */

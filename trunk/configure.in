@@ -4,6 +4,20 @@ AC_HEADER_STDBOOL
 AM_INIT_AUTOMAKE(moneybook,0.1,20050419)
 AM_PATH_CPPUNIT(1.9.6)
 
+#AC_CHECK_PROG (have_xerces, xerces-c-config, yes, no)
+#if test "$have_xerces" = yes; then
+#	XML4C_CFLAGS=" `xerces-c-config --cflags` "
+#	XML4C_LIBS=" `xerces-c-config --libs` "
+#else
+#	XML4C_CFLAGS=" -I/usr/include/xercesc "
+#	XML4C_LIBS=" -lxerces-c "
+#fi
+ 
+AC_ARG_WITH(xml4c,
+	[AS_HELP_STRING( --with-xml4c=DIR, use xml4c install rooted at <DIR>)],
+        [XML4C_CFLAGS=" -I$withval/include "
+	 XML4C_LIBS=" -L$withval/lib -lxerces-c "])
+
 AC_ARG_ENABLE(
 	[debug],
 	[AS_HELP_STRING(--enable-debug,build with debugging information (default NO)

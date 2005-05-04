@@ -1,5 +1,10 @@
 2005-05-02 Nathan Samson <nathansamson@gmail.com>
 
+	src/engine/libmoneybook.cpp,src/engine/libmoneybook.h:
+		you can load posts from a file
+
+2005-05-02 Nathan Samson <nathansamson@gmail.com>
+
 	src/engine/libmoneybook.h,src/engine/libmoneybook.cpp,
 		src/engine/libmoneybook.cpp: cleaned some code (cdebug, ret vals and comments) changed or in ||
 
