@@ -21,12 +21,12 @@
 /*!
 	Constructor of CJournalEdit
 */
-CJournalEdit::CJournalEdit (bool JDebetEdit,CPost* JPost,long double JValue) {
+CJournalEdit::CJournalEdit (bool JDebetEdit,CPost* JPost,mint JValue) {
 	DebetEdit = JDebetEdit;
 	Post = JPost;
 	Value = JValue;
 	Next = 0;
-} /* CJournalEdit::CJournalEdit (bool JDebetEdit,CPost* JPost,long double JValue) */
+} /* CJournalEdit::CJournalEdit (bool JDebetEdit,CPost* JPost,mint JValue) */
 
 /*!
 	Destructor of CJournalEdit
@@ -66,6 +66,6 @@ CPost* CJournalEdit::getPost () {
 /*!
 	returns the value of this CJournalEdit
 */
-long double CJournalEdit::getValue () {
+mint CJournalEdit::getValue () {
 	return Value;
-} /* long double CJournalEdit::getValue () */
+} /* mint CJournalEdit::getValue () */

@@ -21,12 +21,12 @@
 /*!
 	Constructor of CPostEdit
 */
-CPostEdit::CPostEdit (bool PDebetEdit,long double PValue,unsigned int BookNumber) {
+CPostEdit::CPostEdit (bool PDebetEdit,mint PValue,unsigned int BookNumber) {
 	DebetEdit = PDebetEdit;
 	Value = PValue;
 	Number = BookNumber;
 	Next = 0;
-} /* CPostEdit::CPostEdit (bool PDebetEdit,long double PValue,unsigned int BookNumber)*/
+} /* CPostEdit::CPostEdit (bool PDebetEdit,mint PValue,unsigned int BookNumber)*/
 
 /*!
 	Destructor of CPostEdit
@@ -52,9 +52,9 @@ void CPostEdit::setNext (CPostEdit* PNext) {
 /*!
 	returns the Value of the PostEdit
 */
-long double CPostEdit::getValue () {
+mint CPostEdit::getValue () {
 	return Value;
-} /* long double CPostEdit::getValue */
+} /* mint CPostEdit::getValue */
 
 /*!
 	returns true if it is an Edit on the DebetSide

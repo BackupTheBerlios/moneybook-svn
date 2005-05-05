@@ -105,9 +105,9 @@ void CPost::setLastPostEdit (CPostEdit* PLastEdit) {
 /*!
 	get the Saldo of the Post
 */
-long double CPost::getSaldo () {
+mint CPost::getSaldo () {
 	CPostEdit* CurPostEdit = FirstPostEdit;
-	long double Saldo = 0;
+	mint Saldo = 0;
 	while (CurPostEdit != 0)  {
 		if (CurPostEdit->getDebetEdit () == true) {
 			Saldo += CurPostEdit->getValue ();
@@ -121,7 +121,7 @@ long double CPost::getSaldo () {
 		Saldo *= -1;
 	}
 	return Saldo;
-} /* unsigned long CPost::getSaldo () */
+} /* mint CPost::getSaldo () */
 
 /*!
 	returns the Sort of Post

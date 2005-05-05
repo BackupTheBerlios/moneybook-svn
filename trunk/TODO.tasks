@@ -49,6 +49,11 @@ EMonth monthofyear?
       <summary>save/load date</summary>
       <comment>Change save and load so that dates can be saved and loaded</comment>
     </item>
+    <item>
+      <attribute id="1115317363" priority="1" done="1" start_date="732071" completed_date="732071" notify="0" last_edited="1115319602"/>
+      <summary>fix precision</summary>
+      <comment>fix the precision of the money (now there are problems with the tests)</comment>
+    </item>
   </category>
   <category title="interface" place="2">
     <item>

@@ -180,11 +180,12 @@ void CBookKeeping::addPost (std::string name,unsigned short id,SSortPost SortPos
 } /* void CBookKeeping::addPost (std::string name,unsigned short id,SSortPost SortPost) */
 
 /*!
+	!!!I think i'm not going to use this anymore!!!
 	returns a new CJournalEdit*
 */
-CJournalEdit* CBookKeeping::newJournalEdit (bool DebetEdit,CPost* Post,long double Value) {
-	return new CJournalEdit (DebetEdit,Post,Value);;
-} /* CJournalEdit* CBookKeeping::newJournalEdit (bool DebetEdit,CPost* Post,long double Value) */
+CJournalEdit* CBookKeeping::newJournalEdit (bool DebetEdit,CPost* Post,mint Value) {
+	return new CJournalEdit (DebetEdit,Post,Value);
+} /* CJournalEdit* CBookKeeping::newJournalEdit (bool DebetEdit,CPost* Post,mint Value) */
 
 /*!
 	!!!I think i'm not going to use this anymore!!!
@@ -348,7 +349,7 @@ void CBookKeeping::save (std::string sFileName) {
 		}
 		File << "\t</journals>\n";
 
-		File << "</bookkeeping>";
+		File << "</bookkeeping>\n";
 		File.close();
 	} else {
 		throw CException ("Can not save, can not open file");
@@ -497,7 +498,7 @@ void CBookKeeping::loadFromParser (DOMNode *n) {
 					cdebug << "Journaledit found" << std::endl;
 					CPost* post = getPostByName(getAttributeByName (tagjournaledit,"postname"));
 					cdebug << post << std::endl;
-					long double value = atof (getAttributeByName (tagjournaledit,"value").c_str());
+					mint value = atoi (getAttributeByName (tagjournaledit,"value").c_str());
 					// it is a number (0 or 1) but it is an bool
 					bool debetedit = atoi (getAttributeByName (tagjournaledit,"debetedit").c_str ());
 					try {

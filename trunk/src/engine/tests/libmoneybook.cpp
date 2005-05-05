@@ -34,9 +34,9 @@ void LibMoneyBookTest::setUp () {
 	BookKeeping->addPost ("Kapitaal",1000,PASSIVE);
 	BookKeeping->addPost ("Bank RC Fortis",5500,ACTIVE);
 
-	CJournalEdit* FirstJEdit = BookKeeping->newJournalEdit (true,BookKeeping->getPostByName ("Bank RC Fortis"),1000.05);
+	CJournalEdit* FirstJEdit = BookKeeping->newJournalEdit (true,BookKeeping->getPostByName ("Bank RC Fortis"),100005);
 	CJournalEdit* LastJEdit = FirstJEdit;
-	CJournalEdit* CurJEdit = BookKeeping->newJournalEdit (false,BookKeeping->getPostByName ("Kapitaal"),1000.05);
+	CJournalEdit* CurJEdit = BookKeeping->newJournalEdit (false,BookKeeping->getPostByName ("Kapitaal"),100005);
 	BookKeeping->setNextOnJournalEdit (CurJEdit,FirstJEdit,LastJEdit);
 	CJournalEdit* CurJournalEdit = FirstJEdit;
 
@@ -71,20 +71,20 @@ void LibMoneyBookTest::testBookJournalGood () {
 
 	CJournalEdit* CurJournalEdit = CurJournal->Journal->getFirstJournalEdit ();
 
-	CPPUNIT_ASSERT (CurJournalEdit->getValue () == 1000.05);
+	CPPUNIT_ASSERT (CurJournalEdit->getValue () == 100005);
 	CPPUNIT_ASSERT (CurJournalEdit->getDebetEdit () == true);
 	CPPUNIT_ASSERT_EQUAL (std::string ("Bank RC Fortis"),CurJournalEdit->getPost ()->getName ());
 	
 	CurJournalEdit = CurJournalEdit->getNext ();
-	CPPUNIT_ASSERT (CurJournalEdit->getValue () == 1000.05);
+	CPPUNIT_ASSERT (CurJournalEdit->getValue () == 100005);
 	CPPUNIT_ASSERT (CurJournalEdit->getDebetEdit () == false);
 	CPPUNIT_ASSERT_EQUAL (std::string ("Kapitaal"),CurJournalEdit->getPost () ->getName ());
 }
 
 void LibMoneyBookTest::testBookJournalBad () {
-	CJournalEdit* FirstJEdit = BookKeeping->newJournalEdit (true,BookKeeping->getPostByName ("Bank RC Fortis"),1000.05);
+	CJournalEdit* FirstJEdit = BookKeeping->newJournalEdit (true,BookKeeping->getPostByName ("Bank RC Fortis"),100005);
 	CJournalEdit* LastJEdit = FirstJEdit;
-	CJournalEdit* CurJEdit = BookKeeping->newJournalEdit (false,BookKeeping->getPostByName ("Kapitaal"),1000.06);
+	CJournalEdit* CurJEdit = BookKeeping->newJournalEdit (false,BookKeeping->getPostByName ("Kapitaal"),100006);
 	BookKeeping->setNextOnJournalEdit (CurJEdit,FirstJEdit,LastJEdit);
 	CJournalEdit* CurJournalEdit = FirstJEdit;
 	TDate Date;
@@ -170,21 +170,27 @@ void LibMoneyBookTest::testLoad () {
 	cdebug << "Loaded..." << std::endl;
 	delete BookKeeping;
 	BookKeeping = new CBookKeeping;
-	BookKeeping->load ("./src/engine/tests/firstloadtest.xml");
+	try { 
+		BookKeeping->load ("./src/engine/tests/firstloadtest.xml");
+	}
+	catch (CException e) {
+		std::cout << "Exception occured: " << e.what << std::endl;
+		CPPUNIT_ASSERT_EQUAL (0,1);
+	}
 	
-	long double test = 9001;
+	mint test = 900105;
 	short unsigned int number = 10000;
 	CPPUNIT_ASSERT_EQUAL (BookKeeping->getPostByName ("Kapitaal")->getSaldo (),test);
 	CPPUNIT_ASSERT_EQUAL (number,BookKeeping->getPostByName ("Kapitaal")->getId ());
 	CPPUNIT_ASSERT_EQUAL (std::string("PASSIVE"),SortPostToString(BookKeeping->getPostByName ("Kapitaal")->getSortPost ()));
 
-	test = 2000;
+	test = 200030;
 	number = 57000;
 	CPPUNIT_ASSERT_EQUAL (BookKeeping->getPostByName ("Kas")->getSaldo (),test);
 	CPPUNIT_ASSERT_EQUAL (number,BookKeeping->getPostByName ("Kas")->getId ());
 	CPPUNIT_ASSERT_EQUAL (std::string("ACTIVE"),SortPostToString(BookKeeping->getPostByName ("Kas")->getSortPost ()));
 
-	test = 7001;
+	test = 700075;
 	number = 55000;
 	CPPUNIT_ASSERT_EQUAL (BookKeeping->getPostByName ("Bank")->getSaldo (),test);
 	CPPUNIT_ASSERT_EQUAL (number,BookKeeping->getPostByName ("Bank")->getId ());

@@ -32,6 +32,10 @@
 
 XERCES_CPP_NAMESPACE_USE;
 
+// this is an int, but the 2 last digits represents the precision after the comma
+// floats are not precise enough
+typedef long int mint;
+
 /*!
 	Date, can store dates ( in all types and formats )
 */
@@ -51,17 +55,17 @@ SSortPost StringToSortPost ( std::string SortPost );
 */
 class CPostEdit {
 	private:
-		long double Value;
+		mint Value;
 		bool DebetEdit;
 		unsigned int Number;
 
 		CPostEdit* Next;
 	public:
-		CPostEdit (bool PDebetEdit,long double PValue,unsigned int BookNumber);
+		CPostEdit (bool PDebetEdit,mint PValue,unsigned int BookNumber);
 		~CPostEdit ();
 		CPostEdit* getNext ();
 		void setNext (CPostEdit* PNext);
-		long double getValue ();
+		mint getValue ();
 		bool getDebetEdit ();
 		unsigned int getNumber ();
 }; /* class CPostEdit */
@@ -90,7 +94,7 @@ class CPost {
 		void setFirstPostEdit (CPostEdit* PFirstEdit);
 		CPostEdit* getLastPostEdit ();
 		void setLastPostEdit (CPostEdit* PLastEdit);
-		long double getSaldo ();
+		mint getSaldo ();
 		SSortPost getSortPost ();
 }; /* class CPost */
 
@@ -104,19 +108,19 @@ struct SPost {
 */
 class CJournalEdit {
 	private:
-		long double Value;
+		mint Value;
 		CPost* Post;
 		bool DebetEdit;
 
 		CJournalEdit* Next;
 	public:
-		CJournalEdit (bool JDebetEdit, CPost* JPost, long double JValue);
+		CJournalEdit (bool JDebetEdit, CPost* JPost,mint JValue);
 		~CJournalEdit ();
 		CJournalEdit* getNext ();
 		void setNext (CJournalEdit* JNext);
 		bool getDebetEdit ();
 		CPost* getPost ();
-		long double getValue ();
+		mint getValue ();
 }; /* class CJournalEdit */
 
 struct SJournalEdit {
@@ -170,7 +174,7 @@ class CBookKeeping {
 		SJournal* getJournalByNumberRange (int Minimum,int Maximum);
 		void bookJournal (TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit);
 		void addPost (std::string name,unsigned short id,SSortPost SortPost);
-		CJournalEdit* newJournalEdit (bool DebetEdit,CPost* Post,long double Value);
+		CJournalEdit* newJournalEdit (bool DebetEdit,CPost* Post,mint Value);
 		void setNextOnJournalEdit (CJournalEdit* CurJEdit,CJournalEdit* FirstJEdit,CJournalEdit* LastJEdit);
 		CPost* getPostByName (std::string Name);
 		CPost* getFirstPost ();

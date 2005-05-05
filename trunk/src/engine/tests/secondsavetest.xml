@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <bookkeeping>
 	<posts>
-		<post name="Kapitaal" id="1000" sort="PASSIVE" saldo="1000.05" />
-		<post name="Bank RC Fortis" id="5500" sort="ACTIVE" saldo="1000.05" />
+		<post name="Kapitaal" id="1000" sort="PASSIVE" saldo="100005" />
+		<post name="Bank RC Fortis" id="5500" sort="ACTIVE" saldo="100005" />
 	</posts>
 	<journals>
 		<journal id=" 1" document="BA 001/1 Fortis" date="This is the date" >
-			 <journaledit postname="Bank RC Fortis" value="1000.05" debetedit="1" />
-			 <journaledit postname="Kapitaal" value="1000.05" debetedit="0" />
+			 <journaledit postname="Bank RC Fortis" value="100005" debetedit="1" />
+			 <journaledit postname="Kapitaal" value="100005" debetedit="0" />
 		</journal>
 	</journals>
 </bookkeeping>
