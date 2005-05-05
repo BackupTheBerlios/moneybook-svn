@@ -23,6 +23,7 @@
 #include <cppunit/TestAssert.h>
 #include <cppunit/TestCaller.h>
 
+#include "../../general.h"
 #include "../libmoneybook.h"
 #include "libmoneybook.h"
 
@@ -73,13 +74,47 @@ void LibMoneyBookTest::testBookJournalGood () {
 
 	TDate Date;
 	Date.date= "This is the date";
-	BookKeeping->bookJournal (Date,"BA 001/1 Fortis",FirstJEdit);
+	try {
+		BookKeeping->bookJournal (Date,"BA 001/1 Fortis",FirstJEdit);
+	}
+	catch (...) {
+		// Nothing may be thrown
+		CPPUNIT_ASSERT_EQUAL (0,1);
+	}
 	SJournal* CurJournal = BookKeeping->getJournalByNumberRange (1,1);
 	CPPUNIT_ASSERT_EQUAL (std::string ("BA 001/1 Fortis"),CurJournal->Journal->getDocument ());
 	CPPUNIT_ASSERT_EQUAL (std::string ("This is the date"),CurJournal->Journal->getDate ().date);
 	CPPUNIT_ASSERT (CurJournal->Journal->getId () == 1);
 	
 	CPPUNIT_ASSERT (CurJournal->Journal->getFirstJournalEdit ()->getNext ()->getPost () == BookKeeping->getPostByName ("Kapitaal") );
+}
+
+void LibMoneyBookTest::testBookJournalBad () {
+	CJournalEdit* FirstJEdit = BookKeeping->newJournalEdit (true,BookKeeping->getPostByName ("Bank RC Fortis"),1000.05);
+	CJournalEdit* LastJEdit = FirstJEdit;
+	CJournalEdit* CurJEdit = BookKeeping->newJournalEdit (false,BookKeeping->getPostByName ("Kapitaal"),1000.06);
+	BookKeeping->setNextOnJournalEdit (CurJEdit,FirstJEdit,LastJEdit);
+	CJournalEdit* CurJournalEdit = FirstJEdit;
+	TDate Date;
+	Date.date= "This is the date";
+	try {
+		BookKeeping->bookJournal (Date,"BA 001/1 Fortis",FirstJEdit);
+	}
+	catch (CException e) {
+		// see what is trown is good
+		CPPUNIT_ASSERT_EQUAL (e.what,std::string("Not in balance"));
+	}
+	catch (...) {
+		// bad thing is trown
+		CPPUNIT_ASSERT_EQUAL (0,1);
+	}
+	CPPUNIT_ASSERT (BookKeeping->getJournalByNumberRange (0,0) == 0);
+}
+
+void LibMoneyBookTest::testSave () {
+}
+
+void LibMoneyBookTest::testLoad () {
 }
 
 CppUnit::Test* LibMoneyBookTest::suite () {
@@ -91,5 +126,14 @@ CppUnit::Test* LibMoneyBookTest::suite () {
 	suiteOfTests->addTest(new CppUnit::TestCaller<LibMoneyBookTest>( 
 								"Test Booking Journals", 
 								&LibMoneyBookTest::testBookJournalGood));
+	suiteOfTests->addTest(new CppUnit::TestCaller<LibMoneyBookTest>( 
+								"Test Booking Journals", 
+								&LibMoneyBookTest::testBookJournalBad));
+	suiteOfTests->addTest(new CppUnit::TestCaller<LibMoneyBookTest>( 
+								"Test Booking Journals", 
+								&LibMoneyBookTest::testSave));
+	suiteOfTests->addTest(new CppUnit::TestCaller<LibMoneyBookTest>( 
+								"Test Booking Journals", 
+								&LibMoneyBookTest::testLoad));
 	return suiteOfTests; 
 }

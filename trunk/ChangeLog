@@ -1,4 +1,9 @@
-2005-05-02 Nathan Samson <nathansamson@gmail.com>
+2005-05-05 Nathan Samson <nathansamson@gmail.com>
+
+	src/engine/tests/libmoneybook.cpp,src/engine/tests/libmoneybook.h:
+		added a bad bookJournalt test and framework for loading and asve tests
+
+2005-05-04 Nathan Samson <nathansamson@gmail.com>
 
 	src/engine/libmoneybook.cpp: you can load a whole bookkeeping from a file
 		only dates are not working yet.

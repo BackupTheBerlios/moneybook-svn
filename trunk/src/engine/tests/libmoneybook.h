@@ -38,8 +38,9 @@ CBookKeeping* BookKeeping;
 
 		void testAddPost ();
 		void testBookJournalGood ();
-		//void testSave ();
-		//void testLoad ();
+		void testBookJournalBad ();
+		void testLoad ();
+		void testSave ();
 
 		static CppUnit::Test* suite ();
 };

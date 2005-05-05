@@ -20,5 +20,5 @@ check_PROGRAMS = testengine
 testengine_SOURCES = main.cpp libmoneybook.cpp ../../general.cpp
 testengine_CXXFLAGS = $(CPPUNIT_CFLAGS)
 testengine_LDFLAGS = $(CPPUNIT_LIBS) -ldl
-testengine_LDADD = $(top_builddir)/src/engine/libmoneybook.a
+testengine_LDADD = $(top_builddir)/src/engine/libmoneybook.a -lxerces-c
 testengine_DEPENDENCIES = ../libmoneybook.a
