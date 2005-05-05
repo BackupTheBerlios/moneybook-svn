@@ -1,5 +1,7 @@
 2005-05-05 Nathan Samson <nathansamson@gmail.com>
 
+	src/moneybook.cpp,configure.in,added src/moneybook.h, added src/mainframe.cpp, src/Makefile.am: first wxWidgets version
+
 	src/engine/libmoneybook.h,src/engine/libmoneybook.cpp,src/engine/cpost.cpp,
 		src/engine/cpostedit.cpp,src/engine/cjournaledit.cpp,src/engine/tests/libmoneybook.cpp,
 		src/engine/tests/firstloadtest.xml,src/engine/tests/secondloadtest.xml,src/engine/tests/firstsavetest.xml

@@ -1,7 +1,7 @@
 AC_INIT
 AC_CONFIG_SRCDIR([src/moneybook.cpp])
 AC_HEADER_STDBOOL
-AM_INIT_AUTOMAKE(moneybook,0.1,20050419)
+AM_INIT_AUTOMAKE(moneybook,0.1,svnrev40)
 AM_PATH_CPPUNIT(1.9.6)
 
 #AC_CHECK_PROG (have_xerces, xerces-c-config, yes, no)
@@ -84,6 +84,5 @@ AC_CONFIG_FILES([Makefile \
 	src/Makefile \
 	src/engine/Makefile \
 	src/engine/tests/Makefile \
-	src/interface/Makefile \
 ])
 AC_OUTPUT
