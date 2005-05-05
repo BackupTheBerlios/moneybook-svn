@@ -74,3 +74,24 @@ void debug (bool doDebug) {
 		cdebug.open ("/dev/null");
 	}
 }
+
+bool streamCompare(std::istream& stream1, std::istream& stream2) {
+	bool identical=true;
+	char charstr1, charstr2;
+	
+	if (stream1.bad() || stream2.bad()) {
+		identical=false;
+	}
+	
+	while ( stream1.get(charstr1) && stream2.get(charstr2) && identical) {
+		if (charstr1 != charstr2) {
+			identical=false;
+		}
+	}
+	
+	stream2.get(charstr2);
+	if (!stream1.eof() || !stream2.eof()) {
+		identical=false;
+	}
+	return identical;
+}

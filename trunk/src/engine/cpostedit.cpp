@@ -25,6 +25,7 @@ CPostEdit::CPostEdit (bool PDebetEdit,long double PValue,unsigned int BookNumber
 	DebetEdit = PDebetEdit;
 	Value = PValue;
 	Number = BookNumber;
+	Next = 0;
 } /* CPostEdit::CPostEdit (bool PDebetEdit,long double PValue,unsigned int BookNumber)*/
 
 /*!

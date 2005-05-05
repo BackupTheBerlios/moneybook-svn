@@ -38,10 +38,12 @@ CPost::CPost (std::string PName,unsigned short PId,SSortPost PSortPost) {
 CPost::~CPost () {
 	cdebug << "Destructor CPost" << std::endl;
 	CPostEdit* CurPostEdit = FirstPostEdit;
-	while (CurPostEdit != 0) {
+	while (FirstPostEdit != 0) {
 		FirstPostEdit = CurPostEdit->getNext ();
+		cdebug << CurPostEdit << std::endl;
 		delete CurPostEdit;
 		CurPostEdit = FirstPostEdit;
+		cdebug << CurPostEdit << std::endl;
 	}
 } /* CPost::~CPost () */
 
@@ -107,7 +109,7 @@ long double CPost::getSaldo () {
 	CPostEdit* CurPostEdit = FirstPostEdit;
 	long double Saldo = 0;
 	while (CurPostEdit != 0)  {
-		if ( CurPostEdit->getDebetEdit () == true ) {
+		if (CurPostEdit->getDebetEdit () == true) {
 			Saldo += CurPostEdit->getValue ();
 		} else {
 			Saldo -= CurPostEdit->getValue ();
@@ -118,7 +120,6 @@ long double CPost::getSaldo () {
 	if  ((SortPost == PASSIVE) || (SortPost == TURNOVER)) {
 		Saldo *= -1;
 	}
-
 	return Saldo;
 } /* unsigned long CPost::getSaldo () */
 

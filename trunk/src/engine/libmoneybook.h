@@ -178,7 +178,7 @@ class CBookKeeping {
 		std::string getFileName ();
 		void setFileName (std::string sFileName);
 		void save (std::string sFileName = "");
-		bool CBookKeeping::load (std::string LFileName = "",bool override = false);
+		bool load (std::string LFileName = "",bool override = false);
 		SPost* getPostById (int Minimum,int Maximum);
 		
 }; /* class CBookKeeping */

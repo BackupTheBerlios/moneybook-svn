@@ -23,26 +23,30 @@
 #include <cppunit/TestAssert.h>
 #include <cppunit/TestCaller.h>
 
+#include "../../config.h"
 #include "../../general.h"
 #include "../libmoneybook.h"
 #include "libmoneybook.h"
 
-LibMoneyBookTest::LibMoneyBookTest () {
+void LibMoneyBookTest::setUp () {
 	BookKeeping = new CBookKeeping;
 	
 	BookKeeping->addPost ("Kapitaal",1000,PASSIVE);
 	BookKeeping->addPost ("Bank RC Fortis",5500,ACTIVE);
-}
 
-LibMoneyBookTest::~LibMoneyBookTest () {
-	delete BookKeeping;
-}
+	CJournalEdit* FirstJEdit = BookKeeping->newJournalEdit (true,BookKeeping->getPostByName ("Bank RC Fortis"),1000.05);
+	CJournalEdit* LastJEdit = FirstJEdit;
+	CJournalEdit* CurJEdit = BookKeeping->newJournalEdit (false,BookKeeping->getPostByName ("Kapitaal"),1000.05);
+	BookKeeping->setNextOnJournalEdit (CurJEdit,FirstJEdit,LastJEdit);
+	CJournalEdit* CurJournalEdit = FirstJEdit;
 
-
-void LibMoneyBookTest::setUp () {
+	TDate Date;
+	Date.date= "This is the date";
+	BookKeeping->bookJournal (Date,"BA 001/1 Fortis",FirstJEdit);
 }
 
 void LibMoneyBookTest::tearDown () {
+	delete BookKeeping;
 }
 
 void LibMoneyBookTest::testAddPost () {
@@ -58,11 +62,15 @@ void LibMoneyBookTest::testAddPost () {
 }
 
 void LibMoneyBookTest::testBookJournalGood () {
-	CJournalEdit* FirstJEdit = BookKeeping->newJournalEdit (true,BookKeeping->getPostByName ("Bank RC Fortis"),1000.05);
-	CJournalEdit* LastJEdit = FirstJEdit;
-	CJournalEdit* CurJEdit = BookKeeping->newJournalEdit (false,BookKeeping->getPostByName ("Kapitaal"),1000.05);
-	BookKeeping->setNextOnJournalEdit (CurJEdit,FirstJEdit,LastJEdit);
-	CJournalEdit* CurJournalEdit = FirstJEdit;
+	SJournal* CurJournal = BookKeeping->getJournalByNumberRange (1,1);
+	CPPUNIT_ASSERT_EQUAL (std::string ("BA 001/1 Fortis"),CurJournal->Journal->getDocument ());
+	CPPUNIT_ASSERT_EQUAL (std::string ("This is the date"),CurJournal->Journal->getDate ().date);
+	CPPUNIT_ASSERT (CurJournal->Journal->getId () == 1);
+	
+	CPPUNIT_ASSERT (CurJournal->Journal->getFirstJournalEdit ()->getNext ()->getPost () == BookKeeping->getPostByName ("Kapitaal") );
+
+	CJournalEdit* CurJournalEdit = CurJournal->Journal->getFirstJournalEdit ();
+
 	CPPUNIT_ASSERT (CurJournalEdit->getValue () == 1000.05);
 	CPPUNIT_ASSERT (CurJournalEdit->getDebetEdit () == true);
 	CPPUNIT_ASSERT_EQUAL (std::string ("Bank RC Fortis"),CurJournalEdit->getPost ()->getName ());
@@ -71,22 +79,6 @@ void LibMoneyBookTest::testBookJournalGood () {
 	CPPUNIT_ASSERT (CurJournalEdit->getValue () == 1000.05);
 	CPPUNIT_ASSERT (CurJournalEdit->getDebetEdit () == false);
 	CPPUNIT_ASSERT_EQUAL (std::string ("Kapitaal"),CurJournalEdit->getPost () ->getName ());
-
-	TDate Date;
-	Date.date= "This is the date";
-	try {
-		BookKeeping->bookJournal (Date,"BA 001/1 Fortis",FirstJEdit);
-	}
-	catch (...) {
-		// Nothing may be thrown
-		CPPUNIT_ASSERT_EQUAL (0,1);
-	}
-	SJournal* CurJournal = BookKeeping->getJournalByNumberRange (1,1);
-	CPPUNIT_ASSERT_EQUAL (std::string ("BA 001/1 Fortis"),CurJournal->Journal->getDocument ());
-	CPPUNIT_ASSERT_EQUAL (std::string ("This is the date"),CurJournal->Journal->getDate ().date);
-	CPPUNIT_ASSERT (CurJournal->Journal->getId () == 1);
-	
-	CPPUNIT_ASSERT (CurJournal->Journal->getFirstJournalEdit ()->getNext ()->getPost () == BookKeeping->getPostByName ("Kapitaal") );
 }
 
 void LibMoneyBookTest::testBookJournalBad () {
@@ -98,7 +90,7 @@ void LibMoneyBookTest::testBookJournalBad () {
 	TDate Date;
 	Date.date= "This is the date";
 	try {
-		BookKeeping->bookJournal (Date,"BA 001/1 Fortis",FirstJEdit);
+		//BookKeeping->bookJournal (Date,"BA 001/1 Fortis",FirstJEdit);
 	}
 	catch (CException e) {
 		// see what is trown is good
@@ -108,13 +100,95 @@ void LibMoneyBookTest::testBookJournalBad () {
 		// bad thing is trown
 		CPPUNIT_ASSERT_EQUAL (0,1);
 	}
-	CPPUNIT_ASSERT (BookKeeping->getJournalByNumberRange (0,0) == 0);
+	CPPUNIT_ASSERT (BookKeeping->getJournalByNumberRange (2,2) == 0);
 }
 
 void LibMoneyBookTest::testSave () {
+	try {
+		BookKeeping->save ();
+	}
+	catch (CException e) {
+		CPPUNIT_ASSERT_EQUAL (e.what,std::string ("Error, no filename given"));
+	}
+	catch (...) {
+		CPPUNIT_ASSERT_EQUAL (0,1);
+	}
+
+	try {
+		BookKeeping->save ("/tmp/firstsavetest.xml");
+	}
+	catch (...) {
+		CPPUNIT_ASSERT_EQUAL (0,1);
+	}
+	CPPUNIT_ASSERT_EQUAL (BookKeeping->getFileName (),std::string ("/tmp/firstsavetest.xml"));
+	std::ifstream out1 ("/tmp/firstsavetest.xml");
+	std::ifstream in1 ("./src/engine/tests/firstsavetest.xml");
+	CPPUNIT_ASSERT (streamCompare(out1,in1));
+
+	try {
+		BookKeeping->setFileName ("/tmp/secondsavetest.xml");
+		BookKeeping->save ();
+	}
+	catch (...) {
+		CPPUNIT_ASSERT_EQUAL (0,1);
+	}
+	CPPUNIT_ASSERT_EQUAL (BookKeeping->getFileName (),std::string ("/tmp/secondsavetest.xml"));
+	std::ifstream out2 ("/tmp/firstsavetest.xml");
+	std::ifstream in2 ("./src/engine/tests/secondsavetest.xml");
+	CPPUNIT_ASSERT (streamCompare(out2,in2));
 }
 
 void LibMoneyBookTest::testLoad () {
+	try { 
+		BookKeeping->load ();
+	}
+	catch (CException e) {
+		CPPUNIT_ASSERT_EQUAL (e.what,std::string ("No Filename given"));
+	}
+
+	try {
+		BookKeeping->setFileName ("filenam");
+		BookKeeping->load ("another,errr");
+	}
+	catch (CException e) {
+		CPPUNIT_ASSERT_EQUAL (e.what,std::string ("There is already assigned a filename"));
+	}
+	BookKeeping->setFileName ("");
+	try {
+		BookKeeping->load ("modified");
+	}
+	catch (CException e) {
+		CPPUNIT_ASSERT_EQUAL (e.what,std::string ("Already modified"));
+	}
+
+	try {
+		BookKeeping->load ("./src/engine/tests/firstloadtest.xml",true);
+	}
+	catch (CException e) {
+		CPPUNIT_ASSERT_EQUAL (std::string ("Already modified"),e.what);
+	}
+	cdebug << "Loaded..." << std::endl;
+	delete BookKeeping;
+	BookKeeping = new CBookKeeping;
+	BookKeeping->load ("./src/engine/tests/firstloadtest.xml");
+	
+	long double test = 9001;
+	short unsigned int number = 10000;
+	CPPUNIT_ASSERT_EQUAL (BookKeeping->getPostByName ("Kapitaal")->getSaldo (),test);
+	CPPUNIT_ASSERT_EQUAL (number,BookKeeping->getPostByName ("Kapitaal")->getId ());
+	CPPUNIT_ASSERT_EQUAL (std::string("PASSIVE"),SortPostToString(BookKeeping->getPostByName ("Kapitaal")->getSortPost ()));
+
+	test = 2000;
+	number = 57000;
+	CPPUNIT_ASSERT_EQUAL (BookKeeping->getPostByName ("Kas")->getSaldo (),test);
+	CPPUNIT_ASSERT_EQUAL (number,BookKeeping->getPostByName ("Kas")->getId ());
+	CPPUNIT_ASSERT_EQUAL (std::string("ACTIVE"),SortPostToString(BookKeeping->getPostByName ("Kas")->getSortPost ()));
+
+	test = 7001;
+	number = 55000;
+	CPPUNIT_ASSERT_EQUAL (BookKeeping->getPostByName ("Bank")->getSaldo (),test);
+	CPPUNIT_ASSERT_EQUAL (number,BookKeeping->getPostByName ("Bank")->getId ());
+	CPPUNIT_ASSERT_EQUAL (std::string("ACTIVE"),SortPostToString(BookKeeping->getPostByName ("Bank")->getSortPost ()));
 }
 
 CppUnit::Test* LibMoneyBookTest::suite () {
@@ -130,10 +204,10 @@ CppUnit::Test* LibMoneyBookTest::suite () {
 								"Test Booking Journals", 
 								&LibMoneyBookTest::testBookJournalBad));
 	suiteOfTests->addTest(new CppUnit::TestCaller<LibMoneyBookTest>( 
-								"Test Booking Journals", 
+								"Test Saving", 
 								&LibMoneyBookTest::testSave));
 	suiteOfTests->addTest(new CppUnit::TestCaller<LibMoneyBookTest>( 
-								"Test Booking Journals", 
+								"Test Loading", 
 								&LibMoneyBookTest::testLoad));
 	return suiteOfTests; 
 }

@@ -12,6 +12,7 @@ AM_PATH_CPPUNIT(1.9.6)
 #	XML4C_CFLAGS=" -I/usr/include/xercesc "
 #	XML4C_LIBS=" -lxerces-c "
 #fi
+AC_DEFINE_UNQUOTED([SRC_DIR], ["$srcdir"],[the srcdir])
  
 AC_ARG_WITH(xml4c,
 	[AS_HELP_STRING( --with-xml4c=DIR, use xml4c install rooted at <DIR>)],

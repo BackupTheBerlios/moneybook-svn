@@ -39,4 +39,6 @@ class CException {
 extern std::ofstream cdebug;
 void debug (bool doDebug);
 
+bool streamCompare(std::istream& stream1, std::istream& stream2);
+
 #endif /* GENERAL_H */

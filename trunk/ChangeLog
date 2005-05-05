@@ -1,5 +1,13 @@
 2005-05-05 Nathan Samson <nathansamson@gmail.com>
 
+	src/engine/libmoneybook.cpp: changed the savefunction a bit
+		
+	src/engine/cpostedit.cpp: fixed a segfault
+
+	src/engine/tests/libmoneybook.cpp: added a load and save test
+	
+	src/general.h,src/general.cpp: add a streamCompare function
+
 	src/engine/tests/libmoneybook.cpp,src/engine/tests/libmoneybook.h:
 		added a bad bookJournalt test and framework for loading and asve tests
 

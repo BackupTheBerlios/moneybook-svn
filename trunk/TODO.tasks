@@ -2,7 +2,7 @@
 <gtodo>
   <category title="tests" place="0">
     <item>
-      <attribute id="1115234529" priority="1" done="0" start_date="732070" enddate="99999999" notify="0" endtime="-60" last_edited="1115234529"/>
+      <attribute id="1115234529" priority="1" done="1" start_date="732070" completed_date="732071" notify="0" last_edited="1115310049"/>
       <summary>save/load</summary>
       <comment>Add save and load tests</comment>
     </item>

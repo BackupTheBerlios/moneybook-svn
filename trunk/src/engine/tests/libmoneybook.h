@@ -29,10 +29,7 @@ class LibMoneyBookTest : public CppUnit::TestFixture
 	private:		
 		//CBookKeeping* BookKeeping;
 	public:
-
-		LibMoneyBookTest ();
-		~LibMoneyBookTest ();
-CBookKeeping* BookKeeping;
+		CBookKeeping* BookKeeping;
 		void setUp ();
 		void tearDown ();
 

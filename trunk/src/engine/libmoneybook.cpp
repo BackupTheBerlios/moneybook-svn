@@ -62,7 +62,7 @@ SSortPost StringToSortPost (std::string SortPost) {
 } /* SSortPost StringToSortPost (std::string SortPost)  */
 
 std::string getAttributeByName (DOMNode* node, std::string attrName) {
-	std::cout << "getAttr" << std::endl;
+	cdebug << "getAttr " << attrName << std::endl;
 	assert (node->getNodeType () == DOMNode::ELEMENT_NODE);
 	
 	std::string value = "";
@@ -234,6 +234,7 @@ CPost* CBookKeeping::getLastPost () {
 	book a journal, and book with that information also the corresponding posts
 */
 void CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* FirstJournalEdit) {
+	cdebug << "Check balance" << std::endl;
 	CJournalEdit* CurJournalEdit = FirstJournalEdit;
 	long double balance = 0;
 	while (CurJournalEdit != 0) {
@@ -244,6 +245,7 @@ void CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* F
 		}
 		CurJournalEdit = CurJournalEdit->getNext ();
 	}
+	cdebug << "Balance: " << balance << std::endl;
 
 	if (balance == 0) {
 		// Book it in the journals
@@ -262,8 +264,10 @@ void CBookKeeping::bookJournal (TDate JDate,std::string Document,CJournalEdit* F
 		while (CurJournalEdit != 0) {
 			CPostEdit* CurPostEdit = new CPostEdit (CurJournalEdit->getDebetEdit (),CurJournalEdit->getValue (),CurJournal->getId ());
 			if ( CurJournalEdit->getPost ()->getFirstPostEdit () == 0 ) {
+				cdebug << "FirstPostEdit == 0" << std::endl;
 				CurJournalEdit->getPost ()->setFirstPostEdit (CurPostEdit);
 			} else {
+				cdebug << "FirstPostEdit != 0" << std::endl;
 				CurJournalEdit->getPost ()->getLastPostEdit ()->setNext (CurPostEdit);
 			}
 			CurJournalEdit->getPost ()->setLastPostEdit (CurPostEdit);
@@ -373,25 +377,13 @@ bool CBookKeeping::load (std::string LFileName,bool override) {
 		}
 	} else {
 		if (FileName == "") {
-			FileName = LFileName;
-		} else {
-			cdebug << "There is already assigned a filename" << std::endl;
-			if (override == false) {
-				throw CException ("There is already assigned a filename");
-			} else {
-				cdebug << "override" << std::endl;
-				FileName = LFileName;
-			}
+			throw CException ("No Filename given");
 		}
 	}
 
 	if ((FirstJournal != 0) and (FirstPost != 0)) {
 		cdebug << "Already modified" << std::endl;
-		if ( override == false ) {
-			throw CException ("Already modified");
-		} else {
-			cdebug << "override" << std::endl;
-		}
+		throw CException ("Already modified");
 	}
 	// now the file is ready to load
 	cdebug << "Loading..." << std::endl;
@@ -489,7 +481,7 @@ void CBookKeeping::loadFromParser (DOMNode *n) {
 		}
 		tagpost = tagpost->getNextSibling ();
 	}
-	debug (true);
+
 	while (tagjournal != 0) {
 		if (std::string(XMLString::transcode (tagjournal->getNodeName())) == "journal") {
 			cdebug << "Journal found" << std::endl;
@@ -531,15 +523,17 @@ void CBookKeeping::loadFromParser (DOMNode *n) {
 				std::string document = getAttributeByName (tagjournal,"document");
 				TDate date;
 				date.date = "Dit is de zelfgemaakte datum";
+				cdebug << "BookJournal" << std::endl;
 				bookJournal (date,document,FirstJournalEdit);
 			}
 			catch (CException e) {
-				cdebug << "ADD Journal" << std::endl;
+				cdebug << "Exception occured" << e.what << std::endl;
+				throw e;
 			}
+			cdebug << "ADD Journal" << std::endl;
 		} else {
 			cdebug << "Not a usable tag: " << XMLString::transcode (tagjournal->getNodeName()) << std::endl;
 		}
 		tagjournal = tagjournal->getNextSibling ();
 	}
-	debug (false);
 } /* void CBookKeeping::loadFromParser (DOMNode *n) */ 
