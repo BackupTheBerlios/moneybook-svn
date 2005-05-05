@@ -1,7 +1,9 @@
 2005-05-05 Nathan Samson <nathansamson@gmail.com>
 
 	src/engine/libmoneybook.h,src/engine/libmoneybook.cpp,src/engine/cpost.cpp,
-		src/engine/cpostedit.cpp,src/engine/cjournaledit.cpp: fixed the precision 
+		src/engine/cpostedit.cpp,src/engine/cjournaledit.cpp,src/engine/tests/libmoneybook.cpp,
+		src/engine/tests/firstloadtest.xml,src/engine/tests/secondloadtest.xml,src/engine/tests/firstsavetest.xml
+		: fixed the precision 
 		of floating points (made them long int, 2 last digits are after comma )
 
 	src/engine/libmoneybook.cpp: changed the loadfunction a bit

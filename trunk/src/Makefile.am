@@ -20,5 +20,5 @@
 AUTOMAKE_OPTIONS = gnu
 bin_PROGRAMS = moneybook
 SUBDIRS = engine
-moneybook_SOURCES =  moneybook.cpp general.cpp
-moneybook_LDADD = $(top_builddir)/src/engine/libmoneybook.a -lxerces-c
+moneybook_SOURCES =  moneybook.cpp general.cpp mainframe.cpp
+moneybook_LDADD = $(top_builddir)/src/engine/libmoneybook.a $(PACKAGE_LIBS) $(WX_LIBS) -lxerces-c

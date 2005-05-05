@@ -15,53 +15,22 @@
   *  along with this program; if not, write to the Free Software
   *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-#include <iostream>
+#include <wx/wx.h>
 
-#include "general.h"
-#include "engine/libmoneybook.h"
+#include "moneybook.h"
 
-int main () {
-	CBookKeeping* Test = new CBookKeeping;
-	cdebug << "dit is een leuk programma" << std::endl;
-	Test = new CBookKeeping;
-	try {
-		Test->load ("first.xml");
-	}
-	catch (CException e) {
-		cdebug << "Exception occured: " << e.what << std::endl;
-	}
-	catch (...) {
-		cdebug << "Uknown exception occured: " << std::endl;
-	}
+IMPLEMENT_APP(MyApp)
 
-	SJournal* CurRJournal = Test->getJournalByNumberRange (0,0);
-	while (CurRJournal != 0) {
-		std::cout << "Id: " << CurRJournal->Journal->getId () << " Date: "  << CurRJournal->Journal->getDate ().date << std::endl;
-		SJournalEdit* JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (true);
-		while (JournalEdit != 0) {
-			std::cout << JournalEdit->JournalEdit->getPost ()->getId () << "  ";
-			std::cout << JournalEdit->JournalEdit->getPost ()->getName () << "  " ;
-			std::cout << JournalEdit->JournalEdit->getValue () << std::endl;
-			JournalEdit = JournalEdit->Next;
-		};
-		std::cout << "                  @" << std::endl;
-		JournalEdit = CurRJournal->Journal->getJournalEditByDebetEdit (false);
-		while (JournalEdit != 0) {
-			std::cout << JournalEdit->JournalEdit->getPost ()->getId () << "  ";
-			std::cout << JournalEdit->JournalEdit->getPost ()->getName () << "  ";
-			std::cout << "            " << JournalEdit->JournalEdit->getValue () << std::endl;
-			JournalEdit = JournalEdit->Next;
-		};
-		std::cout << std::endl << std::endl;
-		CurRJournal = CurRJournal->Next;
-	}
-	
-	CPost* CurPost = Test->getFirstPost ();
-	while (CurPost != 0) {
-		std::cout << "Id: " << CurPost->getId () << " Name: " << CurPost->getName () << std::endl;
-		std::cout << " Saldo: " << CurPost->getSaldo () << std::endl;
-		CurPost = CurPost->getNext ();
-	};
+bool MyApp::OnInit() {
+        MyFrame* frame = new MyFrame (_T("Hello world"),wxPoint(50,50),wxSize(200,200));
 
-	delete Test;
-}
+	frame->Connect(ID_Quit, wxEVT_COMMAND_MENU_SELECTED,
+		(wxObjectEventFunction) &MyFrame::OnQuit);
+	frame->Connect(ID_About, wxEVT_COMMAND_MENU_SELECTED,
+		(wxObjectEventFunction) &MyFrame::OnAbout);
+        frame->CreateStatusBar();
+        frame->SetStatusText(_T("Hello World"));
+        frame->Show(TRUE);
+        SetTopWindow(frame);
+        return true;
+} /*virtual bool MyApp::OnInit()*/
