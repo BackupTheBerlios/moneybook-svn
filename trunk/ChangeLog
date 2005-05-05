@@ -1,6 +1,6 @@
 2005-05-05 Nathan Samson <nathansamson@gmail.com>
 
-	src/engine/libmoneybook.cpp: changed the savefunction a bit
+	src/engine/libmoneybook.cpp: changed the loadfunction a bit
 		
 	src/engine/cpostedit.cpp: fixed a segfault
 

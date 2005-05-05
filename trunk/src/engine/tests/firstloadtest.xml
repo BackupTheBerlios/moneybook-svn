@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<bookkeeping>
+	<journals>
+		<journal id=" 1" document="BA 001/1 Fortis" date="This is the date" >
+			<journaledit postname="Bank" value="7001" debetedit="1" />
+			<journaledit postname="Kas" value="2000" debetedit="1" />
+			<journaledit postname="Kapitaal" value="9001" debetedit="0" />
+		</journal>
+	</journals>
+	<posts>
+		<post name="Kapitaal" id="10000" sort="PASSIVE" saldo="9001.05" />
+		<post name="Kas" id="57000" sort="ACTIVE" saldo="2000.10" />
+		<post name="Bank" id="55000" sort="ACTIVE" saldo="7000.95" />
+	</posts>
+</bookkeeping>

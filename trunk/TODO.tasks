@@ -6,6 +6,11 @@
       <summary>save/load</summary>
       <comment>Add save and load tests</comment>
     </item>
+    <item>
+      <attribute id="1115310187" priority="1" done="0" start_date="732071" enddate="99999999" notify="0" endtime="-60" last_edited="1115310187"/>
+      <summary>loadtest</summary>
+      <comment>change the loadtest so that you must not run the tests in trunk/</comment>
+    </item>
   </category>
   <category title="libmoneybook" place="1">
     <item>
