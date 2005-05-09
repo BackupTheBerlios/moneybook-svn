@@ -120,4 +120,5 @@ CJournalEdit* CJournal::getJournalEditByDebetEdit (bool DebetEdit) {
 		}
 		CurJournalEdit = CurJournalEdit->getNext ();
 	}
+	return TmpFirstJournalEdit;
 } /* CJournalEdit* CJournal::getJournalEditByDebetEdit (bool DebetEdit) */
