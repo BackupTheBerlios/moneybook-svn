@@ -85,6 +85,7 @@ class CPost {
 		CPost* Next;
 	public:
 		CPost (std::string PName,unsigned short PId,SSortPost PSortPost);
+		CPost (CPost* Post);
 		~CPost ();
 		CPost* getNext ();
 		void setNext (CPost* PNext);
@@ -97,11 +98,6 @@ class CPost {
 		mint getSaldo ();
 		SSortPost getSortPost ();
 }; /* class CPost */
-
-struct SPost {
-	CPost* Post;
-	SPost* Next;
-};
 
 /*!
 	CJournalEdit, Dynamic list, for holding all CJournalEdit
@@ -175,7 +171,7 @@ class CBookKeeping {
 		void setFileName (std::string sFileName);
 		void save (std::string sFileName = "");
 		bool load (std::string LFileName = "",bool override = false);
-		SPost* getPostById (int Minimum,int Maximum);
+		CPost* getPostById (int Minimum,int Maximum);
 		
 }; /* class CBookKeeping */
 

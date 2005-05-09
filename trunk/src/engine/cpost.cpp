@@ -33,6 +33,18 @@ CPost::CPost (std::string PName,unsigned short PId,SSortPost PSortPost) {
 } /* CPost::CPost ( std::string PName, unsigned short PId,SSortPost PSortPos ) */ 
 
 /*!
+	Copy's a post except of the Next
+*/
+CPost::CPost (CPost* Post) {
+	Id = Post->getId ();
+	Name = Post->getName ();
+	SortPost = Post->getSortPost ();
+	FirstPostEdit = Post->getFirstPostEdit ();
+	LastPostEdit = Post->getLastPostEdit ();
+	Next = 0;
+} /* CPost::CPost ( std::string PName, unsigned short PId,SSortPost PSortPos ) */ 
+
+/*!
 	Destructor of CPost
 */
 CPost::~CPost () {

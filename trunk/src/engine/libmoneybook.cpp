@@ -422,30 +422,28 @@ bool CBookKeeping::load (std::string LFileName,bool override) {
 } /* bool CBookKeeping::load (std::string LFileName,bool override) */ 
 
 /*
-	returns SPost with all Posts in in range Minimum->Maximum
+	returns CPost with all Posts in in range Minimum->Maximum
 */
-SPost* CBookKeeping::getPostById (int Minimum,int Maximum) {
+CPost* CBookKeeping::getPostById (int Minimum,int Maximum) {
+	CPost* TmpFirstPost = 0;
+	CPost* TmpLastPost = 0;
+	CPost* TmpCurPost = 0;
+
 	CPost* CurPost = FirstPost;
-	SPost* FirstSPost = 0;
-	SPost* LastSPost = 0;
-	
-	while (CurPost != 0) {
-		if (isInIntRange (Minimum,Maximum,CurPost->getId ())) {
-			SPost* CurSPost = new SPost;
-			if (FirstSPost == 0) {
-				FirstSPost = CurSPost;
-				LastSPost = CurSPost;
+	while (CurPost == 0) {
+		if (isInIntRange (Minimum,Maximum,CurPost->getId ()) == true)  {
+			// Copy it
+			TmpCurPost = new CPost (CurPost);
+			if (TmpFirstPost == 0) {
+				TmpFirstPost = TmpCurPost;
 			} else {
-				LastSPost->Next = CurSPost;
+				TmpLastPost->setNext (TmpCurPost);
 			}
-			CurSPost->Post = CurPost;
-			CurSPost->Next = 0;
-			LastSPost = CurSPost;
+			TmpLastPost = TmpCurPost;
 		}
-		CurPost = CurPost->getNext ();
 	}
-	return FirstSPost;
-} /* SPost* CBookKeeping::getPostById (int Minimum,int Maximum) */
+	return TmpFirstPost;
+} /* CPost* CBookKeeping::getPostById (int Minimum,int Maximum) */
 
 void CBookKeeping::loadFromParser (DOMNode *n) {
 	DOMNode* tagpost = 0;
