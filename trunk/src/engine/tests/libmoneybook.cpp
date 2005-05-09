@@ -62,14 +62,14 @@ void LibMoneyBookTest::testAddPost () {
 }
 
 void LibMoneyBookTest::testBookJournalGood () {
-	SJournal* CurJournal = BookKeeping->getJournalByNumberRange (1,1);
-	CPPUNIT_ASSERT_EQUAL (std::string ("BA 001/1 Fortis"),CurJournal->Journal->getDocument ());
-	CPPUNIT_ASSERT_EQUAL (std::string ("This is the date"),CurJournal->Journal->getDate ().date);
-	CPPUNIT_ASSERT (CurJournal->Journal->getId () == 1);
+	CJournal* CurJournal = BookKeeping->getJournalByNumberRange (1,1);
+	CPPUNIT_ASSERT_EQUAL (std::string ("BA 001/1 Fortis"),CurJournal->getDocument ());
+	CPPUNIT_ASSERT_EQUAL (std::string ("This is the date"),CurJournal->getDate ().date);
+	CPPUNIT_ASSERT (CurJournal->getId () == 1);
 	
-	CPPUNIT_ASSERT (CurJournal->Journal->getFirstJournalEdit ()->getNext ()->getPost () == BookKeeping->getPostByName ("Kapitaal") );
+	CPPUNIT_ASSERT (CurJournal->getFirstJournalEdit ()->getNext ()->getPost () == BookKeeping->getPostByName ("Kapitaal") );
 
-	CJournalEdit* CurJournalEdit = CurJournal->Journal->getFirstJournalEdit ();
+	CJournalEdit* CurJournalEdit = CurJournal->getFirstJournalEdit ();
 
 	CPPUNIT_ASSERT (CurJournalEdit->getValue () == 100005);
 	CPPUNIT_ASSERT (CurJournalEdit->getDebetEdit () == true);

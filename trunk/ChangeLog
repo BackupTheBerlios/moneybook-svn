@@ -1,5 +1,9 @@
 2005-05-09 Nathan Samson <nathansamson@gmail.com>
 
+	* src/engine/ cjournal.cpp,libmoneybook.h, libmoneybook.cpp, 
+	src/engine/tests/libmoneybook.cpp
+		Changed the return type og getJournalByNumberRange (the former was really stupid and unusefull)
+
 	* src/engine/ cjournal.cpp,libmoneybook.cpp, cjournaledit.cpp,libmoneybook.his
 		Changed the return type of getJournalEditByDebetEdit (the former was really stupid and unusefull)
 

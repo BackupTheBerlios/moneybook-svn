@@ -31,6 +31,16 @@ CJournal::CJournal (TDate JDate,std::string JDocument,unsigned int JId,CJournalE
 	Next = 0;
 } /* CJournal::CJournal (TDate JDate,std::string JDocument,unsigned int JId,CJournalEdit* JFirstJournalEdit) */
 
+/*!
+	Copy's an CJournal, except of the Next
+*/
+CJournal::CJournal (CJournal* Journal) {
+	Date = Journal->getDate ();
+	Document = Journal->getDocument ();
+	Id = Journal->getId ();
+	FirstJournalEdit = Journal->getFirstJournalEdit ();
+	Next = 0;
+} /*CJournal::CJournal (CJournal* Journal) */
 
 /*! 
 	Destrucor of CJournal 

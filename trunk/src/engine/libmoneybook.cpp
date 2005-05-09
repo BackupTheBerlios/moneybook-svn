@@ -137,28 +137,28 @@ CBookKeeping::~CBookKeeping () {
 /*!
 	returns all Journals who are in a range ( 0 is "I don't care" )
 */
-SJournal* CBookKeeping::getJournalByNumberRange (int Minimum,int Maximum) {
+CJournal* CBookKeeping::getJournalByNumberRange (int Minimum,int Maximum) {
+	CJournal* TmpFirstJournal = 0;
+	CJournal* TmpLastJournal = 0;
+	CJournal* TmpCurJournal = 0;
+
 	CJournal* CurJournal = FirstJournal;
-	SJournal* FirstRJournal = 0;
-	SJournal* LastRJournal = 0;
-	
+
 	while (CurJournal != 0) {
 		if (isInIntRange (Minimum,Maximum,CurJournal->getId ())) {
-			SJournal* CurRJournal = new SJournal;
-			if (FirstRJournal == 0) {
-				FirstRJournal = CurRJournal;
-				LastRJournal = FirstRJournal;
+			// Copy the old one
+			TmpCurJournal = new CJournal (CurJournal);
+			if (TmpFirstJournal == 0) {
+				TmpFirstJournal = TmpCurJournal;
 			} else {
-				LastRJournal->Next = CurRJournal;
+				TmpLastJournal->setNext (TmpCurJournal);
 			}
-			CurRJournal->Journal = CurJournal;
-			CurRJournal->Next = 0;
-			LastRJournal = CurRJournal;
+			TmpLastJournal = TmpCurJournal;
 		}
 		CurJournal = CurJournal->getNext ();
 	}
-	return FirstRJournal;
-} /* SJournal* CBookKeeping::getJournalByNumberRange (int Minimum,int Maximum)  */
+	return TmpFirstJournal;
+} /* CJournal* CBookKeeping::getJournalByNumberRange (int Minimum,int Maximum)  */
 
 /*!
 	add a post in the dynamic list

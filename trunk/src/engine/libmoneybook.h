@@ -137,6 +137,7 @@ class CJournal {
 		CJournal* Next;
 	public:
 		CJournal (TDate JDate,std::string JDocument,unsigned int JNumber,CJournalEdit* JFirstJournalEdit);
+		CJournal (CJournal* Journal);
 		~CJournal ();
 		CJournal* getNext ();
 		void setNext (CJournal* JNext);
@@ -146,11 +147,6 @@ class CJournal {
 		std::string getDocument ();
 		CJournalEdit* getJournalEditByDebetEdit (bool DebetEdit);
 }; /* class CJournal */
-
-struct SJournal {
-	CJournal* Journal;
-	SJournal* Next;
-}; /* struct SJournal */
 
 /*!
 	Main API, most functionality is in this Class
@@ -167,7 +163,7 @@ class CBookKeeping {
 	public:
 		CBookKeeping ();
 		~CBookKeeping (); 
-		SJournal* getJournalByNumberRange (int Minimum,int Maximum);
+		CJournal* getJournalByNumberRange (int Minimum,int Maximum);
 		void bookJournal (TDate JDate,std::string Document,CJournalEdit* JFirstJournalEdit);
 		void addPost (std::string name,unsigned short id,SSortPost SortPost);
 		CJournalEdit* newJournalEdit (bool DebetEdit,CPost* Post,mint Value);
