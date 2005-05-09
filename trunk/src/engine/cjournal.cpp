@@ -88,26 +88,26 @@ std::string CJournal::getDocument () {
 } /* std::string CJournal::getDocument () */
 
 /*!
-	get all journaledits from CJournal who matches DebetEdit 
+	get all journaledits from CJournal who matches DebetEdit,an put it in an new list
 */
-SJournalEdit* CJournal::getJournalEditByDebetEdit (bool DebetEdit) {
-	SJournalEdit* FirstRJournalEdit = 0;
-	SJournalEdit* LastRJournalEdit = 0;
-	SJournalEdit* CurRJournalEdit = 0;
+CJournalEdit* CJournal::getJournalEditByDebetEdit (bool DebetEdit) {
+	CJournalEdit* TmpFirstJournalEdit = 0;
+	CJournalEdit* TmpLastJournalEdit = 0;
+	CJournalEdit* TmpCurJournalEdit = 0;
+
 	CJournalEdit* CurJournalEdit = FirstJournalEdit;
-	 while (CurJournalEdit != 0) {
+
+	while (CurJournalEdit != 0) {
 		if (CurJournalEdit->getDebetEdit () == DebetEdit) {
-			CurRJournalEdit = new SJournalEdit;
-			CurRJournalEdit->Next = 0;
-			CurRJournalEdit->JournalEdit = CurJournalEdit;
-			if  (FirstRJournalEdit == 0) {
-				FirstRJournalEdit = CurRJournalEdit;
+			// Copy this one in an new
+			TmpCurJournalEdit = new CJournalEdit (CurJournalEdit);
+			if (TmpFirstJournalEdit == 0) {
+				TmpFirstJournalEdit = TmpCurJournalEdit;
 			} else {
-				LastRJournalEdit->Next = CurRJournalEdit;
+				TmpLastJournalEdit->setNext (TmpCurJournalEdit);
 			}
-			LastRJournalEdit = CurRJournalEdit;
+			TmpLastJournalEdit = TmpCurJournalEdit;
 		}
 		CurJournalEdit = CurJournalEdit->getNext ();
 	}
-	return FirstRJournalEdit;
-} /* SJournalEdit* CJournal::getJournalEditByDebetEdit (bool DebetEdit) */
+} /* CJournalEdit* CJournal::getJournalEditByDebetEdit (bool DebetEdit) */

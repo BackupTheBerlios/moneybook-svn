@@ -115,6 +115,7 @@ class CJournalEdit {
 		CJournalEdit* Next;
 	public:
 		CJournalEdit (bool JDebetEdit, CPost* JPost,mint JValue);
+		CJournalEdit (CJournalEdit* JournalEdit);
 		~CJournalEdit ();
 		CJournalEdit* getNext ();
 		void setNext (CJournalEdit* JNext);
@@ -122,11 +123,6 @@ class CJournalEdit {
 		CPost* getPost ();
 		mint getValue ();
 }; /* class CJournalEdit */
-
-struct SJournalEdit {
-	CJournalEdit* JournalEdit;
-	SJournalEdit* Next;
-}; /* struct SJournalEdit */
 
 /*!
 	CJournal, dynamic list, keeps a Journal
@@ -148,7 +144,7 @@ class CJournal {
 		CJournalEdit* getFirstJournalEdit ();
 		TDate getDate ();
 		std::string getDocument ();
-		SJournalEdit* getJournalEditByDebetEdit (bool DebetEdit);
+		CJournalEdit* getJournalEditByDebetEdit (bool DebetEdit);
 }; /* class CJournal */
 
 struct SJournal {

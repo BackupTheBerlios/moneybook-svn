@@ -19,7 +19,7 @@
 #include "libmoneybook.h"
 
 /*!
-	Constructor of CJournalEdit
+	Normal constructor of CJournalEdit
 */
 CJournalEdit::CJournalEdit (bool JDebetEdit,CPost* JPost,mint JValue) {
 	DebetEdit = JDebetEdit;
@@ -27,6 +27,16 @@ CJournalEdit::CJournalEdit (bool JDebetEdit,CPost* JPost,mint JValue) {
 	Value = JValue;
 	Next = 0;
 } /* CJournalEdit::CJournalEdit (bool JDebetEdit,CPost* JPost,mint JValue) */
+
+/*!
+	Copy's an CJournalEdit except the Next, put that one at 0
+*/
+CJournalEdit::CJournalEdit (CJournalEdit* JournalEdit) {
+	DebetEdit = JournalEdit->getDebetEdit ();
+	Post = JournalEdit->getPost ();
+	Value = JournalEdit->getValue ();
+	Next = 0;
+} /* CJournalEdit::CJournalEdit (CJournalEdit* JournalEdit) */
 
 /*!
 	Destructor of CJournalEdit
