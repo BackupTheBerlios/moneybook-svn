@@ -15,25 +15,32 @@
   *  along with this program; if not, write to the Free Software
   *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-#include <wx/wx.h>
+#ifndef MONEYBOOK_H
+#define MONEYBOOK_H
+#include <gtkmm.h>
+#include <string>
 
-class MyApp: public wxApp {
-	public:
-		virtual bool OnInit();
-}; /*class MyApp*/
+#include "general.h"
+class CMoneybookGUI : public Gtk::Window {
+	public: 
+		CMoneybookGUI ();
+		virtual ~CMoneybookGUI ();
+	private:
+		void addItemsMenu ();
 
-enum
-{
-	ID_Quit,
-	ID_About
+		void on_hide ();
+		void onPreferences ();
+		void onAbout ();
+
+		Gtk::VBox* vBox;
+		Gtk::Widget* menu;
+		Gtk::Widget* toolbar;
+		Gtk::Statusbar* statusbar;
+
+		Gtk::AboutDialog* aboutDialog; 
+
+		std::list<Glib::ustring> authors;
+		Glib::RefPtr<Gtk::UIManager> refUIManager;
+		Glib::RefPtr<Gtk::ActionGroup> refActionGroup;
 };
-
-DECLARE_APP(MyApp)
-
-class MyFrame: public wxFrame {
-	public:
-		MyFrame (const wxString& title, const wxPoint& pos, const wxSize& size);
-
-		void OnQuit (wxCommandEvent& event);
-		void OnAbout (wxCommandEvent& event);
-}; /*class MyFrame*/
+#endif

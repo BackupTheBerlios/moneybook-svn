@@ -1,7 +1,7 @@
 AC_INIT
 AC_CONFIG_SRCDIR([src/moneybook.cpp])
 AC_HEADER_STDBOOL
-AM_INIT_AUTOMAKE(moneybook,0.1,svnrev40)
+AM_INIT_AUTOMAKE(moneybook,0.1)
 AM_PATH_CPPUNIT(1.9.6)
 
 #AC_CHECK_PROG (have_xerces, xerces-c-config, yes, no)
@@ -13,38 +13,11 @@ AM_PATH_CPPUNIT(1.9.6)
 #	XML4C_LIBS=" -lxerces-c "
 #fi
 AC_DEFINE_UNQUOTED([SRC_DIR], ["$srcdir"],[the srcdir])
- 
-AM_OPTIONS_WXCONFIG
-AM_PATH_WXCONFIG(2.3.2, wxWin=1)
-	if test "$wxWin" != 1;
-	then
-		AC_MSG_ERROR([
-		wxWindows must be installed on your system.
 
-		Please check that wx-config is in path, the directory
-		where wxWindows libraries are installed (returned by
-		'wx-config --libs' or 'wx-config --static --libs' command)
-		is in LD_LIBRARY_PATH or equivalent variable and
-		wxWindows version is 2.3.2 or above.
-		])
-	else
-		dnl Quick hack until wx-config does it
-		ac_save_LIBS=$LIBS
-		ac_save_CXXFLAGS=$CXXFLAGS
-		LIBS=$WX_LIBS
-		CXXFLAGS=$WX_CXXFLAGS
-		AC_LANG_SAVE
-		AC_LANG_CPLUSPLUS
-		AC_TRY_LINK([#include <wx/wx.h>],
-			[wxString test=""],
-			,[WX_LIBS=$WX_LIBS_STATIC])
-		AC_LANG_RESTORE
-		LIBS=$ac_save_LIBS
-		CXXFLAGS=$ac_save_CXXFLAGS
-	fi
-
-PKG_CHECK_MODULES(PACKAGE, [gtk+-2.0 libglade-2.0])
+PKG_CHECK_MODULES(PACKAGE, [gtkmm-2.4 >= 2.6 libglade-2.0])
 AC_SUBST(PACKAGE_CFLAGS)
+AC_SUBST(PACKAGE_CPPFLAGS)
+AC_SUBST(PACKAGE_CXXFLAGS)
 AC_SUBST(PACKAGE_LIBS)
 
 AC_ARG_WITH(xml4c,
@@ -79,7 +52,6 @@ AC_PROG_MAKE_SET
 CFLAGS="$CFLAGS"
 CPPFLAGS="$CPPFLAGS"
 CXXFLAGS="$CXXFLAGS"
-
 AC_CONFIG_FILES([Makefile \
 	src/Makefile \
 	src/engine/Makefile \
